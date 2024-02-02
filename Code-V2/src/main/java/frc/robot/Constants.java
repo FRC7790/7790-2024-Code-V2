@@ -47,6 +47,7 @@ public final class Constants
     public static final double LEFT_X_DEADBAND  = 0.1;
     public static final double LEFT_Y_DEADBAND  = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.1;
-    public static final double TURN_CONSTANT    = 6;
+    public static final double TURN_CONSTANT    = 1;
+    //Christopher Changed Turn constant from 6 to 1 as test
   }
 }
