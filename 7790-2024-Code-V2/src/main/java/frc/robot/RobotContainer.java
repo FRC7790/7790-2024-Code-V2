@@ -138,7 +138,7 @@ this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter(), new
   {
 
     // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("3 Shoot", true);
+    return drivebase.getAutonomousCommand("ShootTest", true);
 
   }
 
