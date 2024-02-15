@@ -18,10 +18,10 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.drivebase.AbsoluteDriveAdv;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
@@ -45,10 +45,13 @@ public class RobotContainer
   // CommandJoystick driverController   = new CommandJoystick(3);//(OperatorConstants.DRIVER_CONTROLLER_PORT);
   XboxController driverXbox = new XboxController(0);
 
-private final JoystickButton startShooter = new JoystickButton(this.driverXbox, 5);
+  private final JoystickButton startShooter = new JoystickButton(this.driverXbox, 5);
   private final JoystickButton stopShooter = new JoystickButton(this.driverXbox, 6);
+  private final POVButton harvest = new POVButton(this.driverXbox, 0);
+  private final POVButton harvestStop = new POVButton(this.driverXbox, -1);
+  private final POVButton harvestReverse = new POVButton(this.driverXbox, 180);
 
-  Intake intake = new Intake();
+  
   Shooter shooter = new Shooter();
   
   /**
@@ -125,6 +128,9 @@ private final JoystickButton startShooter = new JoystickButton(this.driverXbox, 
 
 this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter(), new Subsystem[0]));
 this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter(), new Subsystem[0]));
+this.harvest.onTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
+this.harvestStop.onTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
+this.harvestReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
 
 
   }
