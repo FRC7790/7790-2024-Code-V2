@@ -13,10 +13,10 @@ public class Shooter extends SubsystemBase
     private CANSparkMax indexMotor;
 
     public Shooter() {
-       // this.shooterMotor1 = new CANSparkMax(30, CANSparkLowLevel.MotorType.kBrushless);
-       // this.shooterMotor2 = new CANSparkMax(31, CANSparkLowLevel.MotorType.kBrushless);
-        this.indexMotor = new CANSparkMax(30, CANSparkLowLevel.MotorType.kBrushless);
-        this.intakeMotor = new CANSparkMax(31, CANSparkLowLevel.MotorType.kBrushless);
+        this.shooterMotor1 = new CANSparkMax(30, CANSparkLowLevel.MotorType.kBrushless);
+        this.shooterMotor2 = new CANSparkMax(31, CANSparkLowLevel.MotorType.kBrushless);
+        this.indexMotor = new CANSparkMax(32, CANSparkLowLevel.MotorType.kBrushless);
+        this.intakeMotor = new CANSparkMax(33, CANSparkLowLevel.MotorType.kBrushless);
     }
     public void startShooter() {
         shooterMotor1.set(-.2);

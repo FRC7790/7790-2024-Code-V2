@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,57 +23,67 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.drivebase.AbsoluteDriveAdv;
+import frc.robot.commands.pathfinding.Pathfinder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
- * little robot logic should actually be handled in the {@link Robot} periodic methods (other than the scheduler calls).
- * Instead, the structure of the robot (including subsystems, commands, and trigger mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very
+ * little robot logic should actually be handled in the {@link Robot} periodic
+ * methods (other than the scheduler calls).
+ * Instead, the structure of the robot (including subsystems, commands, and
+ * trigger mappings) should be declared here.
  */
-public class RobotContainer
-{
-
+public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
-                                                                         "swerve/neo"));
+      "swerve/neo"));
   // CommandJoystick rotationController = new CommandJoystick(1);
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  CommandJoystick driverController = new CommandJoystick(1);
+  // CommandJoystick driverController = new CommandJoystick(1);
 
-  // CommandJoystick driverController   = new CommandJoystick(3);//(OperatorConstants.DRIVER_CONTROLLER_PORT);
+  // CommandJoystick driverController = new
+  // CommandJoystick(3);//(OperatorConstants.DRIVER_CONTROLLER_PORT);
   XboxController driverXbox = new XboxController(0);
+  Joystick buttonBox = new Joystick(1);
 
   private final JoystickButton startShooter = new JoystickButton(this.driverXbox, 5);
   private final JoystickButton stopShooter = new JoystickButton(this.driverXbox, 6);
   private final POVButton harvest = new POVButton(this.driverXbox, 0);
   private final POVButton harvestStop = new POVButton(this.driverXbox, -1);
   private final POVButton harvestReverse = new POVButton(this.driverXbox, 180);
-
-  
+  private final JoystickButton target1 = new JoystickButton(this.buttonBox, 1);
+  private final JoystickButton target2 = new JoystickButton(this.buttonBox, 2);
+  private final JoystickButton target3 = new JoystickButton(this.buttonBox, 3);
+  private final JoystickButton target4 = new JoystickButton(this.buttonBox, 4);
+  private final JoystickButton target5 = new JoystickButton(this.buttonBox, 5);
+  private final JoystickButton target6 = new JoystickButton(this.buttonBox, 6);
+  private final JoystickButton target7 = new JoystickButton(this.buttonBox, 7);
+  private final JoystickButton target8 = new JoystickButton(this.buttonBox, 8);
+  private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
   Shooter shooter = new Shooter();
-  
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer()
-  {
+  public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
 
     AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
-                                                                   () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-                                                                                                OperatorConstants.LEFT_Y_DEADBAND),
-                                                                   () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-                                                                                                OperatorConstants.LEFT_X_DEADBAND),
-                                                                   () -> MathUtil.applyDeadband(driverXbox.getRightX(),
-                                                                                                OperatorConstants.RIGHT_X_DEADBAND),
-                                                                   driverXbox::getYButtonPressed,
-                                                                   driverXbox::getAButtonPressed,
-                                                                   driverXbox::getXButtonPressed,
-                                                                   driverXbox::getBButtonPressed);
+        () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
+            OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
+            OperatorConstants.LEFT_X_DEADBAND),
+        () -> MathUtil.applyDeadband(driverXbox.getRightX(),
+            OperatorConstants.RIGHT_X_DEADBAND),
+        driverXbox::getYButtonPressed,
+        driverXbox::getAButtonPressed,
+        driverXbox::getXButtonPressed,
+        driverXbox::getBButtonPressed);
 
     // Applies deadbands and inverts controls because joysticks
     // are back-right positive while robot
@@ -103,35 +114,47 @@ public class RobotContainer
     drivebase.setDefaultCommand(
         !RobotBase.isSimulation() ? driveFieldOrientedAnglularVelocity : driveFieldOrientedDirectAngleSim);
 
-        
   }
 
   /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the
-   * named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-   * {@link CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
-   * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight joysticks}.
+   * Use this method to define your trigger->command mappings. Triggers can be
+   * created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary predicate, or via the
+   * named factories in
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses
+   * for
+   * {@link CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
+   * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
+   * Flight joysticks}.
    */
-  private void configureBindings()
-  {
+  private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     new JoystickButton(driverXbox, 1).onTrue((new InstantCommand(drivebase::zeroGyro)));
     new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
     new JoystickButton(driverXbox,
-                       2).whileTrue(
-        Commands.deferredProxy(() -> drivebase.driveToPose(
-                                   new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
-                              ));
-//    new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
+        2).whileTrue(
+            Commands.deferredProxy(() -> drivebase.driveToPose(
+                new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))));
+    // new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
+    // InstantCommand(drivebase::lock, drivebase)));
 
-this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter(), new Subsystem[0]));
-this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter(), new Subsystem[0]));
-this.harvest.whileTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
-this.harvestStop.whileTrue(new InstantCommand(() -> this.shooter.harvestStop(), new Subsystem[0]));
-this.harvestReverse.whileTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
-
+    this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter(), new Subsystem[0]));
+    this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter(), new Subsystem[0]));
+    this.harvest.whileTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
+    this.harvestStop.whileTrue(new InstantCommand(() -> this.shooter.harvestStop(), new Subsystem[0]));
+    this.harvestReverse.whileTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(1), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(2), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(3), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(4), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(5), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(6), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(7), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(8), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(9), new Subsystem[0]));
   }
 
   /**
@@ -139,21 +162,18 @@ this.harvestReverse.whileTrue(new InstantCommand(() -> this.shooter.harvestRever
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand()
-  {
+  public Command getAutonomousCommand() {
 
     // An example command will be run in autonomous
     return drivebase.getAutonomousCommand("Test", true);
 
   }
 
-  public void setDriveMode()
-  {
-    //drivebase.setDefaultCommand();
+  public void setDriveMode() {
+    // drivebase.setDefaultCommand();
   }
 
-  public void setMotorBrake(boolean brake)
-  {
+  public void setMotorBrake(boolean brake) {
     drivebase.setMotorBrake(brake);
   }
 }
