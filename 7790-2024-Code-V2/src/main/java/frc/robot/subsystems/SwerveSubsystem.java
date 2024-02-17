@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.pathfinding.Vision;
+
 import java.io.File;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
@@ -284,11 +286,18 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    System.out.println (getPose().getX());
+    System.out.println (getPose().getY());
+
+     Pose2d pose = Vision.getPose();
+     if(pose != null)
+      resetOdometry(pose);
   }
 
   @Override
   public void simulationPeriodic()
   {
+    
   }
 
   /**
