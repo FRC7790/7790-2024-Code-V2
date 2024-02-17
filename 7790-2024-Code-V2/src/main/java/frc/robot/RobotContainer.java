@@ -50,11 +50,12 @@ public class RobotContainer {
   XboxController driverXbox = new XboxController(0);
   Joystick buttonBox = new Joystick(1);
 
-  private final JoystickButton startShooter = new JoystickButton(this.driverXbox, 5);
-  private final JoystickButton stopShooter = new JoystickButton(this.driverXbox, 6);
+  private final JoystickButton startShooter = new JoystickButton(this.driverXbox, 6);
+  private final JoystickButton stopShooter = new JoystickButton(this.driverXbox, 5);
   private final POVButton harvest = new POVButton(this.driverXbox, 0);
   private final POVButton harvestStop = new POVButton(this.driverXbox, -1);
   private final POVButton harvestReverse = new POVButton(this.driverXbox, 180);
+  private final JoystickButton shoot = new JoystickButton(this.driverXbox, 1);
   private final JoystickButton target1 = new JoystickButton(this.buttonBox, 1);
   private final JoystickButton target2 = new JoystickButton(this.buttonBox, 2);
   private final JoystickButton target3 = new JoystickButton(this.buttonBox, 3);
@@ -132,12 +133,12 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-    new JoystickButton(driverXbox, 1).onTrue((new InstantCommand(drivebase::zeroGyro)));
-    new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
-    new JoystickButton(driverXbox,
-        2).whileTrue(
-            Commands.deferredProxy(() -> drivebase.driveToPose(
-                new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))));
+    new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
+    //new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
+   // new JoystickButton(driverXbox,
+    //    2).whileTrue(
+    //        Commands.deferredProxy(() -> drivebase.driveToPose(
+    //            new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))));
     // new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
     // InstantCommand(drivebase::lock, drivebase)));
 
@@ -146,15 +147,17 @@ public class RobotContainer {
     this.harvest.whileTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
     this.harvestStop.whileTrue(new InstantCommand(() -> this.shooter.harvestStop(), new Subsystem[0]));
     this.harvestReverse.whileTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
+    this.shoot.whileTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
     this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(1), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(2), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(3), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(4), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(5), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(6), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(7), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(8), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(9), new Subsystem[0]));
+    this.target2.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(2), new Subsystem[0]));
+    this.target3.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(3), new Subsystem[0]));
+    this.target4.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(4), new Subsystem[0]));
+    this.target5.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(5), new Subsystem[0]));
+    this.target6.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(6), new Subsystem[0]));
+    this.target7.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(7), new Subsystem[0]));
+    this.target8.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(8), new Subsystem[0]));
+    this.target9.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(9), new Subsystem[0]));
+    
   }
 
   /**
