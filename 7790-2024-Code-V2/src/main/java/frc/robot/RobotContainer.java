@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.drivebase.AbsoluteDriveAdv;
-import frc.robot.commands.pathfinding.Pathfinder;
+import frc.robot.commands.pathfinding.ButtonMapping;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
@@ -56,6 +56,7 @@ public class RobotContainer {
   private final POVButton harvestStop = new POVButton(this.driverXbox, -1);
   private final POVButton harvestReverse = new POVButton(this.driverXbox, 180);
   private final JoystickButton shoot = new JoystickButton(this.driverXbox, 1);
+  private final JoystickButton indexStop = new JoystickButton(this.driverXbox, 1);
   private final JoystickButton target1 = new JoystickButton(this.buttonBox, 1);
   private final JoystickButton target2 = new JoystickButton(this.buttonBox, 2);
   private final JoystickButton target3 = new JoystickButton(this.buttonBox, 3);
@@ -144,19 +145,20 @@ public class RobotContainer {
 
     this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter(), new Subsystem[0]));
     this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter(), new Subsystem[0]));
-    this.harvest.whileTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
-    this.harvestStop.whileTrue(new InstantCommand(() -> this.shooter.harvestStop(), new Subsystem[0]));
-    this.harvestReverse.whileTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
-    this.shoot.whileTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(1), new Subsystem[0]));
-    this.target2.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(2), new Subsystem[0]));
-    this.target3.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(3), new Subsystem[0]));
-    this.target4.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(4), new Subsystem[0]));
-    this.target5.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(5), new Subsystem[0]));
-    this.target6.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(6), new Subsystem[0]));
-    this.target7.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(7), new Subsystem[0]));
-    this.target8.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(8), new Subsystem[0]));
-    this.target9.onTrue(new InstantCommand(() -> Pathfinder.driveToPose(9), new Subsystem[0]));
+    this.harvest.onTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
+    this.harvestStop.onTrue(new InstantCommand(() -> this.shooter.harvestStop(), new Subsystem[0]));
+    this.harvestReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
+    this.shoot.onTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
+    this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new Subsystem[0]));
+    this.target1.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(1)).schedule(), drivebase));
+    this.target2.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(2)).schedule(), drivebase));
+    this.target3.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(3)).schedule(), drivebase));
+    this.target4.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(4)).schedule(), drivebase));
+    this.target5.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(5)).schedule(), drivebase));
+    this.target6.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(6)).schedule(), drivebase));
+    this.target7.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(7)).schedule(), drivebase));
+    this.target8.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(8)).schedule(), drivebase));
+    this.target9.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(9)).schedule(), drivebase));
     
   }
 

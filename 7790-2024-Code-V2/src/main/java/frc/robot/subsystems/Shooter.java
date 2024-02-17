@@ -19,15 +19,17 @@ public class Shooter extends SubsystemBase
         this.intakeMotor = new CANSparkMax(33, CANSparkLowLevel.MotorType.kBrushless);
     }
     public void startShooter() {
-        shooterMotor1.set(-.3);
-        shooterMotor2.set(.4);
+        shooterMotor1.set(-.5);
+        shooterMotor2.set(.3);
+        indexMotor.set(.8);
     }
     public void stopShooter() {
         shooterMotor1.set(0);
         shooterMotor2.set(0);
+        indexMotor.set(0);
     }
     public void harvest() {
-        intakeMotor.set(.5);
+        intakeMotor.set(.4);
         indexMotor.set(.2);
     }
     public void harvestStop() {
@@ -35,9 +37,13 @@ public class Shooter extends SubsystemBase
         indexMotor.set(0);
     }
     public void harvestReverse() {
-        indexMotor.set(.1);
+        indexMotor.set(-.2);
+        intakeMotor.set(-.2);
     }
     public void shoot() {
-        indexMotor.set(.1);
+        intakeMotor.set(.8);
+    }
+    public void indexStop() {
+        intakeMotor.set(0);
     }
 }
