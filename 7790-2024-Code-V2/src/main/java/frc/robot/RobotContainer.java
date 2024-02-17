@@ -80,10 +80,10 @@ public class RobotContainer
     // left stick controls translation
     // right stick controls the desired angle NOT angular rotation
     Command driveFieldOrientedDirectAngle = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRightX(),
-        () -> driverXbox.getRightY());
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverXbox.getRightX(),
+        () -> -driverXbox.getRightY());
 
     // Applies deadbands and inverts controls because joysticks
     // are back-right positive while robot
@@ -91,17 +91,17 @@ public class RobotContainer
     // left stick controls translation
     // right stick controls the angular velocity of the robot
     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRawAxis(2));
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverXbox.getRawAxis(4));
 
     Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRawAxis(2));
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverXbox.getRawAxis(4));
 
     drivebase.setDefaultCommand(
-        !RobotBase.isSimulation() ? driveFieldOrientedDirectAngle : driveFieldOrientedDirectAngleSim);
+        !RobotBase.isSimulation() ? driveFieldOrientedAnglularVelocity : driveFieldOrientedDirectAngleSim);
 
         
   }
@@ -128,10 +128,9 @@ public class RobotContainer
 
 this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter(), new Subsystem[0]));
 this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter(), new Subsystem[0]));
-this.harvest.onTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
-this.harvestStop.onTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
-this.harvestReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
-
+this.harvest.whileTrue(new InstantCommand(() -> this.shooter.harvest(), new Subsystem[0]));
+this.harvestStop.whileTrue(new InstantCommand(() -> this.shooter.harvestStop(), new Subsystem[0]));
+this.harvestReverse.whileTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
 
   }
 
@@ -144,7 +143,7 @@ this.harvestReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse(
   {
 
     // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("ShootTest", true);
+    return drivebase.getAutonomousCommand("Test", true);
 
   }
 
