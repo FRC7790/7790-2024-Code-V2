@@ -19,8 +19,8 @@ public class Shooter extends SubsystemBase
         this.intakeMotor = new CANSparkMax(33, CANSparkLowLevel.MotorType.kBrushless);
     }
     public void startShooter() {
-        shooterMotor1.set(-.7);
-        shooterMotor2.set(.6);
+        shooterMotor1.set(-.3);
+        shooterMotor2.set(.4);
     }
     public void stopShooter() {
         shooterMotor1.set(0);

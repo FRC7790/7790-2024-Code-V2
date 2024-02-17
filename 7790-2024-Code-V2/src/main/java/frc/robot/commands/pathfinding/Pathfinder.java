@@ -74,6 +74,8 @@ public class Pathfinder {
                     // before attempting to rotate.
         );
 
+        pathfindingCommand.schedule();
+
     }
 
 }
