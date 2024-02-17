@@ -150,15 +150,15 @@ public class RobotContainer {
     this.harvestReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
     this.shoot.onTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
     this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new Subsystem[0]));
-    this.target1.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(1)).schedule(), drivebase));
-    this.target2.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(2)).schedule(), drivebase));
-    this.target3.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(3)).schedule(), drivebase));
-    this.target4.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(4)).schedule(), drivebase));
-    this.target5.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(5)).schedule(), drivebase));
-    this.target6.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(6)).schedule(), drivebase));
-    this.target7.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(7)).schedule(), drivebase));
-    this.target8.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(8)).schedule(), drivebase));
-    this.target9.onTrue(new InstantCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(9)).schedule(), drivebase));
+    this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
+    this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
+    this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
+    this.target4.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(4)));
+    this.target5.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(5)));
+    this.target6.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(6)));
+    this.target7.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
+    this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
+    this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
     
   }
 
