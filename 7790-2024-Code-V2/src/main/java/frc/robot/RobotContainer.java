@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -138,12 +138,14 @@ public class RobotContainer {
 
     new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
     //new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
-   // new JoystickButton(driverXbox,
-    //    2).whileTrue(
-    //        Commands.deferredProxy(() -> drivebase.driveToPose(
-    //            new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))));
-    // new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
-    // InstantCommand(drivebase::lock, drivebase)));
+   
+    new JoystickButton(driverXbox,
+       2).whileTrue(
+           Commands.deferredProxy(() -> drivebase.driveToPose(
+               new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))));
+   
+    /* new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
+    InstantCommand(drivebase::lock, drivebase))); */
 
     this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter(), new Subsystem[0]));
     this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter(), new Subsystem[0]));
@@ -154,6 +156,7 @@ public class RobotContainer {
     this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new Subsystem[0]));
     this.targetingMode.onTrue(new InstantCommand(() -> Vision.targetingOn(), new Subsystem[0]));
     this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
+    
     this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
     this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
     this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
