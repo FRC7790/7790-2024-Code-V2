@@ -11,6 +11,18 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class Vision {
+    public static boolean isTargeting = false;
+    public static Pose2d notePose;
+
+    public static void targetingOn(){
+
+        isTargeting = true;
+    }
+
+    public static void targetingOff(){
+
+        isTargeting = false;
+    }
 
     public static Pose2d getPose(){
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-shooter");
@@ -44,5 +56,18 @@ public class Vision {
            
            
         }
- 
+ public static void getNote(){
+        final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-object");
+        
+            double m_noteX = table.getEntry("tx").getDouble(0.0);
+            double m_noteY = table.getEntry("ty").getDouble(0.0);
+            String m_objType = table.getEntry("tclass").getString("");
+
+            Pose2d pose = new Pose2d(m_noteX, m_noteY, new Rotation2d(0));
+
+           notePose = pose;
+            
+           
+           
+        }
 }

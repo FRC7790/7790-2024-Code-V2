@@ -46,6 +46,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public        double      maximumSpeed = Units.feetToMeters(14.5);
 
+
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -232,10 +233,40 @@ public class SwerveSubsystem extends SubsystemBase
   public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier angularRotationX)
   {
     return run(() -> {
+
+      double error = 0;
+     
+      if(Vision.isTargeting && Vision.notePose != null)
+      {
+        double speed = 0.6;
+        double speed2 = 0.48;
+        double tolerance = 4;
+        double multiplier = 0.05;
+        double x = Vision.notePose.getX();
+        error = x * multiplier;
+
+        if(error > speed2)
+        {
+          error = speed2;
+        }
+        if(error < -speed)
+        {
+          error = -speed;
+        }
+       
+      }
       // Make the robot move
+
+      //System.out.println("ang" + angularRotationX.getAsDouble());
+      //System.out.println(angularRotationX);
+      // System.out.println();
+      double rot = angularRotationX.getAsDouble();
+      rot -= error;
+      
+
       swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble(), 3) * swerveDrive.getMaximumVelocity(),
                                           Math.pow(translationY.getAsDouble(), 3) * swerveDrive.getMaximumVelocity()),
-                        Math.pow(angularRotationX.getAsDouble(), 3) * swerveDrive.getMaximumAngularVelocity(),
+                        Math.pow(rot , 3) * swerveDrive.getMaximumAngularVelocity() ,
                         true,
                         false);
     });
@@ -286,12 +317,14 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    System.out.println (getPose().getX());
-    System.out.println (getPose().getY());
+     Vision.getNote();
 
      Pose2d pose = Vision.getPose();
      if(pose != null)
       resetOdometry(pose);
+
+    
+      
   }
 
   @Override

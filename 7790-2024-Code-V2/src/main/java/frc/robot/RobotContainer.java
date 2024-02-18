@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.drivebase.AbsoluteDriveAdv;
 import frc.robot.commands.pathfinding.ButtonMapping;
+import frc.robot.commands.pathfinding.Vision;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
@@ -66,6 +67,7 @@ public class RobotContainer {
   private final JoystickButton target7 = new JoystickButton(this.buttonBox, 7);
   private final JoystickButton target8 = new JoystickButton(this.buttonBox, 8);
   private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
+  private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
   Shooter shooter = new Shooter();
 
   /**
@@ -150,6 +152,8 @@ public class RobotContainer {
     this.harvestReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
     this.shoot.onTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
     this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new Subsystem[0]));
+    this.targetingMode.onTrue(new InstantCommand(() -> Vision.targetingOn(), new Subsystem[0]));
+    this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
     this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
     this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
     this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
