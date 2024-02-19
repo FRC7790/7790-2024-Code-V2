@@ -49,11 +49,12 @@ public class Pivot extends SubsystemBase
         
         this.pid = new PIDController(0.03, 0.0, 0.0);
 
-        //this.pivotEncoder = new CANcoder(00);
-       // this.pivotMotor1 = new CANSparkMax(00, CANSparkLowLevel.MotorType.kBrushless);
-        //this.pivotMotor2 = new CANSparkMax(00, CANSparkLowLevel.MotorType.kBrushless);
+        this.pivotEncoder = new CANcoder(60);
+        this.pivotMotor1 = new CANSparkMax(61, CANSparkLowLevel.MotorType.kBrushless);
+        this.pivotMotor2 = new CANSparkMax(62, CANSparkLowLevel.MotorType.kBrushless);
 
-     //   this.pivotMotor2.follow(this.pivotMotor1, true);
+        this.pivotMotor2.follow(this.pivotMotor1, true);
+
     }
     
     public void setDesiredAngle(final float desiredAngle) {
@@ -63,6 +64,8 @@ public class Pivot extends SubsystemBase
    /*  public void moveAmount(final float amount) {
         this.setDesiredAngle(this.desiredAngle + amount);
     } */
+
+    //manual move? ^
     
     public void setSpeakerScore() {
         this.setDesiredAngle(this.speakerScoreAngle + distanceValue);
@@ -70,7 +73,7 @@ public class Pivot extends SubsystemBase
     
     //Speaker Score needs to be adjusted using another value for distance.
     //The starting point should be its highest angle.
-    
+
     public void setHumanPickup() {
         this.setDesiredAngle(this.humanPickupAngle);
     }
@@ -89,17 +92,17 @@ public class Pivot extends SubsystemBase
     
 
 
-/*     @Override
+     @Override
     public void periodic() {
         if (!this.isInitialized) {
             this.desiredAngle = (float)(this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset);
             this.isInitialized = true;
         }
-        final float maxoutput = 0.5f;
+        final float maxoutput = 0.2f;
         final double output = MathUtil.clamp(this.pid.calculate(this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset, this.desiredAngle), -maxoutput, maxoutput);
         this.pivotMotor1.set(-output);
         SmartDashboard.putNumber("Arm Angle", this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset);
         SmartDashboard.putNumber("Desired Angle", this.desiredAngle);
         SmartDashboard.putNumber("output", output);
-    }*/
+    }
 }

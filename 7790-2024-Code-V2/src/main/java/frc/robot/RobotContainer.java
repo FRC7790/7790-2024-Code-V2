@@ -74,6 +74,8 @@ public class RobotContainer {
   private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
   private final POVButton GroundPickupExtension = new POVButton(this.driverXbox, 90);
   private final POVButton HomeExtension = new POVButton(this.driverXbox, 90);
+  private final POVButton HomePivot = new POVButton(this.driverXbox, 270);
+  private final POVButton GroundPickupPivot = new POVButton(this.driverXbox, 270);
   Shooter shooter = new Shooter();
   Pivot pivot = new Pivot();
   Extender extender = new Extender();
@@ -163,6 +165,8 @@ public class RobotContainer {
     this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
     this.GroundPickupExtension.onTrue(new InstantCommand(() -> this.extender.setGroundPose(), new Subsystem[0]));
     this.HomeExtension.onFalse(new InstantCommand(() -> this.extender.setHomeState(), new Subsystem[0]));
+    this.GroundPickupPivot.onTrue(new InstantCommand(() -> this.pivot.setGroundPickup(), new Subsystem[0]));
+    this.HomePivot.onFalse(new InstantCommand(() -> this.pivot.setHomeState(), new Subsystem[0]));
     this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
     this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
     this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
