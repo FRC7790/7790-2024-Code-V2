@@ -22,11 +22,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.autos.GroundPickupExtension;
 import frc.robot.commands.drivebase.AbsoluteDriveAdv;
 import frc.robot.commands.pathfinding.ButtonMapping;
 import frc.robot.commands.pathfinding.Vision;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.Pivot;
+
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
 
@@ -69,8 +72,10 @@ public class RobotContainer {
   private final JoystickButton target8 = new JoystickButton(this.buttonBox, 8);
   private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
   private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
+  private final POVButton GroundPickupExtension = new POVButton(this.driverXbox, 90);
   Shooter shooter = new Shooter();
-
+  Pivot pivot = new Pivot();
+  Extender extender = new Extender();
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -142,7 +147,7 @@ public class RobotContainer {
    new JoystickButton(driverXbox,
        2).whileTrue(
            Commands.deferredProxy(() -> drivebase.driveToPose(
-               new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))));
+               new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0))).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming)));
 
     //new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
     //InstantCommand(drivebase::lock, drivebase)));
@@ -156,6 +161,7 @@ public class RobotContainer {
     this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new Subsystem[0]));
     this.targetingMode.onTrue(new InstantCommand(() -> Vision.targetingOn(), new Subsystem[0]));
     this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
+    this.GroundPickupExtension.whileTrue(new GroundPickupExtension(extender, pivot, shooter));
     this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
     this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
     this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));

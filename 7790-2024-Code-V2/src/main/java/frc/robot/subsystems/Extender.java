@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.MathUtil;
 import com.revrobotics.CANSparkLowLevel;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -13,7 +15,7 @@ public class Extender extends SubsystemBase
 {
     private CANSparkMax extenderMotor1;
     private CANSparkMax extenderMotor2;
-    private float desiredPose;
+    private float desiredPosition;
     private float poseMax;
     private float poseMin;
     private float speakerScorePose;
@@ -25,74 +27,55 @@ public class Extender extends SubsystemBase
     
     private float movementPose;
     //This should be used while arm is extending/retracting to clear frame.
-
+    PIDController pid;
     public float distanceValue;
-    public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
     private RelativeEncoder extender1encoder;
-    private SparkPIDController m_pidController;
 
     
     public Extender() {
-        this.desiredPose = 0.0f;
-        this.poseMax = 35.0f;
+        this.desiredPosition = 0.0f;
+        this.poseMax = 10.0f;
         this.poseMin = 0.0f;
-        this.humanPickupPose = 20.0f;
-        this.groundPickupPose = -24.5f;
-        this.movementPose = 0.0f;
+        this.humanPickupPose = 10.0f;
+        this.groundPickupPose = 5.0f;
         this.trapScorePose = 0.0f;
         this.speakerScorePose = 0.0f;
         this.homeStatePose = 0.0f;
 
-        this.extenderMotor1 = new CANSparkMax(00, CANSparkLowLevel.MotorType.kBrushless);
-        this.extenderMotor2 = new CANSparkMax(00, CANSparkLowLevel.MotorType.kBrushless);
+        this.extenderMotor1 = new CANSparkMax(40, CANSparkLowLevel.MotorType.kBrushless);
+        this.extenderMotor2 = new CANSparkMax(41, CANSparkLowLevel.MotorType.kBrushless);
         
         this.extenderMotor2.follow(this.extenderMotor1, true);
 
         extender1encoder = extenderMotor1.getEncoder();
 
-        //Need to add logic to keep motors in sync with each other!!!
-        m_pidController = extenderMotor1.getPIDController();
-        // PID coefficients
-        kP = 0.1;
-        kI = 1e-4;
-        kD = 1;
-        kIz = 0;
-        kFF = 0;
-        kMaxOutput = 1;
-        kMinOutput = -1;
-    
-        // set PID coefficients
-        m_pidController.setP(kP);
-        m_pidController.setI(kI);
-        m_pidController.setD(kD);
-        m_pidController.setIZone(kIz);
-        m_pidController.setFF(kFF);
-        m_pidController.setOutputRange(kMinOutput, kMaxOutput);
-    
+        this.pid = new PIDController(0.03, 0.0, 0.0);
     }
     
-    public void setDesiredPose(final float desiredPose) {
-        this.desiredPose = (desiredPose);
+    public void setDesiredPosition(final float desiredPose) {
+        this.desiredPosition = (desiredPose);
     }
 
     public void setHumanPickup() {
-        this.setDesiredPose(this.humanPickupPose);
-        m_pidController.setReference(desiredPose, CANSparkMax.ControlType.kPosition);
+        this.setDesiredPosition(this.humanPickupPose);       
     }
-    
+
+    //lavantense ovegente
     public void setGroundPose() {
-        this.setDesiredPose(this.groundPickupPose);
-        m_pidController.setReference(desiredPose, CANSparkMax.ControlType.kPosition);
+        this.setDesiredPosition(this.groundPickupPose);       
     }
-    
-    public void setMovementPose() {
-        this.setDesiredPose(this.movementPose);
-        m_pidController.setReference(desiredPose, CANSparkMax.ControlType.kPosition);
-    }
-    
     public void setHomeState() {
-        this.setDesiredPose(this.homeStatePose);
-        m_pidController.setReference(desiredPose, CANSparkMax.ControlType.kPosition);
+        this.setDesiredPosition(this.homeStatePose);
     }
+    @Override
+    public void periodic() {
+
+        final float maxoutput = 0.05f;
+        final double output = MathUtil.clamp(this.pid.calculate(extender1encoder.getPosition(),this.desiredPosition), -maxoutput, maxoutput);
+        this.extenderMotor1.set(output);
+
+        System.out.println(desiredPosition);
+    }
+
 }

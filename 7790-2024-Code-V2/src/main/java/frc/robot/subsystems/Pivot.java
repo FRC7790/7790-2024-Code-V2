@@ -49,11 +49,11 @@ public class Pivot extends SubsystemBase
         
         this.pid = new PIDController(0.03, 0.0, 0.0);
 
-        this.pivotEncoder = new CANcoder(00);
-        this.pivotMotor1 = new CANSparkMax(00, CANSparkLowLevel.MotorType.kBrushless);
-        this.pivotMotor2 = new CANSparkMax(00, CANSparkLowLevel.MotorType.kBrushless);
+        //this.pivotEncoder = new CANcoder(00);
+       // this.pivotMotor1 = new CANSparkMax(00, CANSparkLowLevel.MotorType.kBrushless);
+        //this.pivotMotor2 = new CANSparkMax(00, CANSparkLowLevel.MotorType.kBrushless);
 
-        this.pivotMotor2.follow(this.pivotMotor1, true);
+     //   this.pivotMotor2.follow(this.pivotMotor1, true);
     }
     
     public void setDesiredAngle(final float desiredAngle) {
@@ -70,7 +70,7 @@ public class Pivot extends SubsystemBase
     
     //Speaker Score needs to be adjusted using another value for distance.
     //The starting point should be its highest angle.
-
+    
     public void setHumanPickup() {
         this.setDesiredAngle(this.humanPickupAngle);
     }
@@ -89,7 +89,7 @@ public class Pivot extends SubsystemBase
     
 
 
-    @Override
+/*     @Override
     public void periodic() {
         if (!this.isInitialized) {
             this.desiredAngle = (float)(this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset);
@@ -101,5 +101,5 @@ public class Pivot extends SubsystemBase
         SmartDashboard.putNumber("Arm Angle", this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset);
         SmartDashboard.putNumber("Desired Angle", this.desiredAngle);
         SmartDashboard.putNumber("output", output);
-    }
+    }*/
 }

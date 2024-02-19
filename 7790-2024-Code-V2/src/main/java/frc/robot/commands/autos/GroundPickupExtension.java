@@ -11,7 +11,7 @@ import frc.robot.subsystems.Shooter;
 
 public class GroundPickupExtension extends SequentialCommandGroup
 {
-    public GroundPickupExtension(final Pivot s_Pivot, final Extender s_Extender, final Shooter s_Shooter) {
+    public GroundPickupExtension(final Extender s_Extender, final Pivot s_Pivot, final Shooter s_Shooter) {
         super(new Command[0]);
         this.addCommands(new InstantCommand(() -> s_Pivot.setMovementAngle(), new Subsystem[0]), 
 
