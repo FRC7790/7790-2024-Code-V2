@@ -4,6 +4,8 @@ import edu.wpi.first.math.MathUtil;
 import com.revrobotics.CANSparkLowLevel;
 import edu.wpi.first.math.controller.PIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Extender extends SubsystemBase
@@ -19,11 +21,14 @@ public class Extender extends SubsystemBase
     private float groundPickupPose;
     private float trapScorePose;
     private float homeStatePose;
-
+    
     private float movementPose;
     //This should be used while arm is extending/retracting to clear frame.
 
     public float distanceValue;
+
+    private RelativeEncoder extender1encoder;
+    private RelativeEncoder extender2encoder;
 
     PIDController pid;
     
@@ -45,6 +50,13 @@ public class Extender extends SubsystemBase
         
         this.extenderMotor2.follow(this.extenderMotor1, true);
 
+        extender1encoder = extenderMotor1.getEncoder();
+        extender2encoder = extenderMotor2.getEncoder();
+
+        //Need to add logic to keep motors in sync with each other!!!
+
+        //Each motor revolution will produce 42 pulses on the encoder, allowing
+        //for us to extrapolate the information to determine extension lengths.
     }
     
     public void setDesiredPose(final float desiredPose) {
