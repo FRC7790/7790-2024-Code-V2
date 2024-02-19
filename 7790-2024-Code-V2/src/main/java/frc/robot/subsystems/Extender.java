@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -24,13 +23,11 @@ public class Extender extends SubsystemBase
     private float groundPickupPose;
     private float trapScorePose;
     private float homeStatePose;
-    
-    private float movementPose;
-    //This should be used while arm is extending/retracting to clear frame.
-    PIDController pid;
-    public float distanceValue;
 
-    private RelativeEncoder extender1encoder;
+    PIDController pid;
+
+    private RelativeEncoder extender1Encoder;
+    private RelativeEncoder extender2Encoder;
 
     
     public Extender() {
@@ -38,7 +35,7 @@ public class Extender extends SubsystemBase
         this.poseMax = 10.0f;
         this.poseMin = 0.0f;
         this.humanPickupPose = 10.0f;
-        this.groundPickupPose = 5.0f;
+        this.groundPickupPose = 2.0f;
         this.trapScorePose = 0.0f;
         this.speakerScorePose = 0.0f;
         this.homeStatePose = 0.0f;
@@ -46,11 +43,14 @@ public class Extender extends SubsystemBase
         this.extenderMotor1 = new CANSparkMax(40, CANSparkLowLevel.MotorType.kBrushless);
         this.extenderMotor2 = new CANSparkMax(41, CANSparkLowLevel.MotorType.kBrushless);
         
-        this.extenderMotor2.follow(this.extenderMotor1, true);
 
-        extender1encoder = extenderMotor1.getEncoder();
+        extender1Encoder = extenderMotor1.getEncoder();
+        extender1Encoder.setPosition(0);
 
-        this.pid = new PIDController(0.03, 0.0, 0.0);
+        extender2Encoder = extenderMotor2.getEncoder();
+        extender2Encoder.setPosition(0);
+
+        this.pid = new PIDController(0.07, 0.0, 0.0);
     }
     
     public void setDesiredPosition(final float desiredPose) {
@@ -60,8 +60,6 @@ public class Extender extends SubsystemBase
     public void setHumanPickup() {
         this.setDesiredPosition(this.humanPickupPose);       
     }
-
-    //lavantense ovegente
     public void setGroundPose() {
         this.setDesiredPosition(this.groundPickupPose);       
     }
@@ -71,16 +69,13 @@ public class Extender extends SubsystemBase
     @Override
     public void periodic() {
 
-        final float maxoutput = 0.5f;
-        final double output = MathUtil.clamp(this.pid.calculate(extender1encoder.getPosition(),this.desiredPosition), -maxoutput, maxoutput);
+        final float maxoutput = 0.12f;
+ 
+        final double output = MathUtil.clamp(this.pid.calculate(extender1Encoder.getPosition(),this.desiredPosition), -maxoutput, maxoutput);
         extenderMotor1.set(output);
 
-        System.out.println(output);
-        System.out.println();
-        System.out.println(desiredPosition);
-        System.out.println();
-        System.out.println(extender1encoder.getPosition());
-
+        final double output2 = MathUtil.clamp(this.pid.calculate(extender2Encoder.getPosition(), -(this.desiredPosition)), -maxoutput, maxoutput);
+        extenderMotor2.set(output2);
     }
 
 }
