@@ -158,7 +158,7 @@ public class SwerveSubsystem extends SubsystemBase
    * @param pose Target {@link Pose2d} to go to.
    * @return PathFinding command
    */
-  public Command driveToPose(Pose2d pose)
+  public Command driveToPose(Pose2d targetPose)
   {
     // Create the constraints to use while pathfinding
     PathConstraints constraints = new PathConstraints(
@@ -169,7 +169,7 @@ public class SwerveSubsystem extends SubsystemBase
 
     // Since AutoBuilder is configured, we can use it to build pathfinding commands
     return AutoBuilder.pathfindToPose(
-        pose,
+        targetPose,
         constraints,
         0.0, // Goal end velocity in meters/sec
         0.0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
