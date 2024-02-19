@@ -73,6 +73,7 @@ public class RobotContainer {
   private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
   private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
   private final POVButton GroundPickupExtension = new POVButton(this.driverXbox, 90);
+  private final POVButton HomeExtension = new POVButton(this.driverXbox, 270);
   Shooter shooter = new Shooter();
   Pivot pivot = new Pivot();
   Extender extender = new Extender();
@@ -158,10 +159,10 @@ public class RobotContainer {
     this.harvestStop.onTrue(new InstantCommand(() -> this.shooter.harvestStop(), new Subsystem[0]));
     this.harvestReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
     this.shoot.onTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
-    this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new Subsystem[0]));
     this.targetingMode.onTrue(new InstantCommand(() -> Vision.targetingOn(), new Subsystem[0]));
     this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
-    this.GroundPickupExtension.whileTrue(new GroundPickupExtension(extender, pivot, shooter));
+    this.GroundPickupExtension.whileTrue(new InstantCommand(() -> this.extender.setGroundPose(), new Subsystem[0]));
+    this.HomeExtension.whileTrue(new InstantCommand(() -> this.extender.setHomeState(), new Subsystem[0]));
     this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
     this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
     this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));

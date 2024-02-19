@@ -71,11 +71,16 @@ public class Extender extends SubsystemBase
     @Override
     public void periodic() {
 
-        final float maxoutput = 0.05f;
+        final float maxoutput = 0.5f;
         final double output = MathUtil.clamp(this.pid.calculate(extender1encoder.getPosition(),this.desiredPosition), -maxoutput, maxoutput);
-        this.extenderMotor1.set(output);
+        extenderMotor1.set(output);
 
+        System.out.println(output);
+        System.out.println();
         System.out.println(desiredPosition);
+        System.out.println();
+        System.out.println(extender1encoder.getPosition());
+
     }
 
 }
