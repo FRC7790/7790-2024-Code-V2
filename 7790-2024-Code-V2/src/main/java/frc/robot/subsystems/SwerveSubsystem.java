@@ -240,7 +240,6 @@ public class SwerveSubsystem extends SubsystemBase
       {
         double speed = 0.6;
         double speed2 = 0.48;
-        double tolerance = 4;
         double multiplier = 0.05;
         double x = Vision.notePose.getX();
         error = x * multiplier;
