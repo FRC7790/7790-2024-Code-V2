@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -61,7 +62,7 @@ public class RobotContainer {
   private final POVButton harvestStop = new POVButton(this.driverXbox, -1);
   private final POVButton harvestReverse = new POVButton(this.driverXbox, 180);
   private final JoystickButton shoot = new JoystickButton(this.driverXbox, 1);
-  private final JoystickButton indexStop = new JoystickButton(this.driverXbox, 1);
+  //private final JoystickButton indexStop = new JoystickButton(this.driverXbox, 1);
   private final JoystickButton target1 = new JoystickButton(this.buttonBox, 1);
   private final JoystickButton target2 = new JoystickButton(this.buttonBox, 2);
   private final JoystickButton target3 = new JoystickButton(this.buttonBox, 3);
@@ -70,7 +71,8 @@ public class RobotContainer {
   private final JoystickButton target6 = new JoystickButton(this.buttonBox, 6);
   private final JoystickButton target7 = new JoystickButton(this.buttonBox, 7);
   private final JoystickButton target8 = new JoystickButton(this.buttonBox, 8);
-  private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
+  //private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
+  private final JoystickButton target9 = new JoystickButton(this.driverXbox, 2);
   private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
   private final POVButton GroundPickupExtension = new POVButton(this.driverXbox, 90);
   private final POVButton HomeExtension = new POVButton(this.driverXbox, 90);
@@ -147,10 +149,13 @@ public class RobotContainer {
 
     new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
     //new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
-   new JoystickButton(driverXbox,
-       2).whileTrue(
-           Commands.deferredProxy(() -> drivebase.driveToPose(
-               new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0))).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming)));
+
+
+   //new JoystickButton(driverXbox,
+    //   2).whileTrue(
+    //       Commands.deferredProxy(() -> drivebase.driveToPose(
+    //           new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0))).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming)));
+
 
     //new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
     //InstantCommand(drivebase::lock, drivebase)));
@@ -175,7 +180,7 @@ public class RobotContainer {
     this.target6.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(6)));
     this.target7.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
     this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
-    this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
+    this.target9.onTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(9))));
     
   }
 
