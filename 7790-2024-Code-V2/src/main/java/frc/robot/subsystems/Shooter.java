@@ -17,9 +17,7 @@ public class Shooter extends SubsystemBase
     private CANSparkMax intakeMotor;
     private CANSparkMax indexMotor;
     private RelativeEncoder shooterMotor1Encoder;
-    private RelativeEncoder shooterMotor2Encoder;
     private RelativeEncoder shooterMotor3Encoder;
-    private RelativeEncoder shooterMotor4Encoder;
     private RelativeEncoder intakeMotorEncoder;
     private RelativeEncoder indexMotorEncoder;
     private float desiredVelShooterMotor1;
@@ -38,15 +36,15 @@ public class Shooter extends SubsystemBase
 
         this.shooterMotor1 = new CANSparkMax(30, CANSparkLowLevel.MotorType.kBrushless);
         this.shooterMotor2 = new CANSparkMax(31, CANSparkLowLevel.MotorType.kBrushless);
-        this.indexMotor = new CANSparkMax(32, CANSparkLowLevel.MotorType.kBrushless);
-        this.intakeMotor = new CANSparkMax(33, CANSparkLowLevel.MotorType.kBrushless);
+        this.shooterMotor3 = new CANSparkMax(32, CANSparkLowLevel.MotorType.kBrushless);
+        this.shooterMotor4 = new CANSparkMax(33, CANSparkLowLevel.MotorType.kBrushless);
+        this.indexMotor = new CANSparkMax(34, CANSparkLowLevel.MotorType.kBrushless);
+        this.intakeMotor = new CANSparkMax(35, CANSparkLowLevel.MotorType.kBrushless);
         
         this.pid = new PIDController(0.0001, 0.0, 0.0);
 
         shooterMotor1Encoder = shooterMotor1.getEncoder();
-        shooterMotor2Encoder = shooterMotor2.getEncoder();
         shooterMotor3Encoder = shooterMotor3.getEncoder();
-        shooterMotor4Encoder = shooterMotor4.getEncoder();
         intakeMotorEncoder = intakeMotor.getEncoder();
         indexMotorEncoder = indexMotor.getEncoder();
         
