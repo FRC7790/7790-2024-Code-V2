@@ -172,24 +172,15 @@ public class RobotContainer {
     this.HomeExtension.onFalse(new InstantCommand(() -> this.extender.setHomeState(), new Subsystem[0]));
     this.GroundPickupPivot.onTrue(new InstantCommand(() -> this.pivot.setGroundPickup(), new Subsystem[0]));
     this.HomePivot.onFalse(new InstantCommand(() -> this.pivot.setHomeState(), new Subsystem[0]));
-    //this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
-    //this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
-    //this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
-    //this.target4.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(4)));
-    //this.target5.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(5)));
-    //this.target6.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(6)));
-    //this.target7.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
-    //this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
-    //this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
-    this.target1.whileTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(1))));
-    this.target2.whileTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(2))));
-    this.target3.whileTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(3))));
-    this.target4.whileTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(4))));
-    this.target5.whileTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(5))));
-    this.target6.whileTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(6))));
-    this.target7.whileTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(7))));
-    this.target8.whileTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(8))));
-    this.target9.whileTrue(new RunCommand(() -> drivebase.driveToPose(ButtonMapping.buttonToPose(9))));
+    this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
+    this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
+    this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
+    this.target4.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(4)));
+    this.target5.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(5)));
+    this.target6.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(6)));
+    this.target7.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
+    this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
+    this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
   }
 
   /**
