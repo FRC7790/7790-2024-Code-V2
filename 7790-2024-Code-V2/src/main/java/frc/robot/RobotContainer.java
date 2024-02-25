@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.autos.GroundPickupExtension;
+//import frc.robot.commands.autos.GroundPickupExtension;
 import frc.robot.commands.drivebase.AbsoluteDriveAdv;
 import frc.robot.commands.pathfinding.ButtonMapping;
 import frc.robot.commands.pathfinding.Vision;
@@ -62,7 +62,7 @@ public class RobotContainer {
   private final POVButton harvestStop = new POVButton(this.driverXbox, -1);
   private final POVButton harvestReverse = new POVButton(this.driverXbox, 180);
   private final JoystickButton shoot = new JoystickButton(this.driverXbox, 1);
-  //private final JoystickButton indexStop = new JoystickButton(this.driverXbox, 1);
+  private final JoystickButton indexStop = new JoystickButton(this.driverXbox, 1);
   private final JoystickButton target1 = new JoystickButton(this.buttonBox, 1);
   private final JoystickButton target2 = new JoystickButton(this.buttonBox, 2);
   private final JoystickButton target3 = new JoystickButton(this.buttonBox, 3);
@@ -71,8 +71,7 @@ public class RobotContainer {
   private final JoystickButton target6 = new JoystickButton(this.buttonBox, 6);
   private final JoystickButton target7 = new JoystickButton(this.buttonBox, 7);
   private final JoystickButton target8 = new JoystickButton(this.buttonBox, 8);
-  //private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
-  private final JoystickButton target9 = new JoystickButton(this.driverXbox, 2);
+  private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
   private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
   private final POVButton GroundPickupExtension = new POVButton(this.driverXbox, 90);
   private final POVButton HomeExtension = new POVButton(this.driverXbox, 90);
@@ -170,6 +169,7 @@ public class RobotContainer {
     this.harvestStop.onTrue(new InstantCommand(() -> this.shooter.harvestStop(), new Subsystem[0]));
     this.harvestReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
     this.shoot.onTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
+    this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new Subsystem[0]));
     this.targetingMode.onTrue(new InstantCommand(() -> Vision.targetingOn(), new Subsystem[0]));
     this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
     this.GroundPickupExtension.onTrue(new InstantCommand(() -> this.extender.setGroundPose(), new Subsystem[0]));
@@ -186,7 +186,9 @@ public class RobotContainer {
     this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
     this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
 
-    this.pivot.setDefaultCommand(new InstantCommand(() -> this.pivot.moveAmount((float) this.driverXbox.getRawAxis(5))));
+    //this.extender.setDefaultCommand(new InstantCommand(() -> this.extender.extendAmount((float) -this.driverXbox.getRawAxis(5)), extender));
+    this.pivot.setDefaultCommand(new InstantCommand(() -> this.pivot.moveAmount((float) -this.driverXbox.getRawAxis(5)), pivot));
+
   }
 
   /**

@@ -1,4 +1,4 @@
-package frc.robot.commands.autos;
+/* package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -22,4 +22,4 @@ public class GroundPickupExtension extends SequentialCommandGroup
         new WaitCommand(1.0),
         new InstantCommand(() -> s_Shooter.harvest(), new Subsystem[0]));
     }
-}
+} */

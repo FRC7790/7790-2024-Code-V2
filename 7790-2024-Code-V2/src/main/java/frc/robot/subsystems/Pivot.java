@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -6,6 +6,8 @@ import com.revrobotics.CANSparkLowLevel;
 import edu.wpi.first.math.controller.PIDController;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pivot extends SubsystemBase
@@ -49,10 +51,15 @@ public class Pivot extends SubsystemBase
         
         this.pid = new PIDController(0.03, 0.0, 0.0);
 
-        this.pivotEncoder = new CANcoder(60);
-        this.pivotMotor1 = new CANSparkMax(61, CANSparkLowLevel.MotorType.kBrushless);
-        this.pivotMotor2 = new CANSparkMax(62, CANSparkLowLevel.MotorType.kBrushless);
+        this.pivotEncoder = new CANcoder(51);
+        this.pivotMotor1 = new CANSparkMax(52, CANSparkLowLevel.MotorType.kBrushless);
+        this.pivotMotor2 = new CANSparkMax(53, CANSparkLowLevel.MotorType.kBrushless);
 
+        this.pivotMotor1.restoreFactoryDefaults();
+        this.pivotMotor1.setIdleMode(IdleMode.kBrake);
+
+        this.pivotMotor2.restoreFactoryDefaults();
+        this.pivotMotor2.setIdleMode(IdleMode.kBrake);
         this.pivotMotor2.follow(this.pivotMotor1, true);
 
     }
@@ -105,4 +112,4 @@ public class Pivot extends SubsystemBase
         SmartDashboard.putNumber("Desired Angle", this.desiredAngle);
         SmartDashboard.putNumber("output", output);
     }
-}
+} 

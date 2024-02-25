@@ -1,4 +1,4 @@
-package frc.robot.commands.autos;
+/* package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -21,4 +21,4 @@ public class HomeExtension extends SequentialCommandGroup
         
         new InstantCommand(() -> s_Pivot.setMovementAngle(), new Subsystem[0]));
     }
-}
+} */
