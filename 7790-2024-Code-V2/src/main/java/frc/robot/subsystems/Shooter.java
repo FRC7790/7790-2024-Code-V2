@@ -52,18 +52,18 @@ public class Shooter extends SubsystemBase
       
     }
     public void startShooter() {
-        shooterMotor1.set(.5);
-        shooterMotor3.set(.5);
+        shooterMotor1.set(.1);
+        shooterMotor3.set(.1);
     }
     public void stopShooter() {
         shooterMotor1.set(0);
         shooterMotor3.set(0);
     }
     public void harvest() {
-        if(isTriggered == false) {
-            
-        intakeMotor.set(.4);
-        indexMotor.set(.3);
+        if(isTriggered == true) {
+
+        intakeMotor.set(.1);
+        indexMotor.set(.1);
         } else {
         intakeMotor.set(0);
         indexMotor.set(0);
@@ -75,11 +75,11 @@ public class Shooter extends SubsystemBase
         indexMotor.set(0);
     }
     public void harvestReverse() {
-        intakeMotor.set(-.2);
-        indexMotor.set(-.2);
+        intakeMotor.set(-.1);
+        indexMotor.set(-.1);
     }
     public void shoot() {
-        indexMotor.set(.4);
+        indexMotor.set(.1);
     }
       public void indexStop() {
         intakeMotor.set(0);

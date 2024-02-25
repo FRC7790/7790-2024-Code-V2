@@ -60,6 +60,7 @@ public class Pivot extends SubsystemBase
 
         this.pivotMotor2.restoreFactoryDefaults();
         this.pivotMotor2.setIdleMode(IdleMode.kBrake);
+        
         this.pivotMotor2.follow(this.pivotMotor1, true);
 
     }
