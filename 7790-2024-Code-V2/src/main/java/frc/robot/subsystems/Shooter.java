@@ -6,6 +6,7 @@ import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase
@@ -24,6 +25,10 @@ public class Shooter extends SubsystemBase
     private float desiredVelShooterMotor3;
     private float desiredVelIntakeMotor;
     private float desiredVelIndexMotor;
+
+    private Boolean isTriggered;
+    DigitalInput noteSensor = new DigitalInput(9);
+
     PIDController pid;
 
     public Shooter() {
@@ -65,8 +70,14 @@ public class Shooter extends SubsystemBase
         desiredVelIndexMotor = 0f;
     }
     public void harvest() {
+        if(isTriggered == false) {
         desiredVelIntakeMotor = 2000f;
         desiredVelIndexMotor = 2100f;
+        } else {
+        desiredVelIntakeMotor = 0f;
+        desiredVelIndexMotor = 0f;
+        }
+        
     }
     public void harvestStop() {
         desiredVelIntakeMotor = 0f;
@@ -101,5 +112,11 @@ public class Shooter extends SubsystemBase
 
         final double output4 = MathUtil.clamp(this.pid.calculate(indexMotorEncoder.getVelocity(), this.desiredVelIndexMotor), -indexMaxoutput, indexMaxoutput);
         indexMotor.set(output4);
+
+        if(!noteSensor.get()){
+            isTriggered = false;
+        } else {
+            isTriggered = true;
+        }
     }
 }
