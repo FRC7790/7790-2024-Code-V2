@@ -61,14 +61,14 @@ public class Pivot extends SubsystemBase
         this.desiredAngle = (float)MathUtil.clamp(desiredAngle, this.angleMin, this.angleMax);
     }
     
-   /*  public void moveAmount(final float amount) {
+     public void moveAmount(final float amount) {
         this.setDesiredAngle(this.desiredAngle + amount);
-    } */
+     }
 
     //manual move? ^
     
     public void setSpeakerScore() {
-        this.setDesiredAngle(this.speakerScoreAngle + distanceValue);
+        this.setDesiredAngle(this.speakerScoreAngle);
     }
     
     //Speaker Score needs to be adjusted using another value for distance.
@@ -98,7 +98,7 @@ public class Pivot extends SubsystemBase
             this.desiredAngle = (float)(this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset);
             this.isInitialized = true;
         }
-        final float maxoutput = 0.2f;
+        final float maxoutput = 0.05f;
         final double output = MathUtil.clamp(this.pid.calculate(this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset, this.desiredAngle), -maxoutput, maxoutput);
         this.pivotMotor1.set(-output);
         SmartDashboard.putNumber("Arm Angle", this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset);

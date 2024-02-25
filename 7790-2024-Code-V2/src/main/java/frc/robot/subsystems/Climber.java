@@ -69,7 +69,7 @@ public class Climber extends SubsystemBase
     @Override
     public void periodic() {
 
-        final float maxoutput = 0.12f;
+        final float maxoutput = 0.05f;
         final double output = MathUtil.clamp(this.pid.calculate(climber1Encoder.getPosition(),this.desiredPosition), -maxoutput, maxoutput);
         climberMotor1.set(output);
 

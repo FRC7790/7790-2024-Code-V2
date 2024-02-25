@@ -78,9 +78,13 @@ public class RobotContainer {
   private final POVButton HomeExtension = new POVButton(this.driverXbox, 90);
   private final POVButton HomePivot = new POVButton(this.driverXbox, 270);
   private final POVButton GroundPickupPivot = new POVButton(this.driverXbox, 270);
+
+  private final 
+  
   Shooter shooter = new Shooter();
   Pivot pivot = new Pivot();
   Extender extender = new Extender();
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -181,6 +185,8 @@ public class RobotContainer {
     this.target7.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
     this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
     this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
+
+    this.pivot.setDefaultCommand(new InstantCommand(() -> this.pivot.moveAmount((float) this.driverXbox.getRawAxis(5))));
   }
 
   /**
