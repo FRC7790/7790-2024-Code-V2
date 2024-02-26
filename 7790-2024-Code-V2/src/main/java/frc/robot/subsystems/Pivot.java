@@ -18,8 +18,8 @@ public class Pivot extends SubsystemBase
 
     private boolean isInitialized;
 
+    private float angleOffset = 180;
     private float desiredAngle;
-    private float angleOffset;
     private float angleMax;
     private float angleMin;
     private float speakerScoreAngle;
@@ -35,25 +35,41 @@ public class Pivot extends SubsystemBase
     public float distanceValue;
 
     PIDController pid;
+
+    public float NormalizeAngle(float angle)
+    {
+        float newAngle = angle - angleOffset;
+         while(newAngle > 180)
+         {
+            newAngle -= 360;
+         }
+
+         while(newAngle < -180)
+         {
+            newAngle += 360;
+         }
+        return newAngle;
+    }
     
     public Pivot() {
-        this.desiredAngle = 0.0f;
+        
         this.isInitialized = false;
-        this.angleOffset = 255.0f;
-        this.angleMax = 35.0f;
-        this.angleMin = -52.0f;
-        this.humanPickupAngle = 20.0f;
-        this.groundPickupAngle = -24.5f;
-        this.movementAngle = 0.0f;
-        this.trapScoreAngle = 0.0f;
-        this.speakerScoreAngle = 0.0f;
-        this.homeStateAngle = 0.0f;
+        this.angleMax = 52;
+        this.angleMin = -27;
+        this.humanPickupAngle = 0;
+        this.groundPickupAngle = -30;
+        //this.movementAngle = 0.0f;
+        this.trapScoreAngle = 52;
+        //this.speakerScoreAngle = 0.0f;
+        this.homeStateAngle = -27;
         
         this.pid = new PIDController(0.03, 0.0, 0.0);
 
-        this.pivotEncoder = new CANcoder(51);
-        this.pivotMotor1 = new CANSparkMax(52, CANSparkLowLevel.MotorType.kBrushless);
-        this.pivotMotor2 = new CANSparkMax(53, CANSparkLowLevel.MotorType.kBrushless);
+        this.pivotEncoder = new CANcoder(15);
+
+    
+        this.pivotMotor1 = new CANSparkMax(20, CANSparkLowLevel.MotorType.kBrushless);
+        this.pivotMotor2 = new CANSparkMax(21, CANSparkLowLevel.MotorType.kBrushless);
 
         this.pivotMotor1.restoreFactoryDefaults();
         this.pivotMotor1.setIdleMode(IdleMode.kBrake);
@@ -66,11 +82,17 @@ public class Pivot extends SubsystemBase
     }
     
     public void setDesiredAngle(final float desiredAngle) {
-        this.desiredAngle = (float)MathUtil.clamp(desiredAngle, this.angleMin, this.angleMax);
+        this.desiredAngle = desiredAngle;
     }
     
+    
      public void moveAmount(final float amount) {
-        this.setDesiredAngle(this.desiredAngle + amount);
+
+        if (Math.abs(amount)<0.1){
+            return;
+        }
+        float f = (float)MathUtil.clamp(this.desiredAngle + amount, angleMin,angleMax);
+        this.desiredAngle = f;
      }
 
     //manual move? ^
@@ -103,13 +125,13 @@ public class Pivot extends SubsystemBase
      @Override
     public void periodic() {
         if (!this.isInitialized) {
-            this.desiredAngle = (float)(this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset);
+            this.desiredAngle = NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360));
             this.isInitialized = true;
         }
-        final float maxoutput = 0.05f;
-        final double output = MathUtil.clamp(this.pid.calculate(this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset, this.desiredAngle), -maxoutput, maxoutput);
+        final float maxoutput = 0.3f;
+        final double output = MathUtil.clamp(this.pid.calculate(NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360)), this.desiredAngle), -maxoutput, maxoutput);
         this.pivotMotor1.set(-output);
-        SmartDashboard.putNumber("Arm Angle", this.pivotEncoder.getAbsolutePosition().getValue() - this.angleOffset);
+        SmartDashboard.putNumber("Arm Angle", NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360))); 
         SmartDashboard.putNumber("Desired Angle", this.desiredAngle);
         SmartDashboard.putNumber("output", output);
     }

@@ -34,7 +34,7 @@ public class Extender extends SubsystemBase
     
     public Extender() {
         this.desiredPosition = 0.0f;
-        this.poseMax = 10.0f;
+        this.poseMax = 44.0f;
         this.poseMin = 0.5f;
         this.humanPickupPose = 10.0f;
         this.groundPickupPose = 2.0f;
@@ -42,8 +42,8 @@ public class Extender extends SubsystemBase
         this.speakerScorePose = 0.0f;
         this.homeStatePose = 0.0f;
 
-        this.extenderMotor1 = new CANSparkMax(60, CANSparkLowLevel.MotorType.kBrushless);
-        this.extenderMotor2 = new CANSparkMax(61, CANSparkLowLevel.MotorType.kBrushless);
+        this.extenderMotor1 = new CANSparkMax(22, CANSparkLowLevel.MotorType.kBrushless);
+        this.extenderMotor2 = new CANSparkMax(23, CANSparkLowLevel.MotorType.kBrushless);
 
         this.extenderMotor1.restoreFactoryDefaults();
         this.extenderMotor1.setIdleMode(IdleMode.kBrake);
@@ -107,6 +107,8 @@ public class Extender extends SubsystemBase
 
         final double output2 = MathUtil.clamp(this.pid.calculate(pos2, this.desiredPosition), -maxoutput, maxoutput);
         extenderMotor2.set(output2);
+
+
     }
 
 }

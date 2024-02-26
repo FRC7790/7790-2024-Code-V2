@@ -113,3 +113,38 @@ SwerveDrive swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumS
 
 # Special Thanks to Team 7900! Trial N' Terror
 Without the debugging and aid of Team 7900 the project could never be as stable or active as it is. 
+
+-- means set
+
+CANCODER IDS:
+BackRight 9 --
+BackLeft 10 --
+FrontLeft 11 --
+FrontRight 12 --
+Arm 15 --
+
+MotorControllers
+BL Drive 1 --
+BL Angle 2 --
+BR Drive 3 --
+BR Angle 4 --
+FR Drive 5 --
+FR Angle 6 --
+FL Drive 7 --
+FL Angle 8 --
+
+PivotL 20 --
+PivotR 21 --
+ExtendL 22 --
+ExtendR 23 --
+Climb1 24
+Climb2 25
+
+Shoot1 30 --
+Shoot2 31 --
+Shoot3 32 --
+Shoot4 33 --
+Intake 34 --
+Index 35 --
+
+PDH 50

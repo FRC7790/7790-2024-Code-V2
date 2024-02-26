@@ -24,12 +24,12 @@ public class Shooter extends SubsystemBase
 
     public Shooter() {
 
-        this.shooterMotor1 = new CANSparkMax(40, CANSparkLowLevel.MotorType.kBrushless);
+        this.shooterMotor1 = new CANSparkMax(30, CANSparkLowLevel.MotorType.kBrushless);
         this.shooterMotor2 = new CANSparkMax(31, CANSparkLowLevel.MotorType.kBrushless);
         this.shooterMotor3 = new CANSparkMax(32, CANSparkLowLevel.MotorType.kBrushless);
         this.shooterMotor4 = new CANSparkMax(33, CANSparkLowLevel.MotorType.kBrushless);
-        this.indexMotor = new CANSparkMax(34, CANSparkLowLevel.MotorType.kBrushless);
-        this.intakeMotor = new CANSparkMax(41, CANSparkLowLevel.MotorType.kBrushless);
+        this.indexMotor = new CANSparkMax(35, CANSparkLowLevel.MotorType.kBrushless);
+        this.intakeMotor = new CANSparkMax(34, CANSparkLowLevel.MotorType.kBrushless);
         
         this.shooterMotor1.restoreFactoryDefaults();
         this.shooterMotor2.restoreFactoryDefaults();
@@ -38,10 +38,10 @@ public class Shooter extends SubsystemBase
         this.indexMotor.restoreFactoryDefaults();
         this.intakeMotor.restoreFactoryDefaults();
 
-        this.shooterMotor1.setIdleMode(IdleMode.kCoast);
-        this.shooterMotor2.setIdleMode(IdleMode.kCoast);
-        this.shooterMotor3.setIdleMode(IdleMode.kCoast);
-        this.shooterMotor4.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor1.setIdleMode(IdleMode.kBrake);
+        this.shooterMotor2.setIdleMode(IdleMode.kBrake);
+        this.shooterMotor3.setIdleMode(IdleMode.kBrake);
+        this.shooterMotor4.setIdleMode(IdleMode.kBrake);
         this.indexMotor.setIdleMode(IdleMode.kCoast);
         this.intakeMotor.setIdleMode(IdleMode.kCoast);
         
@@ -52,8 +52,8 @@ public class Shooter extends SubsystemBase
       
     }
     public void startShooter() {
-        shooterMotor1.set(.1);
-        shooterMotor3.set(.1);
+        shooterMotor1.set(-.3);
+        shooterMotor3.set(.3);
     }
     public void stopShooter() {
         shooterMotor1.set(0);
@@ -62,8 +62,8 @@ public class Shooter extends SubsystemBase
     public void harvest() {
         if(isTriggered == true) {
 
-        intakeMotor.set(.1);
-        indexMotor.set(.1);
+        intakeMotor.set(-.2);
+        indexMotor.set(-.2);
         } else {
         intakeMotor.set(0);
         indexMotor.set(0);
@@ -75,21 +75,19 @@ public class Shooter extends SubsystemBase
         indexMotor.set(0);
     }
     public void harvestReverse() {
-        intakeMotor.set(-.1);
-        indexMotor.set(-.1);
-    }
-    public void shoot() {
+        intakeMotor.set(.1);
         indexMotor.set(.1);
     }
+    public void shoot() {
+        indexMotor.set(.3);
+    }
       public void indexStop() {
-        intakeMotor.set(0);
+        indexMotor.set(0);
       }
     
     @Override
     public void periodic() {
 
         isTriggered = noteSensor.get();
-
-        System.out.println(isTriggered);
     }
     }

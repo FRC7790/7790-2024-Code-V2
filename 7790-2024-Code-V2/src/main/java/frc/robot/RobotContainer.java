@@ -187,7 +187,7 @@ public class RobotContainer {
     this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
 
     //this.extender.setDefaultCommand(new InstantCommand(() -> this.extender.extendAmount((float) -this.driverXbox.getRawAxis(5)), extender));
-    this.pivot.setDefaultCommand(new InstantCommand(() -> this.pivot.moveAmount((float) -this.driverXbox.getRawAxis(5)), pivot));
+    this.pivot.setDefaultCommand(new InstantCommand(() -> this.pivot.moveAmount((float) this.driverXbox.getRawAxis(5)), pivot));
 
   }
 
