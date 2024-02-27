@@ -85,7 +85,7 @@ public class RobotContainer {
   Shooter shooter = new Shooter();
   Pivot pivot = new Pivot();
   Extender extender = new Extender();
-  LED led = new LED();
+  //LED led = new LED();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
