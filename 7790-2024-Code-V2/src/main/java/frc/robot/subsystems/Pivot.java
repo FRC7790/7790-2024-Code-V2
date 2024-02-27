@@ -53,9 +53,11 @@ public class Pivot extends SubsystemBase
     
     public Pivot() {
         
+        //angle min -27
+
         this.isInitialized = false;
         this.angleMax = 52;
-        this.angleMin = -27;
+        this.angleMin = -50;
         this.humanPickupAngle = 0;
         this.groundPickupAngle = -30;
         //this.movementAngle = 0.0f;
@@ -91,7 +93,10 @@ public class Pivot extends SubsystemBase
         if (Math.abs(amount)<0.1){
             return;
         }
-        float f = (float)MathUtil.clamp(this.desiredAngle + amount, angleMin,angleMax);
+
+        float scale = 0.1f;
+
+        float f = (float)MathUtil.clamp(this.desiredAngle + amount * scale, angleMin,angleMax);
         this.desiredAngle = f;
      }
 
@@ -100,9 +105,6 @@ public class Pivot extends SubsystemBase
     public void setSpeakerScore() {
         this.setDesiredAngle(this.speakerScoreAngle);
     }
-    
-    //Speaker Score needs to be adjusted using another value for distance.
-    //The starting point should be its highest angle.
 
     public void setHumanPickup() {
         this.setDesiredAngle(this.humanPickupAngle);

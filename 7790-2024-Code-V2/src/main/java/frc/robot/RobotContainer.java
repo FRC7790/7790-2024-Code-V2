@@ -29,6 +29,7 @@ import frc.robot.commands.pathfinding.ButtonMapping;
 import frc.robot.commands.pathfinding.Vision;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Extender;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Pivot;
 
 import frc.robot.subsystems.SwerveSubsystem;
@@ -55,6 +56,7 @@ public class RobotContainer {
   // CommandJoystick(3);//(OperatorConstants.DRIVER_CONTROLLER_PORT);
   XboxController driverXbox = new XboxController(0);
   Joystick buttonBox = new Joystick(1);
+  XboxController alternate = new XboxController(2);
 
   private final JoystickButton startShooter = new JoystickButton(this.driverXbox, 6);
   private final JoystickButton stopShooter = new JoystickButton(this.driverXbox, 5);
@@ -83,6 +85,7 @@ public class RobotContainer {
   Shooter shooter = new Shooter();
   Pivot pivot = new Pivot();
   Extender extender = new Extender();
+  LED led = new LED();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -186,8 +189,8 @@ public class RobotContainer {
     this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
     this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
 
-    //this.extender.setDefaultCommand(new InstantCommand(() -> this.extender.extendAmount((float) -this.driverXbox.getRawAxis(5)), extender));
-    this.pivot.setDefaultCommand(new InstantCommand(() -> this.pivot.moveAmount((float) this.driverXbox.getRawAxis(5)), pivot));
+    this.extender.setDefaultCommand(new InstantCommand(() -> this.extender.extendAmount((float) -this.alternate.getRawAxis(4)), extender));
+    this.pivot.setDefaultCommand(new InstantCommand(() -> this.pivot.moveAmount((float) this.alternate.getRawAxis(5)), pivot));
 
   }
 

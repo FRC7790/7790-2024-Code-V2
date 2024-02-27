@@ -34,7 +34,10 @@ public class Extender extends SubsystemBase
     
     public Extender() {
         this.desiredPosition = 0.0f;
-        this.poseMax = 44.0f;
+
+        //max 44.0f
+
+        this.poseMax = 50.0f;
         this.poseMin = 0.5f;
         this.humanPickupPose = 10.0f;
         this.groundPickupPose = 2.0f;

@@ -62,8 +62,8 @@ public class Shooter extends SubsystemBase
     public void harvest() {
         if(isTriggered == true) {
 
-        intakeMotor.set(-.2);
-        indexMotor.set(-.2);
+        intakeMotor.set(.2);
+        indexMotor.set(.2);
         } else {
         intakeMotor.set(0);
         indexMotor.set(0);
@@ -75,8 +75,8 @@ public class Shooter extends SubsystemBase
         indexMotor.set(0);
     }
     public void harvestReverse() {
-        intakeMotor.set(.1);
-        indexMotor.set(.1);
+        intakeMotor.set(-.1);
+        indexMotor.set(-.1);
     }
     public void shoot() {
         indexMotor.set(.3);
