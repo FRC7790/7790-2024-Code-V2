@@ -54,7 +54,7 @@ public class Shooter extends SubsystemBase
       
     }
     public void startShooter() {
-        shooterMotor1.set(-.4);
+        shooterMotor1.set(-.2);
         shooterMotor3.set(.3);
     }
         public void startAmpShooter() {
@@ -104,21 +104,16 @@ public Command startHarvestCommand()
 
 public Command stopHarvestCommand()
 {
-    Command command = new InstantCommand(()->harvestStop(), this);
+    Command command = new InstantCommand(()->harvestStop() , this);
     return command;
 }
 
     public void harvest() {
-        if(isTriggered == true) {
 
         intakeMotor.set(.25);
         indexMotor.set(.25);
-        } else {
-        intakeMotor.set(0);
-        indexMotor.set(0);
-        }
-        
     }
+
     public void harvestStop() {
         intakeMotor.set(0);
         indexMotor.set(0);

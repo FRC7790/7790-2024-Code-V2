@@ -41,7 +41,7 @@ public class Extender extends SubsystemBase
 
         this.extenderMax = 44.5f;
         this.extenderMin = 0.5f;
-        this.humanPickupPose = 10.0f;
+        this.humanPickupPose = 30.0f;
         this.groundPickupPose = 44.5f;
         this.trapScorePose = 44.5f;
         this.speakerScorePose = 0.0f;
@@ -120,6 +120,12 @@ public class Extender extends SubsystemBase
     public Command groundScoreCommand()
     {
         Command command = new InstantCommand(()-> this.setGroundPose(), this);
+        return command;
+    }
+
+    public Command setHumanPickupCommand()
+    {
+        Command command = new InstantCommand(()-> this.setHumanPickup(), this);
         return command;
     }
 

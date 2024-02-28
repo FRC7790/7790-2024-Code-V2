@@ -59,17 +59,17 @@ public class Pivot extends SubsystemBase
 
         this.isInitialized = false;
         this.angleMax = 61;
-        this.angleMin = -44.5f;
-        this.humanPickupAngle = 0;
-        this.groundPickupAngle = -44.5f;
+        this.angleMin = -44.7f;
+        this.humanPickupAngle = 30;
+        this.groundPickupAngle = -44.7f;
         //this.movementAngle = 0.0f;
         this.trapScoreAngle = 56;
         //this.speakerScoreAngle = 0.0f;
         this.homeStateAngle = -27;
         this.ampScoreAngle = 61;
-        this.shootAngle = 30;
+        this.shootAngle = -31;
         
-        this.pid = new PIDController(0.03, 0.0, 0.0);
+        this.pid = new PIDController(0.04, 0.0, 0.0);
 
         this.pivotEncoder = new CANcoder(15);
 
@@ -153,6 +153,12 @@ public class Pivot extends SubsystemBase
     public Command setShootAngleCommand()
     {
         Command command = new InstantCommand(()-> this.setShootAngle(), this);
+        return command;
+    }
+
+    public Command setHumanPickupCommand()
+    {
+        Command command = new InstantCommand(()-> this.setHumanPickup(), this);
         return command;
     }
 

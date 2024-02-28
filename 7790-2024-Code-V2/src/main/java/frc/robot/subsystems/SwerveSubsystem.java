@@ -106,7 +106,7 @@ public class SwerveSubsystem extends SubsystemBase
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                         new PIDConstants(0.001, 0.0, 0.0), //If you experience any
+                                         new PIDConstants(0.05, 0.0, 0.0), //If you experience any
                                          // oscillation or erratic behavior try lowering "kP"
                                          // Translation PID constants
                                          new PIDConstants(swerveDrive.swerveController.config.headingPIDF.p,
@@ -187,10 +187,10 @@ public class SwerveSubsystem extends SubsystemBase
     PathConstraints constraints = new PathConstraints(
 
     // orig 4.0, 720
-        swerveDrive.getMaximumVelocity(), .5,
-        swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(180));
+        swerveDrive.getMaximumVelocity(), 4.0,
+        swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(720));
 
-       
+      
 
     // Since AutoBuilder is configured, we can use it to build pathfinding commands
     Command command = AutoBuilder.pathfindThenFollowPath(

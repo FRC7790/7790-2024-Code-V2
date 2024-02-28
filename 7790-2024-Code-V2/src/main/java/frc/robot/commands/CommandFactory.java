@@ -24,9 +24,10 @@ public class CommandFactory {
         return command;
     }
 
-    public static Command ampScoreRetractCommand(Extender extender, Pivot pivot)
+    public static Command ampScoreRetractCommand(Extender extender, Shooter shooter, Pivot pivot)
     {
         Command command = pivot.setHomeCommand()
+        .andThen(shooter.stopHarvestCommand())
         .andThen(new WaitCommand(.8))
         .andThen(extender.homeStateCommand());
 
@@ -41,6 +42,8 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
         .andThen(new WaitCommand(.8))
         .andThen(pivot.setGroundCommand())
         .andThen(shooter.startHarvestCommand());
+
+        //same logic as human pickup where leds are triggered here. Auto shutoff as well
 
         command.addRequirements(shooter,pivot,extender);
 
@@ -62,17 +65,41 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
     public static Command shootCommand(Extender extender, Shooter shooter, Pivot pivot)
     {
         Command command = pivot.setShootAngleCommand()
-        .alongWith(shooter.startShooterCommand())
+        .andThen(new WaitCommand(2))
+        .andThen(shooter.startShooterCommand())
         .andThen(new WaitCommand(2))
         .andThen(shooter.shootCommand())
         .andThen(new WaitCommand(.8))
         .andThen(shooter.stopShooterCommand())
-        .alongWith(shooter.indexStopCommand())
+        .andThen(shooter.indexStopCommand())
         .andThen(extender.homeStateCommand())
-        .alongWith(pivot.setHomeCommand());
+        .andThen(pivot.setHomeCommand());
 
         command.addRequirements(shooter,pivot,extender);
 
         return command;
     }
+
+    public static Command humanPickupCommand(Extender extender, Shooter shooter, Pivot pivot)
+    {
+        Command command = pivot.setHumanPickupCommand()
+        .andThen(extender.setHumanPickupCommand())
+        .andThen(new WaitCommand(2))
+        .andThen(shooter.startHarvestCommand())
+
+        //Add logic to start harvest to auto stop on after sensor triggered 
+        //that would move it onto the next command
+
+        .andThen(new WaitCommand(2))
+        //this ^ goes away after auto note detection
+
+        //require led to change here
+        .andThen(shooter.stopHarvestCommand());
+
+        command.addRequirements(shooter,pivot,extender);
+
+        return command;
+    }
+
+    //Call Retract Amp to cancel Human Pickup
 }
