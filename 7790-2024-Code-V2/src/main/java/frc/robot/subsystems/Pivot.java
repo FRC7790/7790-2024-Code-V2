@@ -59,9 +59,9 @@ public class Pivot extends SubsystemBase
 
         this.isInitialized = false;
         this.angleMax = 61;
-        this.angleMin = -45f;
+        this.angleMin = -44.75f;
         this.humanPickupAngle = 0;
-        this.groundPickupAngle = -45f;
+        this.groundPickupAngle = -44.75f;
         //this.movementAngle = 0.0f;
         this.trapScoreAngle = 56;
         //this.speakerScoreAngle = 0.0f;
