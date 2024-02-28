@@ -30,7 +30,7 @@ public class Pivot extends SubsystemBase
     private float groundPickupAngle;
     private float trapScoreAngle;
     private float homeStateAngle;
-
+    private float shootAngle;
     private float movementAngle;
     //This should be used while arm is extending/retracting to clear frame.
 
@@ -67,6 +67,7 @@ public class Pivot extends SubsystemBase
         //this.speakerScoreAngle = 0.0f;
         this.homeStateAngle = -27;
         this.ampScoreAngle = 61;
+        this.shootAngle = 30;
         
         this.pid = new PIDController(0.03, 0.0, 0.0);
 
@@ -128,6 +129,9 @@ public class Pivot extends SubsystemBase
     public void setAmpScore() {
         this.setDesiredAngle(this.ampScoreAngle);
     }
+    public void setShootAngle() {
+        this.setDesiredAngle(this.shootAngle);
+    }
 
     public Command setHomeCommand()
     {
@@ -146,7 +150,11 @@ public class Pivot extends SubsystemBase
         Command command = new InstantCommand(()-> this.setAmpScore(), this);
         return command;
     }
-    
+    public Command setShootAngleCommand()
+    {
+        Command command = new InstantCommand(()-> this.setShootAngle(), this);
+        return command;
+    }
 
 
      @Override

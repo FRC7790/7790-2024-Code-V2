@@ -113,7 +113,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                           swerveDrive.swerveController.config.headingPIDF.i,
                                                           swerveDrive.swerveController.config.headingPIDF.d),
                                          // Rotation PID constants
-                                         4.5,
+                                         4.0,
                                          // Max module speed, in m/s
                                          swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
                                          // Drive base radius in meters. Distance from robot center to furthest module.
@@ -185,8 +185,10 @@ public class SwerveSubsystem extends SubsystemBase
      PathPlannerPath targetPath = PathPlannerPath.fromPathFile(pathName);
     // Create the constraints to use while pathfinding
     PathConstraints constraints = new PathConstraints(
-        swerveDrive.getMaximumVelocity()/2, 4.0/2,
-        swerveDrive.getMaximumAngularVelocity()/2, Units.degreesToRadians(720)/2);
+
+    // orig 4.0, 720
+        swerveDrive.getMaximumVelocity(), .5,
+        swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(180));
 
        
 

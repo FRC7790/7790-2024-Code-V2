@@ -62,13 +62,29 @@ public class RobotContainer {
   Joystick buttonBox = new Joystick(1);
   XboxController alternate = new XboxController(2);
 
-  //private final JoystickButton startShooter = new JoystickButton(this.driverXbox, 6);
-  //private final JoystickButton stopShooter = new JoystickButton(this.driverXbox, 5);
+  // private final JoystickButton startShooter = new
+  // JoystickButton(this.driverXbox, 6);
+  // private final JoystickButton stopShooter = new
+  // JoystickButton(this.driverXbox, 5);
   private final JoystickButton harvest = new JoystickButton(this.driverXbox, 5);
 
-  //private final POVButton harvestReverse = new POVButton(this.driverXbox, 180);
-  private final JoystickButton shoot = new JoystickButton(this.driverXbox, 1);
-  private final JoystickButton indexStop = new JoystickButton(this.driverXbox, 1);
+  // private final POVButton harvestReverse = new POVButton(this.driverXbox, 180);
+  private final JoystickButton shoot = new JoystickButton(this.driverXbox, 6);
+  // private final JoystickButton indexStop = new JoystickButton(this.driverXbox,
+  // 1);
+
+  private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
+
+  private final POVButton ampScore = new POVButton(this.driverXbox, 0);
+  private final POVButton ampScoreRetract = new POVButton(this.driverXbox, 180);
+
+  // private final POVButton GroundPickupExtension = new
+  // POVButton(this.driverXbox, 90);
+  // private final POVButton HomeExtension = new POVButton(this.driverXbox, 90);
+  // private final POVButton HomePivot = new POVButton(this.driverXbox, 270);
+  // private final POVButton GroundPickupPivot = new POVButton(this.driverXbox,
+  // 270);
+
   private final JoystickButton target1 = new JoystickButton(this.buttonBox, 1);
   private final JoystickButton target2 = new JoystickButton(this.buttonBox, 2);
   private final JoystickButton target3 = new JoystickButton(this.buttonBox, 3);
@@ -78,20 +94,11 @@ public class RobotContainer {
   private final JoystickButton target7 = new JoystickButton(this.buttonBox, 7);
   private final JoystickButton target8 = new JoystickButton(this.buttonBox, 8);
   private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
-  private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
-  //private final POVButton GroundPickupExtension = new POVButton(this.driverXbox, 90);
-  //private final POVButton HomeExtension = new POVButton(this.driverXbox, 90);
-  //private final POVButton HomePivot = new POVButton(this.driverXbox, 270);
-  //private final POVButton GroundPickupPivot = new POVButton(this.driverXbox, 270);
 
-  private final POVButton ampScore = new POVButton(this.driverXbox, 0);
-  private final POVButton ampScoreRetract = new POVButton(this.driverXbox, 180);
-
-  
   Shooter shooter = new Shooter();
   Pivot pivot = new Pivot();
   Extender extender = new Extender();
- // LED led = new LED();
+  // LED led = new LED();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -143,8 +150,6 @@ public class RobotContainer {
     drivebase.setDefaultCommand(
         !RobotBase.isSimulation() ? driveFieldOrientedAnglularVelocity : driveFieldOrientedDirectAngleSim);
 
-       
-
   }
 
   /**
@@ -164,62 +169,53 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
-    //new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
+    // new JoystickButton(driverXbox, 3).onTrue(new
+    // InstantCommand(drivebase::addFakeVisionReading));
+
+    // new JoystickButton(driverXbox,
+    // 2).whileTrue(
+    // Commands.deferredProxy(() -> drivebase.driveToPose(
+    // new Pose2d(new Translation2d(4, 4),
+    // Rotation2d.fromDegrees(0))).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming)));
 
 
-   //new JoystickButton(driverXbox,
-    //   2).whileTrue(
-    //       Commands.deferredProxy(() -> drivebase.driveToPose(
-    //           new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0))).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming)));
-
-
-    //new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
-    //InstantCommand(drivebase::lock, drivebase)));
-
-    //this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter(), new Subsystem[0]));
-    //this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter(), new Subsystem[0]));
-    
-    //this.harvestReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse(), new Subsystem[0]));
-    this.shoot.onTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
-    this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new Subsystem[0]));
+    // this.harvestReverse.onTrue(new InstantCommand(() ->
+    // this.shooter.harvestReverse(), new Subsystem[0]));
+    //this.shoot.onTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
+    // this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new
+    // Subsystem[0]));
     this.targetingMode.onTrue(new InstantCommand(() -> Vision.targetingOn(), new Subsystem[0]));
     this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
-    /* this.GroundPickupExtension.onTrue(new InstantCommand(() -> this.extender.setGroundPose(), new Subsystem[0]));
-    this.HomeExtension.onFalse(new InstantCommand(() -> this.extender.setHomeState(), new Subsystem[0]));
-    this.GroundPickupPivot.onTrue(new InstantCommand(() -> this.pivot.setGroundPickup(), new Subsystem[0]));
-    this.HomePivot.onFalse(new InstantCommand(() -> this.pivot.setHomeState(), new Subsystem[0])); */
+
     
-    //this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
     this.target1.onTrue(drivebase.driveToPath(1).andThen((CommandFactory.ampScoreCommand(extender, shooter, pivot))));
     
-    this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
-    this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
-    this.target4.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(4)));
-    this.target5.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(5)));
-    this.target6.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(6)));
-    this.target7.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
-    this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
-    this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
 
-    this.extender.setDefaultCommand(new InstantCommand(() -> this.extender.extendAmount((float) -this.alternate.getRawAxis(1)), extender));
-    this.pivot.setDefaultCommand(new InstantCommand(() -> this.pivot.moveAmount((float) this.alternate.getRawAxis(2)), pivot));
+    /*
+     * this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
+     * this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
+     * this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
+     * this.target4.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(4)));
+     * this.target5.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(5)));
+     * this.target6.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(6)));
+     * this.target7.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
+     * this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
+     * this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
+     */
 
-    this.harvest.onTrue(extender.groundScoreCommand()
-    .andThen(new WaitCommand(.8))
-    .andThen(pivot.setGroundCommand())
-    .andThen(shooter.startHarvestCommand()));
-    
-    this.harvest.onFalse(pivot.setHomeCommand()
-    .andThen(shooter.stopHarvestCommand())
-    .andThen(new WaitCommand(.8))
-    .andThen(extender.homeStateCommand()));
+    this.extender.setDefaultCommand(
+        new InstantCommand(() -> this.extender.extendAmount((float) -this.alternate.getRawAxis(1)), extender));
+    this.pivot.setDefaultCommand(
+        new InstantCommand(() -> this.pivot.moveAmount((float) this.alternate.getRawAxis(2)), pivot));
 
-  this.ampScore.onTrue(CommandFactory.ampScoreCommand(extender, shooter, pivot));
-    
-  this.ampScoreRetract.onTrue(extender.homeStateCommand()
-    .andThen(pivot.setHomeCommand()));
+    this.harvest.onTrue(CommandFactory.harvestCommand(extender, shooter, pivot));
 
+    this.harvest.onFalse(CommandFactory.retractHarvestCommand(extender, shooter, pivot));
+    this.ampScore.onTrue(CommandFactory.ampScoreCommand(extender, shooter, pivot));
 
+    this.ampScoreRetract.onTrue(CommandFactory.ampScoreRetractCommand(extender, shooter, pivot));
+
+    this.shoot.whileTrue(CommandFactory.shootCommand(extender, shooter, pivot));
   }
 
   /**
