@@ -8,6 +8,8 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase
@@ -52,18 +54,65 @@ public class Shooter extends SubsystemBase
       
     }
     public void startShooter() {
-        shooterMotor1.set(-.6);
-        shooterMotor3.set(.4);
+        shooterMotor1.set(-.4);
+        shooterMotor3.set(.3);
+    }
+        public void startAmpShooter() {
+        shooterMotor1.set(-.1);
+        shooterMotor3.set(.1);
     }
     public void stopShooter() {
         shooterMotor1.set(0);
         shooterMotor3.set(0);
     }
+
+public Command startShooterCommand()
+{
+    Command command = new InstantCommand(()->startShooter(), this);
+    return command;
+}
+
+public Command shootCommand()
+{
+    Command command = new InstantCommand(()->shoot(), this);
+    return command;
+}
+
+public Command indexStopCommand()
+{
+    Command command = new InstantCommand(()->indexStop(), this);
+    return command;
+}
+
+public Command startAmpShooterCommand()
+{
+    Command command = new InstantCommand(()->startAmpShooter(), this);
+    return command;
+}
+
+public Command stopShooterCommand()
+{
+    Command command = new InstantCommand(()->stopShooter(), this);
+    return command;
+}
+
+public Command startHarvestCommand()
+{
+    Command command = new InstantCommand(()->harvest(), this);
+    return command;
+}
+
+public Command stopHarvestCommand()
+{
+    Command command = new InstantCommand(()->harvestStop(), this);
+    return command;
+}
+
     public void harvest() {
         if(isTriggered == true) {
 
-        intakeMotor.set(.2);
-        indexMotor.set(.2);
+        intakeMotor.set(.25);
+        indexMotor.set(.25);
         } else {
         intakeMotor.set(0);
         indexMotor.set(0);
@@ -79,10 +128,13 @@ public class Shooter extends SubsystemBase
         indexMotor.set(-.1);
     }
     public void shoot() {
+        intakeMotor.set(.3);
         indexMotor.set(.3);
     }
+    
       public void indexStop() {
         indexMotor.set(0);
+        intakeMotor.set(0);
       }
     
     @Override

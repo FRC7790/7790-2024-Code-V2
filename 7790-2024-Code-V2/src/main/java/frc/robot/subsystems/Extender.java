@@ -9,6 +9,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Extender extends SubsystemBase
@@ -16,8 +18,8 @@ public class Extender extends SubsystemBase
     private CANSparkMax extenderMotor1;
     private CANSparkMax extenderMotor2;
     private float desiredPosition;
-    private float poseMax;
-    private float poseMin;
+    private float extenderMax;
+    private float extenderMin;
     private float speakerScorePose;
     private float ampScorePose;
     private float humanPickupPose;
@@ -37,14 +39,14 @@ public class Extender extends SubsystemBase
 
         //max 44.0f
 
-        this.poseMax = 50.0f;
-        this.poseMin = 0.5f;
+        this.extenderMax = 44.5f;
+        this.extenderMin = 0.5f;
         this.humanPickupPose = 10.0f;
-        this.groundPickupPose = 2.0f;
-        this.trapScorePose = 0.0f;
+        this.groundPickupPose = 44.5f;
+        this.trapScorePose = 44.5f;
         this.speakerScorePose = 0.0f;
-        this.homeStatePose = 0.0f;
-
+        this.homeStatePose = 0.5f;
+        this.ampScorePose = 44.5f;
         this.extenderMotor1 = new CANSparkMax(22, CANSparkLowLevel.MotorType.kBrushless);
         this.extenderMotor2 = new CANSparkMax(23, CANSparkLowLevel.MotorType.kBrushless);
 
@@ -70,7 +72,7 @@ public class Extender extends SubsystemBase
     
     public void setDesiredPosition(final float desiredPose) {
 
-        float newDesiredPose = (float)MathUtil.clamp(desiredPose, poseMin, poseMax);
+        float newDesiredPose = (float)MathUtil.clamp(desiredPose, extenderMin, extenderMax);
 
 
 
@@ -84,7 +86,7 @@ public class Extender extends SubsystemBase
             return;
         }
 
-        float scale = 0.1f;
+        float scale = 0.3f;
         this.setDesiredPosition(this.desiredPosition + amount * scale);
      }
 
@@ -97,10 +99,35 @@ public class Extender extends SubsystemBase
     public void setHomeState() {
         this.setDesiredPosition(this.homeStatePose);
     }
+
+    public void setAmpPose() {
+        this.setDesiredPosition(this.ampScorePose);       
+    }
+
+    //Commands
+    public Command homeStateCommand()
+    {
+        Command command = new InstantCommand(()-> this.setHomeState(), this);
+        return command;
+    }
+
+    public Command ampScoreCommand()
+    {
+        Command command = new InstantCommand(()-> this.setAmpPose(), this);
+        return command;
+    }
+
+    public Command groundScoreCommand()
+    {
+        Command command = new InstantCommand(()-> this.setGroundPose(), this);
+        return command;
+    }
+
+    
     @Override
     public void periodic() {
 
-        final float maxoutput = 0.1f;
+        final float maxoutput = 0.5f;
 
         double pos1 = extender1Encoder.getPosition();
         double pos2 = extender2Encoder.getPosition();

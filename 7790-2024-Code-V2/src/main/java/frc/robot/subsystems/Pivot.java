@@ -8,6 +8,8 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pivot extends SubsystemBase
@@ -56,14 +58,15 @@ public class Pivot extends SubsystemBase
         //angle min -27
 
         this.isInitialized = false;
-        this.angleMax = 52;
-        this.angleMin = -50;
+        this.angleMax = 61;
+        this.angleMin = -45f;
         this.humanPickupAngle = 0;
-        this.groundPickupAngle = -30;
+        this.groundPickupAngle = -45f;
         //this.movementAngle = 0.0f;
-        this.trapScoreAngle = 52;
+        this.trapScoreAngle = 56;
         //this.speakerScoreAngle = 0.0f;
         this.homeStateAngle = -27;
+        this.ampScoreAngle = 61;
         
         this.pid = new PIDController(0.03, 0.0, 0.0);
 
@@ -94,7 +97,7 @@ public class Pivot extends SubsystemBase
             return;
         }
 
-        float scale = 0.1f;
+        float scale = 0.3f;
 
         float f = (float)MathUtil.clamp(this.desiredAngle + amount * scale, angleMin,angleMax);
         this.desiredAngle = f;
@@ -121,6 +124,28 @@ public class Pivot extends SubsystemBase
     public void setHomeState() {
         this.setDesiredAngle(this.homeStateAngle);
     }
+
+    public void setAmpScore() {
+        this.setDesiredAngle(this.ampScoreAngle);
+    }
+
+    public Command setHomeCommand()
+    {
+        Command command = new InstantCommand(()-> this.setHomeState(), this);
+        return command;
+    }
+
+    public Command setGroundCommand()
+    {
+        Command command = new InstantCommand(()-> this.setGroundPickup(), this);
+        return command;
+    }
+
+    public Command setAmpScoreCommand()
+    {
+        Command command = new InstantCommand(()-> this.setAmpScore(), this);
+        return command;
+    }
     
 
 
@@ -130,7 +155,7 @@ public class Pivot extends SubsystemBase
             this.desiredAngle = NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360));
             this.isInitialized = true;
         }
-        final float maxoutput = 0.3f;
+        final float maxoutput = 0.5f;
         final double output = MathUtil.clamp(this.pid.calculate(NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360)), this.desiredAngle), -maxoutput, maxoutput);
         this.pivotMotor1.set(-output);
         SmartDashboard.putNumber("Arm Angle", NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360))); 
