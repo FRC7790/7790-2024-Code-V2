@@ -213,7 +213,7 @@ public class RobotContainer {
     this.harvest.onFalse(CommandFactory.retractHarvestCommand(extender, shooter, pivot));
     this.ampScore.onTrue(CommandFactory.ampScoreCommand(extender, shooter, pivot));
 
-    this.ampScoreRetract.onTrue(CommandFactory.ampScoreRetractCommand(extender, shooter, pivot));
+    this.ampScoreRetract.onTrue(CommandFactory.ampScoreRetractCommand(extender, pivot));
 
     this.shoot.whileTrue(CommandFactory.shootCommand(extender, shooter, pivot));
   }

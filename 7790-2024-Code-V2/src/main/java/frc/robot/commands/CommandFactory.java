@@ -24,14 +24,13 @@ public class CommandFactory {
         return command;
     }
 
-    public static Command ampScoreRetractCommand(Extender extender, Shooter shooter, Pivot pivot)
+    public static Command ampScoreRetractCommand(Extender extender, Pivot pivot)
     {
         Command command = pivot.setHomeCommand()
-        .andThen(shooter.stopHarvestCommand())
         .andThen(new WaitCommand(.8))
         .andThen(extender.homeStateCommand());
 
-        command.addRequirements(shooter,pivot,extender);
+        command.addRequirements(pivot,extender);
 
         return command;
     }
