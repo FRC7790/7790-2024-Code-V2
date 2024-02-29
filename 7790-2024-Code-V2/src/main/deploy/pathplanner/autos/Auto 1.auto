@@ -18,9 +18,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "harvesterOut"
           }
         },
         {
@@ -42,15 +54,51 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 3.0
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "harvesterOut"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Note 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "harvesterIn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
           }
         }
       ]

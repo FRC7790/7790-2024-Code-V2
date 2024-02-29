@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -29,6 +30,7 @@ import frc.robot.commands.pathfinding.Vision;
 
 import java.io.Console;
 import java.io.File;
+import java.util.List;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -86,7 +88,7 @@ public class SwerveSubsystem extends SubsystemBase
     }
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
 
-    setupPathPlanner();
+    
   }
 
   /**
@@ -141,18 +143,17 @@ public class SwerveSubsystem extends SubsystemBase
    * @param setOdomToStart Set the odometry position to the start of the path.
    * @return {@link AutoBuilder#followPath(PathPlannerPath)} path command.
    */
-  public Command getAutonomousCommand(String pathName, boolean setOdomToStart)
+  public Command getAutonomousCommand(String autoName, boolean setOdomToStart)
   {
-    // Load the path you want to follow using its name in the GUI
-    PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
-
+   /* 
     if (setOdomToStart)
     {
-      resetOdometry(new Pose2d(path.getPoint(0).position, getHeading()));
+     
+      resetOdometry( PathPlannerAuto.getStaringPoseFromAutoFile(autoName));
     }
-
+*/
     // Create a path following command using AutoBuilder. This will also trigger event markers.
-    return AutoBuilder.followPath(path);
+    return new PathPlannerAuto(autoName);
   }
 
   /**
@@ -588,14 +589,14 @@ public class SwerveSubsystem extends SubsystemBase
       swerveDrive.addVisionMeasurement(
           limelightMeasurement.pose,
           limelightMeasurement.timestampSeconds,VecBuilder.fill(.5,.5,6));
-          System.out.println("vision 1");
+         // System.out.println("vision 1");
     }
     else if(limelightMeasurement.avgTagArea > 0.8 && poseDifference < 0.5 )
     {
       swerveDrive.addVisionMeasurement(
           limelightMeasurement.pose,
           limelightMeasurement.timestampSeconds,VecBuilder.fill(1,1,12));
-          System.out.println("vision 2");
+          //System.out.println("vision 2");
     }
 
     else if(limelightMeasurement.avgTagArea > 0.1 && poseDifference < 0.3 )
@@ -603,7 +604,7 @@ public class SwerveSubsystem extends SubsystemBase
       swerveDrive.addVisionMeasurement(
           limelightMeasurement.pose,
           limelightMeasurement.timestampSeconds,VecBuilder.fill(2,2,6));
-          System.out.println("vision 3");
+          //System.out.println("vision 3");
     }
   }
 

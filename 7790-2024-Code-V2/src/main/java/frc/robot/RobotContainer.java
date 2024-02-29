@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -37,6 +39,7 @@ import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 /**
@@ -100,24 +103,35 @@ public class RobotContainer {
   private final JoystickButton target8 = new JoystickButton(this.buttonBox, 8);
   private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
 
-  LED led = new LED();
-  Shooter shooter = new Shooter(led);
-  Pivot pivot = new Pivot();
-  Extender extender = new Extender(led);
-  
 
+  LED led = new LED();
+    Shooter shooter = new Shooter(led);
+    Pivot pivot = new Pivot();
+    Extender extender = new Extender(led);
+
+     private final SendableChooser<Command> autoChooser;
+  
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
-    // Configure the trigger bindings
-    configureBindings();
+  public RobotContainer() { 
+    
+    
+    drivebase.setupPathPlanner();
 
     NamedCommands.registerCommand("ampScore", CommandFactory.ampScoreCommand(extender, shooter, pivot));
     NamedCommands.registerCommand("shoot", CommandFactory.shootCommand(extender, shooter, pivot));
     NamedCommands.registerCommand("harvesterOut", CommandFactory.harvestCommand(extender, shooter, pivot));
     NamedCommands.registerCommand("harvesterIn", CommandFactory.retractHarvestCommand(extender, shooter, pivot));
 
+
+    autoChooser = AutoBuilder.buildAutoChooser("Auto 1");
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
+    configureBindings();
+
+   
     AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
         () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
             OperatorConstants.LEFT_Y_DEADBAND),
@@ -247,10 +261,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
-    // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("Auto 1", true);
-
+    Command cmd =  autoChooser.getSelected();
+    cmd.addRequirements(extender,pivot,shooter);
+    
+    return cmd;
   }
 
   public void setDriveMode() {
