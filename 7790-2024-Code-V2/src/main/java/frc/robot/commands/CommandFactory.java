@@ -11,7 +11,7 @@ public class CommandFactory {
     {
         Command command = extender.ampScoreCommand()
         .andThen(pivot.setAmpScoreCommand())
-        .andThen(new WaitCommand(3))
+        .andThen(new WaitCommand(2))
         .andThen(shooter.startAmpShooterCommand())
         .andThen(new WaitCommand(1))
         .andThen(shooter.shootCommand())
@@ -27,8 +27,9 @@ public class CommandFactory {
     public static Command ampScoreRetractCommand(Extender extender, Shooter shooter, Pivot pivot)
     {
         Command command = pivot.setHomeCommand()
+        .andThen(shooter.stopShooterCommand())
         .andThen(shooter.stopHarvestCommand())
-        .andThen(new WaitCommand(.8))
+        .andThen(new WaitCommand(.6))
         .andThen(extender.homeStateCommand());
 
         command.addRequirements(pivot,extender);
@@ -39,7 +40,7 @@ public class CommandFactory {
 public static Command harvestCommand(Extender extender, Shooter shooter, Pivot pivot)
     {
         Command command = extender.groundScoreCommand()
-        .andThen(new WaitCommand(.8))
+        .andThen(new WaitCommand(.5))
         .andThen(pivot.setGroundCommand())
         .andThen(shooter.startHarvestCommand());
 
@@ -65,11 +66,11 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
     public static Command shootCommand(Extender extender, Shooter shooter, Pivot pivot)
     {
         Command command = pivot.setShootAngleCommand()
-        .andThen(new WaitCommand(2))
+        .andThen(new WaitCommand(.5))
         .andThen(shooter.startShooterCommand())
-        .andThen(new WaitCommand(2))
+        .andThen(new WaitCommand(.75))
         .andThen(shooter.shootCommand())
-        .andThen(new WaitCommand(.8))
+        .andThen(new WaitCommand(.4))
         .andThen(shooter.stopShooterCommand())
         .andThen(shooter.indexStopCommand())
         .andThen(extender.homeStateCommand())

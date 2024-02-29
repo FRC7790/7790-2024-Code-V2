@@ -1,4 +1,4 @@
-/*    package frc.robot.subsystems;
+    package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
@@ -6,22 +6,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LED extends SubsystemBase {
 
-    private char desiredLight;
-    private char noteLoaded;
-    private char navigateToSpeaker;
-    private char endGameCelebration;
+    private String desiredLight;
+    private String noteLoaded;
+    private String navigateToSpeaker;
+    private String endGameCelebration;
+    private String shoot;
     
     SerialPort ledInfo = new SerialPort(9600, SerialPort.Port.kOnboard);
 
     double lastRunTime = Timer.getFPGATimestamp();
-    int currentPattern;
+    
     public LED() {
-        desiredLight = 'a';
-        noteLoaded = 'b';
-        navigateToSpeaker = 'c';
-        endGameCelebration = 'z';
+        desiredLight = "1";
+        noteLoaded = "2";
+        navigateToSpeaker = "3";
+        endGameCelebration = "4";
+        shoot = "5";
     }
-    public void setDesiredLight(final char desiredLight) {
+    public void setDesiredLight(String desiredLight) {
         this.desiredLight = (desiredLight);
     }
 
@@ -31,6 +33,9 @@ public class LED extends SubsystemBase {
 
     public void setGroundPose() {
         this.setDesiredLight(this.navigateToSpeaker);
+    }
+     public void setShoot() {
+        this.setDesiredLight(this.shoot);
     }
 
     public void setHomeState() {
@@ -45,7 +50,7 @@ public class LED extends SubsystemBase {
         double curTime = Timer.getFPGATimestamp();
         double timeSinceLastRun = curTime - lastRunTime;
 
-        if(timeSinceLastRun > 3f)
+        if(timeSinceLastRun > 0.5f)
         {
             runTheTask = true;
         }
@@ -56,20 +61,12 @@ public class LED extends SubsystemBase {
 
         if(runTheTask)
         {
-            //do work
-            currentPattern++;
-            if(currentPattern > 4)
-            {
-                currentPattern = 0;
-            }
-
-            String numString = String.valueOf(currentPattern);
-
-            ledInfo.writeString(numString);
+            
+            ledInfo.writeString(desiredLight);
 
             lastRunTime = curTime;
         }
 
     }
 
-}    */
+}    

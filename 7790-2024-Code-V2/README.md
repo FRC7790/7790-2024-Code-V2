@@ -137,8 +137,8 @@ PivotL 20 --
 PivotR 21 --
 ExtendL 22 --
 ExtendR 23 --
-Climb1 24
-Climb2 25
+ClimbL 24 --
+ClimbR 25 --
 
 Shoot1 30 --
 Shoot2 31 --

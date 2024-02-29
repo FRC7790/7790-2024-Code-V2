@@ -24,8 +24,10 @@ public class Shooter extends SubsystemBase
     private Boolean isTriggered;
     DigitalInput noteSensor = new DigitalInput(9);
 
-    public Shooter() {
+    LED led;
+    public Shooter(LED led) {
 
+        this.led = led;
         this.shooterMotor1 = new CANSparkMax(30, CANSparkLowLevel.MotorType.kBrushless);
         this.shooterMotor2 = new CANSparkMax(31, CANSparkLowLevel.MotorType.kBrushless);
         this.shooterMotor3 = new CANSparkMax(32, CANSparkLowLevel.MotorType.kBrushless);
@@ -99,6 +101,7 @@ public Command stopShooterCommand()
 public Command startHarvestCommand()
 {
     Command command = new InstantCommand(()->harvest(), this);
+    
     return command;
 }
 
@@ -125,6 +128,8 @@ public Command stopHarvestCommand()
     public void shoot() {
         intakeMotor.set(.3);
         indexMotor.set(.3);
+
+         led.setShoot();
     }
     
       public void indexStop() {
@@ -136,5 +141,11 @@ public Command stopHarvestCommand()
     public void periodic() {
 
         isTriggered = noteSensor.get();
-    }
+
+        if(isTriggered)
+        {
+            led.noteLoaded();
+        }
+        
+        }
     }

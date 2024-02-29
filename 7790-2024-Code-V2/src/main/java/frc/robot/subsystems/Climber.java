@@ -36,8 +36,8 @@ public class Climber extends SubsystemBase
         this.nonRetracted = 10.0f;
         this.retracted = 2.0f;
 
-        this.climberMotor1 = new CANSparkMax(22, CANSparkLowLevel.MotorType.kBrushless);
-        this.climberMotor2 = new CANSparkMax(23, CANSparkLowLevel.MotorType.kBrushless);
+        this.climberMotor1 = new CANSparkMax(24, CANSparkLowLevel.MotorType.kBrushless);
+        this.climberMotor2 = new CANSparkMax(25, CANSparkLowLevel.MotorType.kBrushless);
 
         this.climberMotor1.restoreFactoryDefaults();
         this.climberMotor1.setIdleMode(IdleMode.kBrake);

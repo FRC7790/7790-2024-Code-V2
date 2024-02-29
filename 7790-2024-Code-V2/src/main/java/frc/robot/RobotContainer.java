@@ -31,7 +31,7 @@ import frc.robot.commands.pathfinding.ButtonMapping;
 import frc.robot.commands.pathfinding.Vision;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Extender;
-//import frc.robot.subsystems.LED;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Pivot;
 
 import frc.robot.subsystems.SwerveSubsystem;
@@ -100,10 +100,11 @@ public class RobotContainer {
   private final JoystickButton target8 = new JoystickButton(this.buttonBox, 8);
   private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
 
-  Shooter shooter = new Shooter();
+  LED led = new LED();
+  Shooter shooter = new Shooter(led);
   Pivot pivot = new Pivot();
-  Extender extender = new Extender();
-  // LED led = new LED();
+  Extender extender = new Extender(led);
+  
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -113,6 +114,9 @@ public class RobotContainer {
     configureBindings();
 
     NamedCommands.registerCommand("ampScore", CommandFactory.ampScoreCommand(extender, shooter, pivot));
+    NamedCommands.registerCommand("shoot", CommandFactory.shootCommand(extender, shooter, pivot));
+    NamedCommands.registerCommand("harvesterOut", CommandFactory.harvestCommand(extender, shooter, pivot));
+    NamedCommands.registerCommand("harvesterIn", CommandFactory.retractHarvestCommand(extender, shooter, pivot));
 
     AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
         () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
@@ -193,7 +197,8 @@ public class RobotContainer {
     this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
 
     
-    //this.target1.onTrue(drivebase.driveToPath(1).andThen((CommandFactory.ampScoreCommand(extender, shooter, pivot))));
+    this.target1.whileTrue(drivebase.driveToPath(1).andThen((CommandFactory.ampScoreCommand(extender, shooter, pivot))));
+    this.target2.whileTrue(drivebase.driveToPath(2).andThen((CommandFactory.shootCommand(extender, shooter, pivot))));
     
 
     /*
@@ -244,7 +249,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("Test", true);
+    return drivebase.getAutonomousCommand("Auto 1", true);
 
   }
 

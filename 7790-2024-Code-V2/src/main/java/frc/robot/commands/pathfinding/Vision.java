@@ -1,5 +1,6 @@
 package frc.robot.commands.pathfinding;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTable;
@@ -9,6 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.SwerveSubsystem;
+import swervelib.SwerveDrive;
 
 public class Vision {
     public static boolean isTargeting = false;
@@ -56,6 +59,19 @@ public class Vision {
            
            
         }
+
+        public static int getTid(){
+        final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-shooter");
+        
+        
+            final double[] value = table.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+            long m_tid = table.getEntry("tid").getInteger(0L);
+           
+            return (int)m_tid;
+           
+           
+        }
+
  public static void getNote(){
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-object");
         
@@ -70,4 +86,8 @@ public class Vision {
            
            
         }
+
+
+        
+        
 }

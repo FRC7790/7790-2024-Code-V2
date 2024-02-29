@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.8378347867806841,
-        "y": 6.701588668877822
+        "x": 1.3737079726411703,
+        "y": 5.556066607628711
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8378347867806841,
-        "y": 7.169747895866162
+        "x": 1.6602937710379906,
+        "y": 5.546821904454621
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.8378347867806841,
-        "y": 7.649043869516311
+        "x": 2.0578160075239067,
+        "y": 5.556066607628711
       },
       "prevControl": {
-        "x": 1.8378347867806841,
-        "y": 7.306559743563596
+        "x": 2.0578160075239067,
+        "y": 5.556066607628711
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "ampScore",
-      "waypointRelativePos": 1.0,
+      "name": "harvesterOut",
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -50,13 +50,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.4412744044191,
+    "rotation": 0,
     "rotateFast": true
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Auto Paths",
   "previewStartingState": {
-    "rotation": -89.99999999999993,
+    "rotation": 0.806929455102312,
     "velocity": 0
   },
   "useDefaultConstraints": true

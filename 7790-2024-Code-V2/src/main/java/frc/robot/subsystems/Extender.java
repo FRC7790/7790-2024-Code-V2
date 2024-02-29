@@ -33,8 +33,10 @@ public class Extender extends SubsystemBase
     private RelativeEncoder extender1Encoder;
     private RelativeEncoder extender2Encoder;
 
+    private LED led;
     
-    public Extender() {
+    public Extender(LED led) {
+        this.led = led;
         this.desiredPosition = 0.0f;
 
         //max 44.0f
@@ -91,7 +93,8 @@ public class Extender extends SubsystemBase
      }
 
     public void setHumanPickup() {
-        this.setDesiredPosition(this.humanPickupPose);       
+        this.setDesiredPosition(this.humanPickupPose);     
+        led.setGroundPose();
     }
     public void setGroundPose() {
         this.setDesiredPosition(this.groundPickupPose);       
@@ -133,7 +136,7 @@ public class Extender extends SubsystemBase
     @Override
     public void periodic() {
 
-        final float maxoutput = 0.5f;
+        final float maxoutput = 0.7f;
 
         double pos1 = extender1Encoder.getPosition();
         double pos2 = extender2Encoder.getPosition();

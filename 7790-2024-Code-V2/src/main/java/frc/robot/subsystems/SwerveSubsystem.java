@@ -10,7 +10,10 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -21,8 +24,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.pathfinding.LimelightHelpers;
 import frc.robot.commands.pathfinding.Vision;
 
+import java.io.Console;
 import java.io.File;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
@@ -106,12 +111,10 @@ public class SwerveSubsystem extends SubsystemBase
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                         new PIDConstants(0.05, 0.0, 0.0), //If you experience any
+                                         new PIDConstants(0.7, 0.0, 0.0), //If you experience any
                                          // oscillation or erratic behavior try lowering "kP"
                                          // Translation PID constants
-                                         new PIDConstants(swerveDrive.swerveController.config.headingPIDF.p,
-                                                          swerveDrive.swerveController.config.headingPIDF.i,
-                                                          swerveDrive.swerveController.config.headingPIDF.d),
+                                         new PIDConstants(0.4, 0, 0.0),
                                          // Rotation PID constants
                                          4.0,
                                          // Max module speed, in m/s
@@ -181,14 +184,24 @@ public class SwerveSubsystem extends SubsystemBase
   {
     String pathName = "Amp Score";
 
+    if(pathNum == 1)
+    {
+      pathName = "Amp Score";
+    }
+    else if(pathNum == 2)
+    {
+      pathName = "Shoot Middle";
+    }
+    
+
 
      PathPlannerPath targetPath = PathPlannerPath.fromPathFile(pathName);
     // Create the constraints to use while pathfinding
     PathConstraints constraints = new PathConstraints(
 
     // orig 4.0, 720
-        swerveDrive.getMaximumVelocity(), 4.0,
-        swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(720));
+        0.5, 0.5,
+        Units.degreesToRadians(180), Units.degreesToRadians(180));
 
       
 
@@ -345,12 +358,10 @@ public class SwerveSubsystem extends SubsystemBase
   {
      Vision.getNote();
 
-     Pose2d pose = Vision.getPose();
-     if(pose != null)
-      resetOdometry(pose);
-
     
-      
+    addVisionMeasurement();
+
+
   }
 
   @Override
@@ -547,4 +558,54 @@ public class SwerveSubsystem extends SubsystemBase
   {
     swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
   }
+
+  private boolean visionIsInitialized = false;
+
+  public void addVisionMeasurement()
+  {
+    LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-shooter");
+
+    if(limelightMeasurement.tagCount == 0)
+      return;
+
+    double poseDifference = getPose().getTranslation()
+    .getDistance(limelightMeasurement.pose.getTranslation());
+    
+     /* Pose2d pose = Vision.getPose();
+     if(pose != null)
+     {
+      resetOdometry(pose);
+    } */
+
+    if(!visionIsInitialized)
+    {
+      resetOdometry(limelightMeasurement.pose);
+      visionIsInitialized = true;
+    }
+
+    if(limelightMeasurement.tagCount >= 2)
+    {
+      swerveDrive.addVisionMeasurement(
+          limelightMeasurement.pose,
+          limelightMeasurement.timestampSeconds,VecBuilder.fill(.5,.5,6));
+          System.out.println("vision 1");
+    }
+    else if(limelightMeasurement.avgTagArea > 0.8 && poseDifference < 0.5 )
+    {
+      swerveDrive.addVisionMeasurement(
+          limelightMeasurement.pose,
+          limelightMeasurement.timestampSeconds,VecBuilder.fill(1,1,12));
+          System.out.println("vision 2");
+    }
+
+    else if(limelightMeasurement.avgTagArea > 0.1 && poseDifference < 0.3 )
+    {
+      swerveDrive.addVisionMeasurement(
+          limelightMeasurement.pose,
+          limelightMeasurement.timestampSeconds,VecBuilder.fill(2,2,6));
+          System.out.println("vision 3");
+    }
+  }
+
+   
 }

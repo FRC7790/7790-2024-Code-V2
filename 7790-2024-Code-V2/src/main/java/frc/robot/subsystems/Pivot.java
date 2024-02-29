@@ -59,9 +59,9 @@ public class Pivot extends SubsystemBase
 
         this.isInitialized = false;
         this.angleMax = 61;
-        this.angleMin = -44.7f;
+        this.angleMin = -45.2f;
         this.humanPickupAngle = 30;
-        this.groundPickupAngle = -44.7f;
+        this.groundPickupAngle = -45.2f;
         //this.movementAngle = 0.0f;
         this.trapScoreAngle = 56;
         //this.speakerScoreAngle = 0.0f;
@@ -69,7 +69,7 @@ public class Pivot extends SubsystemBase
         this.ampScoreAngle = 61;
         this.shootAngle = -31;
         
-        this.pid = new PIDController(0.04, 0.0, 0.0);
+        this.pid = new PIDController(0.06, 0.0, 0.0);
 
         this.pivotEncoder = new CANcoder(15);
 
@@ -169,7 +169,7 @@ public class Pivot extends SubsystemBase
             this.desiredAngle = NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360));
             this.isInitialized = true;
         }
-        final float maxoutput = 0.5f;
+        final float maxoutput = 0.7f;
         final double output = MathUtil.clamp(this.pid.calculate(NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360)), this.desiredAngle), -maxoutput, maxoutput);
         this.pivotMotor1.set(-output);
         SmartDashboard.putNumber("Arm Angle", NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360))); 
