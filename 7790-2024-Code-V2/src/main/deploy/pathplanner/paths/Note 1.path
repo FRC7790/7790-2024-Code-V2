@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.409702819405639,
+        "x": 1.9260417769493865,
         "y": 7.004608294930876
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0407126528538786,
+        "x": 2.5570516103976253,
         "y": 7.004608294930876
       },
       "isLocked": false,
@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 2.2689502521862184,
+        "x": 2.6603258931025917,
         "y": 7.004608294930876
       },
       "prevControl": {
-        "x": 1.7319206066983557,
+        "x": 2.123296247614729,
         "y": 6.9978954243622775
       },
       "nextControl": null,
@@ -30,28 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Harvester Out",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "Intake",
-      "waypointRelativePos": 0.85,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.5,
     "maxAcceleration": 1.0,
@@ -64,7 +43,7 @@
     "rotateFast": true
   },
   "reversed": false,
-  "folder": "Auto Paths",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0
