@@ -88,7 +88,7 @@ public class Extender extends SubsystemBase
             return;
         }
 
-        float scale = 0.3f;
+        float scale = 0.5f;
         this.setDesiredPosition(this.desiredPosition + amount * scale);
      }
 

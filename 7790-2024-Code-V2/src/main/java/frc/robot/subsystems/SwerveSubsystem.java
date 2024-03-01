@@ -206,9 +206,36 @@ public class SwerveSubsystem extends SubsystemBase
     {
       pathName = "Shoot Middle";
     }
+    else if(pathNum == 3)
+    {
+      pathName = "Shoot Left";
+    }
+    else if(pathNum == 4)
+    {
+      pathName = "Shoot Right";
+    }
+    else if(pathNum == 5)
+    {
+      pathName = "Human Pickup Left";
+    }
+    else if(pathNum == 6)
+    {
+      pathName = "Human Pickup Right";
+    }
+    else if(pathNum == 7)
+    {
+      pathName = "Stage L";
+    }
+    else if(pathNum == 8)
+    {
+      pathName = "Stage M";
+    }
+    else if(pathNum == 9)
+    {
+      pathName = "Stage R";
+    }
     
-
-
+  
      PathPlannerPath targetPath = PathPlannerPath.fromPathFile(pathName);
     // Create the constraints to use while pathfinding
     PathConstraints constraints = new PathConstraints(

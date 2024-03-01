@@ -98,7 +98,7 @@ public class Pivot extends SubsystemBase
             return;
         }
 
-        float scale = 0.3f;
+        float scale = 0.5f;
 
         float f = (float)MathUtil.clamp(this.desiredAngle + amount * scale, angleMin,angleMax);
         this.desiredAngle = f;

@@ -64,11 +64,12 @@ public class RobotContainer {
   XboxController driverXbox = new XboxController(0);
   Joystick buttonBox = new Joystick(1);
   XboxController alternate = new XboxController(2);
+  Joystick buttonBox2 = new Joystick(3);
 
-  // private final JoystickButton startShooter = new
-  // JoystickButton(this.driverXbox, 6);
-  // private final JoystickButton stopShooter = new
-  // JoystickButton(this.driverXbox, 5);
+   private final JoystickButton startShooter = new
+   JoystickButton(this.driverXbox, 3);
+   private final JoystickButton stopShooter = new
+   JoystickButton(this.driverXbox, 4);
 
   private final JoystickButton harvestManual = new JoystickButton(driverXbox, 1);
   private final JoystickButton harvestManualReverse = new JoystickButton(driverXbox, 2);
@@ -80,7 +81,7 @@ public class RobotContainer {
   // private final JoystickButton indexStop = new JoystickButton(this.driverXbox,
   // 1);
 
-  private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
+  //private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
 
   private final POVButton ampScore = new POVButton(this.driverXbox, 0);
   private final POVButton ampScoreRetract = new POVButton(this.driverXbox, 180);
@@ -93,15 +94,27 @@ public class RobotContainer {
   // private final POVButton GroundPickupPivot = new POVButton(this.driverXbox,
   // 270);
 
-  private final JoystickButton target1 = new JoystickButton(this.buttonBox, 1);
-  private final JoystickButton target2 = new JoystickButton(this.buttonBox, 2);
-  private final JoystickButton target3 = new JoystickButton(this.buttonBox, 3);
-  private final JoystickButton target4 = new JoystickButton(this.buttonBox, 4);
-  private final JoystickButton target5 = new JoystickButton(this.buttonBox, 5);
-  private final JoystickButton target6 = new JoystickButton(this.buttonBox, 6);
-  private final JoystickButton target7 = new JoystickButton(this.buttonBox, 7);
-  private final JoystickButton target8 = new JoystickButton(this.buttonBox, 8);
-  private final JoystickButton target9 = new JoystickButton(this.buttonBox, 9);
+  private final JoystickButton speakerLeft = new JoystickButton(this.buttonBox, 1);
+  private final JoystickButton speakerMiddle = new JoystickButton(this.buttonBox, 2);
+  private final JoystickButton speakerRight = new JoystickButton(this.buttonBox, 3);
+  private final JoystickButton frontLeftField = new JoystickButton(this.buttonBox, 4);
+  private final JoystickButton frontMiddleField = new JoystickButton(this.buttonBox, 5);
+  private final JoystickButton frontRightField = new JoystickButton(this.buttonBox, 6);
+  private final JoystickButton midLeftField = new JoystickButton(this.buttonBox, 7);
+  private final JoystickButton midMiddleField = new JoystickButton(this.buttonBox, 8);
+  private final JoystickButton midRightField = new JoystickButton(this.buttonBox, 9);
+
+  private final JoystickButton sourceLeft = new JoystickButton(this.buttonBox, 1);
+  private final JoystickButton backField = new JoystickButton(this.buttonBox, 2);
+  private final JoystickButton sourceRight = new JoystickButton(this.buttonBox, 3);
+  private final JoystickButton StageL = new JoystickButton(this.buttonBox, 4);
+  private final JoystickButton StageM = new JoystickButton(this.buttonBox, 5);
+  private final JoystickButton StageR = new JoystickButton(this.buttonBox, 6);
+  //private final JoystickButton ShootStage1 = new JoystickButton(this.buttonBox, 7);
+  //private final JoystickButton ShootStage2 = new JoystickButton(this.buttonBox, 8);
+  //private final JoystickButton ShootStage3 = new JoystickButton(this.buttonBox, 9);
+  private final JoystickButton amp = new JoystickButton(this.buttonBox, 10);
+
 
 
   LED led = new LED();
@@ -207,25 +220,33 @@ public class RobotContainer {
     //this.shoot.onTrue(new InstantCommand(() -> this.shooter.shoot(), new Subsystem[0]));
     // this.indexStop.onFalse(new InstantCommand(() -> this.shooter.indexStop(), new
     // Subsystem[0]));
-    this.targetingMode.onTrue(new InstantCommand(() -> Vision.targetingOn(), new Subsystem[0]));
-    this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
+    
+    //this.targetingMode.onTrue(new InstantCommand(() -> Vision.targetingOn(), new Subsystem[0]));
+    //this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
 
     
-    this.target1.whileTrue(drivebase.driveToPath(1).andThen((CommandFactory.ampScoreCommand(extender, shooter, pivot))));
-    this.target2.whileTrue(drivebase.driveToPath(2).andThen((CommandFactory.shootCommand(extender, shooter, pivot))));
+    this.amp.whileTrue(drivebase.driveToPath(1).andThen((CommandFactory.ampScoreCommand(extender, shooter, pivot))));
+    this.speakerMiddle.whileTrue(drivebase.driveToPath(2).andThen((CommandFactory.shootCommand(extender, shooter, pivot))));
+    this.speakerLeft.whileTrue(drivebase.driveToPath(3).andThen((CommandFactory.shootCommand(extender, shooter, pivot))));
+    this.speakerRight.whileTrue(drivebase.driveToPath(4).andThen((CommandFactory.shootCommand(extender, shooter, pivot))));
     
-
-    /*
-     * this.target1.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
-     * this.target2.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
-     * this.target3.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
-     * this.target4.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(4)));
-     * this.target5.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(5)));
-     * this.target6.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(6)));
-     * this.target7.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
-     * this.target8.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(8)));
-     * this.target9.onTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(9)));
-     */
+    this.sourceLeft.whileTrue(drivebase.driveToPath(5).andThen((CommandFactory.humanPickupCommand(extender, shooter, pivot))));
+    this.sourceRight.whileTrue(drivebase.driveToPath(6).andThen((CommandFactory.humanPickupCommand(extender, shooter, pivot))));
+    
+    this.StageL.whileTrue(drivebase.driveToPath(7));
+    this.StageM.whileTrue(drivebase.driveToPath(8));
+    this.StageR.whileTrue(drivebase.driveToPath(9));
+    
+    this.frontMiddleField.whileTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(1)));
+    this.frontRightField.whileTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(2)));
+    this.frontLeftField.whileTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(3)));
+    this.midLeftField.whileTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(4)));
+    this.midMiddleField.whileTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(5)));
+    this.midRightField.whileTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(6)));
+    this.backField.whileTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
+    
+    
+     
 
     this.extender.setDefaultCommand(
         new InstantCommand(() -> this.extender.extendAmount((float) -this.alternate.getRawAxis(1)), extender));
@@ -253,6 +274,10 @@ public class RobotContainer {
     this.harvestManualReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse()));
     this.harvestManualReverse.onFalse(new InstantCommand(() -> this.shooter.harvestStop()));
     
+    this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter()));
+    this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter()));
+    
+
   }
 
   /**
