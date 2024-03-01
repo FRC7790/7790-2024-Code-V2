@@ -43,7 +43,7 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
         .andThen(new WaitCommand(.5))
         .andThen(pivot.setGroundCommand())
         .andThen(shooter.startHarvestCommand());
-
+        
         //same logic as human pickup where leds are triggered here. Auto shutoff as well
 
         command.addRequirements(shooter,pivot,extender);

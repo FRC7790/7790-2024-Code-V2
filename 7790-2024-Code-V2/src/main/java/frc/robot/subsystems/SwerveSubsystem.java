@@ -54,6 +54,8 @@ public class SwerveSubsystem extends SubsystemBase
   public        double      maximumSpeed = Units.feetToMeters(14.5);
 
 
+  public boolean isFieldOriented = true;
+
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -102,6 +104,17 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive = new SwerveDrive(driveCfg, controllerCfg, maximumSpeed);
   }
 
+
+  public void setIsFieldOriented(){
+
+    isFieldOriented = true;
+
+  }
+
+  public void setIsNotFieldOriented(){
+    isFieldOriented = false;
+
+  }
   /**
    * Setup AutoBuilder for PathPlanner.
    */
@@ -229,6 +242,7 @@ public class SwerveSubsystem extends SubsystemBase
   public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier headingX,
                               DoubleSupplier headingY)
   {
+   
     // swerveDrive.setHeadingCorrection(true); // Normally you would want heading correction for this kind of control.
     return run(() -> {
       double xInput = Math.pow(translationX.getAsDouble(), 3); // Smooth controll out
@@ -239,7 +253,11 @@ public class SwerveSubsystem extends SubsystemBase
                                                                       headingY.getAsDouble(),
                                                                       swerveDrive.getOdometryHeading().getRadians(),
                                                                       swerveDrive.getMaximumVelocity()));
-    });
+    
+    
+                                                                    });
+     
+
   }
 
   /**
@@ -307,7 +325,7 @@ public class SwerveSubsystem extends SubsystemBase
       swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble(), 3) * swerveDrive.getMaximumVelocity(),
                                           Math.pow(translationY.getAsDouble(), 3) * swerveDrive.getMaximumVelocity()),
                         Math.pow(rot , 3) * swerveDrive.getMaximumAngularVelocity() ,
-                        true,
+                        isFieldOriented,
                         false);
     });
   }

@@ -56,8 +56,8 @@ public class Shooter extends SubsystemBase
       
     }
     public void startShooter() {
-        shooterMotor1.set(-.2);
-        shooterMotor3.set(.3);
+        shooterMotor1.set(-.3);
+        shooterMotor3.set(.35);
     }
         public void startAmpShooter() {
         shooterMotor1.set(-.1);
@@ -113,7 +113,7 @@ public Command stopHarvestCommand()
 
     public void harvest() {
 
-        intakeMotor.set(.25);
+        intakeMotor.set(.45);
         indexMotor.set(.25);
     }
 
@@ -142,7 +142,7 @@ public Command stopHarvestCommand()
 
         isTriggered = noteSensor.get();
 
-        if(isTriggered)
+        if(isTriggered == true)
         {
             led.noteLoaded();
         }

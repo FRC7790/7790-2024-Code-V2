@@ -16,6 +16,8 @@ public class LED extends SubsystemBase {
 
     double lastRunTime = Timer.getFPGATimestamp();
     
+    private int  currentPattern;
+    
     public LED() {
         desiredLight = "1";
         noteLoaded = "2";
@@ -50,7 +52,7 @@ public class LED extends SubsystemBase {
         double curTime = Timer.getFPGATimestamp();
         double timeSinceLastRun = curTime - lastRunTime;
 
-        if(timeSinceLastRun > 0.5f)
+        if(timeSinceLastRun > 3f)
         {
             runTheTask = true;
         }
@@ -61,8 +63,16 @@ public class LED extends SubsystemBase {
 
         if(runTheTask)
         {
-            
-            ledInfo.writeString(desiredLight);
+            //do work
+            currentPattern++;
+            if(currentPattern > 4)
+            {
+                currentPattern = 0;
+            }
+
+            String numString = String.valueOf(currentPattern);
+
+            ledInfo.writeString(numString);
 
             lastRunTime = curTime;
         }

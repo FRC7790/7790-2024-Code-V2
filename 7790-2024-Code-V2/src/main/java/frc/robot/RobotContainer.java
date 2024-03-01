@@ -232,9 +232,9 @@ public class RobotContainer {
     this.pivot.setDefaultCommand(
         new InstantCommand(() -> this.pivot.moveAmount((float) this.alternate.getRawAxis(2)), pivot));
 
-    this.harvest.onTrue(CommandFactory.harvestCommand(extender, shooter, pivot));
+    this.harvest.onTrue(CommandFactory.harvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsNotFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOn())));
+    this.harvest.onFalse(CommandFactory.retractHarvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOff())));
 
-    this.harvest.onFalse(CommandFactory.retractHarvestCommand(extender, shooter, pivot));
     this.ampScore.onTrue(CommandFactory.ampScoreCommand(extender, shooter, pivot));
 
     this.ampScoreRetract.onTrue(CommandFactory.ampScoreRetractCommand(extender, shooter, pivot));
