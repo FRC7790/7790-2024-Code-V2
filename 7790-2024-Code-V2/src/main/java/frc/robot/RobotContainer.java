@@ -35,6 +35,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Climber;
 
 import frc.robot.subsystems.SwerveSubsystem;
 import java.io.File;
@@ -68,8 +69,6 @@ public class RobotContainer {
 
    private final JoystickButton startShooter = new
    JoystickButton(this.driverXbox, 3);
-   private final JoystickButton stopShooter = new
-   JoystickButton(this.driverXbox, 4);
 
   private final JoystickButton harvestManual = new JoystickButton(driverXbox, 1);
   private final JoystickButton harvestManualReverse = new JoystickButton(driverXbox, 2);
@@ -94,26 +93,26 @@ public class RobotContainer {
   // private final POVButton GroundPickupPivot = new POVButton(this.driverXbox,
   // 270);
 
-  private final JoystickButton speakerLeft = new JoystickButton(this.buttonBox, 1);
+  private final JoystickButton speakerLeft = new JoystickButton(this.buttonBox, 3);
   private final JoystickButton speakerMiddle = new JoystickButton(this.buttonBox, 2);
-  private final JoystickButton speakerRight = new JoystickButton(this.buttonBox, 3);
-  private final JoystickButton frontLeftField = new JoystickButton(this.buttonBox, 4);
+  private final JoystickButton speakerRight = new JoystickButton(this.buttonBox, 1);
+  private final JoystickButton frontLeftField = new JoystickButton(this.buttonBox, 6);
   private final JoystickButton frontMiddleField = new JoystickButton(this.buttonBox, 5);
-  private final JoystickButton frontRightField = new JoystickButton(this.buttonBox, 6);
-  private final JoystickButton midLeftField = new JoystickButton(this.buttonBox, 7);
+  private final JoystickButton frontRightField = new JoystickButton(this.buttonBox, 4);
+  private final JoystickButton midLeftField = new JoystickButton(this.buttonBox, 9);
   private final JoystickButton midMiddleField = new JoystickButton(this.buttonBox, 8);
-  private final JoystickButton midRightField = new JoystickButton(this.buttonBox, 9);
+  private final JoystickButton midRightField = new JoystickButton(this.buttonBox, 7);
 
-  private final JoystickButton sourceLeft = new JoystickButton(this.buttonBox, 1);
-  private final JoystickButton backField = new JoystickButton(this.buttonBox, 2);
-  private final JoystickButton sourceRight = new JoystickButton(this.buttonBox, 3);
-  private final JoystickButton StageL = new JoystickButton(this.buttonBox, 4);
-  private final JoystickButton StageM = new JoystickButton(this.buttonBox, 5);
-  private final JoystickButton StageR = new JoystickButton(this.buttonBox, 6);
-  //private final JoystickButton ShootStage1 = new JoystickButton(this.buttonBox, 7);
-  //private final JoystickButton ShootStage2 = new JoystickButton(this.buttonBox, 8);
-  //private final JoystickButton ShootStage3 = new JoystickButton(this.buttonBox, 9);
-  private final JoystickButton amp = new JoystickButton(this.buttonBox, 10);
+  private final JoystickButton sourceLeft = new JoystickButton(this.buttonBox2, 1);
+  private final JoystickButton backField = new JoystickButton(this.buttonBox2, 2);
+  private final JoystickButton sourceRight = new JoystickButton(this.buttonBox2, 3);
+  private final JoystickButton StageL = new JoystickButton(this.buttonBox2, 4);
+  private final JoystickButton StageM = new JoystickButton(this.buttonBox2, 5);
+  private final JoystickButton StageR = new JoystickButton(this.buttonBox2, 6);
+  //private final JoystickButton ShootStage1 = new JoystickButton(this.buttonBox2, 7);
+  //private final JoystickButton ShootStage2 = new JoystickButton(this.buttonBox2, 8);
+  //private final JoystickButton ShootStage3 = new JoystickButton(this.buttonBox2, 9);
+  private final JoystickButton amp = new JoystickButton(this.buttonBox2, 10);
 
 
 
@@ -121,6 +120,7 @@ public class RobotContainer {
     Shooter shooter = new Shooter(led);
     Pivot pivot = new Pivot();
     Extender extender = new Extender(led);
+   // Climber climber = new Climber();
 
      private final SendableChooser<Command> autoChooser;
   
@@ -138,7 +138,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("harvesterIn", CommandFactory.retractHarvestCommand(extender, shooter, pivot));
 
 
-    autoChooser = AutoBuilder.buildAutoChooser("Auto 1");
+    autoChooser = AutoBuilder.buildAutoChooser("Auto 2-3");
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -253,7 +253,11 @@ public class RobotContainer {
     this.pivot.setDefaultCommand(
         new InstantCommand(() -> this.pivot.moveAmount((float) this.alternate.getRawAxis(2)), pivot));
 
-    this.harvest.onTrue(CommandFactory.harvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsNotFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOn())));
+    //this.climber.setDefaultCommand(new InstantCommand(() -> this.climber.setDesiredSpeeds((float) -this.driverXbox.getRawAxis(2),(float) this.driverXbox.getRawAxis(3)), climber));
+    
+
+    
+    this.harvest.onTrue(CommandFactory.harvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsNotFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOff())));
     this.harvest.onFalse(CommandFactory.retractHarvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOff())));
 
     this.ampScore.onTrue(CommandFactory.ampScoreCommand(extender, shooter, pivot));
@@ -275,8 +279,9 @@ public class RobotContainer {
     this.harvestManualReverse.onFalse(new InstantCommand(() -> this.shooter.harvestStop()));
     
     this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter()));
-    this.stopShooter.onTrue(new InstantCommand(() -> this.shooter.stopShooter()));
+    this.startShooter.onFalse(new InstantCommand(() -> this.shooter.stopShooter()));
     
+
 
   }
 

@@ -56,8 +56,8 @@ public class Shooter extends SubsystemBase
       
     }
     public void startShooter() {
-        shooterMotor1.set(-.3);
-        shooterMotor3.set(.35);
+        shooterMotor1.set(-.45);
+        shooterMotor3.set(.4);
     }
         public void startAmpShooter() {
         shooterMotor1.set(-.1);
@@ -114,7 +114,7 @@ public Command stopHarvestCommand()
     public void harvest() {
 
         intakeMotor.set(.45);
-        indexMotor.set(.25);
+        indexMotor.set(.35);
     }
 
     public void harvestStop() {
@@ -122,12 +122,12 @@ public Command stopHarvestCommand()
         indexMotor.set(0);
     }
     public void harvestReverse() {
-        intakeMotor.set(-.1);
-        indexMotor.set(-.1);
+        intakeMotor.set(-.2);
+        indexMotor.set(-.2);
     }
     public void shoot() {
         intakeMotor.set(.3);
-        indexMotor.set(.3);
+        indexMotor.set(.4);
 
          led.setShoot();
     }

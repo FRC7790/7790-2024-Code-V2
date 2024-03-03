@@ -2,11 +2,16 @@ package frc.robot.commands.pathfinding;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class ButtonMapping {
     public static Pose2d buttonToPose(int buttonNum){
+        
         float x = 0;
         float y = 0;
+
+        double fieldWidth = 16.54;
+        double midField = fieldWidth / 2;
 
         switch (buttonNum) {
             case 1:
@@ -49,6 +54,15 @@ public class ButtonMapping {
             default:
                 break;
         }
+
+        var alliance = DriverStation.getAlliance();
+         boolean isRedAlliance =  alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+
+         if(isRedAlliance){
+
+            x = (float)(fieldWidth - x);
+
+         }
         Pose2d targetPose = new Pose2d(x, y, Rotation2d.fromDegrees(180));
 
         return targetPose;

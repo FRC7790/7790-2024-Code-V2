@@ -2,87 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.891411350390268,
-      "y": 5.509843091758257
+      "x": 1.043143800573316,
+      "y": 4.236583330309518
     },
-    "rotation": 0
+    "rotation": -55.26285955518589
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Shoot Middle"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "harvesterOut"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "harvesterIn"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Shoot Middle"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "harvesterOut"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "harvesterIn"
-          }
-        },
         {
           "type": "path",
           "data": {
@@ -98,7 +26,43 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "harvesterIn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drive Out"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "harvesterOut"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note 8"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "harvesterIn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Side"
           }
         }
       ]

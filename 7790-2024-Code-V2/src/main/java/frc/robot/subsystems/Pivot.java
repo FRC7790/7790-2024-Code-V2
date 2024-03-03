@@ -20,7 +20,7 @@ public class Pivot extends SubsystemBase
 
     private boolean isInitialized;
 
-    private float angleOffset = 180;
+    private float angleOffset =-2;
     private float desiredAngle;
     private float angleMax;
     private float angleMin;
@@ -57,11 +57,15 @@ public class Pivot extends SubsystemBase
         
         //angle min -27
 
+        // Shoot Medium 18.24
+
+        //17.44 long
+
         this.isInitialized = false;
         this.angleMax = 61;
-        this.angleMin = -42f;
-        this.humanPickupAngle = 30;
-        this.groundPickupAngle = -42f;
+        this.angleMin = -45f;
+        this.humanPickupAngle = 19;
+        this.groundPickupAngle = -45f;
         //this.movementAngle = 0.0f;
         this.trapScoreAngle = 56;
         //this.speakerScoreAngle = 0.0f;
@@ -94,13 +98,19 @@ public class Pivot extends SubsystemBase
     
      public void moveAmount(final float amount) {
 
-        if (Math.abs(amount)<0.1){
+        if (Math.abs(amount)<0.2){
             return;
         }
 
         float scale = 0.5f;
 
-        float f = (float)MathUtil.clamp(this.desiredAngle + amount * scale, angleMin,angleMax);
+       // float f = (float)MathUtil.clamp(this.desiredAngle + amount * scale, angleMin,angleMax);
+
+       //disabled after first match jackson
+
+       float f = (float)this.desiredAngle + amount * scale;
+
+
         this.desiredAngle = f;
      }
 
@@ -169,6 +179,8 @@ public class Pivot extends SubsystemBase
             this.desiredAngle = NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360));
             this.isInitialized = true;
         }
+
+        // Max was 0.7f
         final float maxoutput = 0.7f;
         final double output = MathUtil.clamp(this.pid.calculate(NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360)), this.desiredAngle), -maxoutput, maxoutput);
         this.pivotMotor1.set(-output);

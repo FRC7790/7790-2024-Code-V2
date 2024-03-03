@@ -84,14 +84,14 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
     public static Command humanPickupCommand(Extender extender, Shooter shooter, Pivot pivot)
     {
         Command command = pivot.setHumanPickupCommand()
+        .andThen(new WaitCommand(.5))
         .andThen(extender.setHumanPickupCommand())
-        .andThen(new WaitCommand(1))
         .andThen(shooter.startHarvestCommand())
 
         //Add logic to start harvest to auto stop on after sensor triggered 
         //that would move it onto the next command
 
-        .andThen(new WaitCommand(5))
+        .andThen(new WaitCommand(4))
         //this ^ goes away after auto note detection
 
         //require led to change here

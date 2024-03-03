@@ -224,15 +224,15 @@ public class SwerveSubsystem extends SubsystemBase
     }
     else if(pathNum == 7)
     {
-      pathName = "Stage L";
+      pathName = "Hang L";
     }
     else if(pathNum == 8)
     {
-      pathName = "Stage M";
+      pathName = "Hang M";
     }
     else if(pathNum == 9)
     {
-      pathName = "Stage R";
+      pathName = "Hang R";
     }
     
   
@@ -241,8 +241,8 @@ public class SwerveSubsystem extends SubsystemBase
     PathConstraints constraints = new PathConstraints(
 
     // orig 4.0, 720
-        0.5, 0.5,
-        Units.degreesToRadians(180), Units.degreesToRadians(180));
+        1.5, 1.5,
+        Units.degreesToRadians(360), Units.degreesToRadians(360));
 
       
 
@@ -348,9 +348,23 @@ public class SwerveSubsystem extends SubsystemBase
       double rot = angularRotationX.getAsDouble();
       rot -= error;
       
+      double multiplier = 1;
 
-      swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble(), 3) * swerveDrive.getMaximumVelocity(),
-                                          Math.pow(translationY.getAsDouble(), 3) * swerveDrive.getMaximumVelocity()),
+       var alliance = DriverStation.getAlliance();
+      boolean isRedAlliance =  alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+
+      if (isRedAlliance == true){
+        multiplier = -1;
+      }
+
+
+      if(!isFieldOriented){
+        multiplier = 1;
+      }
+
+
+      swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble() * multiplier, 3) * swerveDrive.getMaximumVelocity(),
+                                          Math.pow(translationY.getAsDouble() * multiplier, 3) * swerveDrive.getMaximumVelocity()),
                         Math.pow(rot , 3) * swerveDrive.getMaximumAngularVelocity() ,
                         isFieldOriented,
                         false);
@@ -473,7 +487,11 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public void zeroGyro()
   {
+
+    
     swerveDrive.zeroGyro();
+
+
   }
 
   /**
@@ -636,7 +654,7 @@ public class SwerveSubsystem extends SubsystemBase
           limelightMeasurement.timestampSeconds,VecBuilder.fill(.5,.5,6));
          // System.out.println("vision 1");
     }
-    else if(limelightMeasurement.avgTagArea > 0.8 && poseDifference < 0.5 )
+    else if((limelightMeasurement.avgTagArea > 0.8) && poseDifference < 0.5 )
     {
       swerveDrive.addVisionMeasurement(
           limelightMeasurement.pose,
@@ -644,7 +662,7 @@ public class SwerveSubsystem extends SubsystemBase
           //System.out.println("vision 2");
     }
 
-    else if(limelightMeasurement.avgTagArea > 0.1 && poseDifference < 0.3 )
+    else if((limelightMeasurement.avgTagArea > 0.1) && poseDifference < 0.3 )
     {
       swerveDrive.addVisionMeasurement(
           limelightMeasurement.pose,

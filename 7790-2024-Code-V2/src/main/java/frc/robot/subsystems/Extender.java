@@ -43,7 +43,7 @@ public class Extender extends SubsystemBase
 
         this.extenderMax = 44.5f;
         this.extenderMin = 0.5f;
-        this.humanPickupPose = 30.0f;
+        this.humanPickupPose = 44.5f;
         this.groundPickupPose = 44.5f;
         this.trapScorePose = 44.5f;
         this.speakerScorePose = 0.0f;
@@ -84,7 +84,7 @@ public class Extender extends SubsystemBase
     public void extendAmount(final float amount) {
 
         
-        if (Math.abs(amount)<0.1){
+        if (Math.abs(amount)<0.2){
             return;
         }
 
