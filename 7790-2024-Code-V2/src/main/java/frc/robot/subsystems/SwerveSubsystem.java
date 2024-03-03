@@ -55,7 +55,8 @@ public class SwerveSubsystem extends SubsystemBase
 
 
   public boolean isFieldOriented = true;
-
+  
+  public boolean isAiming = false;
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -345,8 +346,19 @@ public class SwerveSubsystem extends SubsystemBase
       //System.out.println("ang" + angularRotationX.getAsDouble());
       //System.out.println(angularRotationX);
       // System.out.println();
+      if(!isAiming) {
+      getAngleOfLineBetweenTwoPoints();
+    }
+      
+
       double rot = angularRotationX.getAsDouble();
-      rot -= error;
+
+      if (Vision.isTargeting) {
+        rot -= error;
+      }
+      else{
+        // going to put value for aiming
+      }
       
       double multiplier = 1;
 
@@ -361,7 +373,6 @@ public class SwerveSubsystem extends SubsystemBase
       if(!isFieldOriented){
         multiplier = 1;
       }
-
 
       swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble() * multiplier, 3) * swerveDrive.getMaximumVelocity(),
                                           Math.pow(translationY.getAsDouble() * multiplier, 3) * swerveDrive.getMaximumVelocity()),
@@ -671,5 +682,71 @@ public class SwerveSubsystem extends SubsystemBase
     }
   }
 
-   
+  public void setIsAiming(){
+    boolean isAiming = true;
+  }
+  public void setIsNotAiming(){
+    boolean isAiming = false;
+  }
+  
+  public Rotation2d getAngleOfLineBetweenTwoPoints()
+  {
+
+      double computedAngle = 0;
+
+      double fieldWidth = 16.54;
+      double midField = fieldWidth / 2;
+
+      float x1;
+      float y1;
+      float x2;
+      float y2;
+
+      //Set to AimingPose
+      x1 = 0;
+      y1 = 0;
+
+
+      //SpeakerPose
+      x2 = 0;
+      y2 = 5.55f;
+  
+
+      getPose();
+
+    
+
+
+
+
+
+      var alliance = DriverStation.getAlliance();
+       boolean isRedAlliance =  alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+
+       if(isRedAlliance){
+
+          x1 = (float)(fieldWidth - x1);
+
+
+          x2 = (float)(fieldWidth - x2);
+       }
+
+
+      
+      
+      
+
+  
+
+      
+
+      double xDiff = x1 - x2;
+      double yDiff = y1 - y2;
+
+      computedAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
+
+      
+      return Rotation2d.fromDegrees(computedAngle);
+  }
+  
 }

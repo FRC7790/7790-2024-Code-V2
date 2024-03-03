@@ -144,11 +144,12 @@ public class Extender extends SubsystemBase
         final double output = MathUtil.clamp(this.pid.calculate(pos1, this.desiredPosition), -maxoutput, maxoutput);
         extenderMotor1.set(output);
 
-        System.out.println(output);
+      //  System.out.println(output);
 
         final double output2 = MathUtil.clamp(this.pid.calculate(pos2, this.desiredPosition), -maxoutput, maxoutput);
         extenderMotor2.set(output2);
-        System.out.println(output2);
+
+      //  System.out.println(output2);d
 
     }
 
