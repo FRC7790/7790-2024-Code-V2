@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.pathfinding.LimelightHelpers;
 import frc.robot.commands.pathfinding.Vision;
+import frc.robot.commands.pathfinding.Aiming;
 
 import java.io.Console;
 import java.io.File;
@@ -346,8 +347,8 @@ public class SwerveSubsystem extends SubsystemBase
       //System.out.println("ang" + angularRotationX.getAsDouble());
       //System.out.println(angularRotationX);
       // System.out.println();
-      if(!isAiming) {
-      getAngleOfLineBetweenTwoPoints();
+      if(!Aiming.isAiming) {
+      double computedAngle = Aiming.getAngleOfLineBetweenTwoPoints(getPose());
     }
       
 
@@ -680,73 +681,6 @@ public class SwerveSubsystem extends SubsystemBase
           limelightMeasurement.timestampSeconds,VecBuilder.fill(2,2,6));
           //System.out.println("vision 3");
     }
-  }
-
-  public void setIsAiming(){
-    boolean isAiming = true;
-  }
-  public void setIsNotAiming(){
-    boolean isAiming = false;
-  }
-  
-  public Rotation2d getAngleOfLineBetweenTwoPoints()
-  {
-
-      double computedAngle = 0;
-
-      double fieldWidth = 16.54;
-      double midField = fieldWidth / 2;
-
-      float x1;
-      float y1;
-      float x2;
-      float y2;
-
-      //Set to AimingPose
-      x1 = 0;
-      y1 = 0;
-
-
-      //SpeakerPose
-      x2 = 0;
-      y2 = 5.55f;
-  
-
-      getPose();
-
-    
-
-
-
-
-
-      var alliance = DriverStation.getAlliance();
-       boolean isRedAlliance =  alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
-
-       if(isRedAlliance){
-
-          x1 = (float)(fieldWidth - x1);
-
-
-          x2 = (float)(fieldWidth - x2);
-       }
-
-
-      
-      
-      
-
-  
-
-      
-
-      double xDiff = x1 - x2;
-      double yDiff = y1 - y2;
-
-      computedAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
-
-      
-      return Rotation2d.fromDegrees(computedAngle);
   }
   
 }
