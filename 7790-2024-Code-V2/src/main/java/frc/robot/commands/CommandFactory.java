@@ -39,7 +39,8 @@ public class CommandFactory {
 
 public static Command harvestCommand(Extender extender, Shooter shooter, Pivot pivot)
     {
-        Command command = extender.groundScoreCommand()
+        Command command = pivot.setHomeCommand()
+        .andThen(extender.groundScoreCommand())
         .andThen(new WaitCommand(.5))
         .andThen(pivot.setGroundCommand())
         .andThen(shooter.startHarvestCommand());

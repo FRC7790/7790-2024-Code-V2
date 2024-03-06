@@ -272,8 +272,12 @@ public class RobotContainer {
     
 
     
-    this.harvest.onTrue(CommandFactory.harvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsNotFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOff())));
+    this.harvest.onTrue(CommandFactory.harvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsNotFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOn())));
     this.harvest.onFalse(CommandFactory.retractHarvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOff())));
+
+   // this.harvest.onTrue((new InstantCommand(() -> Vision.targetingOn())));
+    //this.harvest.onFalse((new InstantCommand(() -> Vision.targetingOff())));
+
 
     this.ampScore.onTrue(CommandFactory.ampScoreCommand(extender, shooter, pivot));
 

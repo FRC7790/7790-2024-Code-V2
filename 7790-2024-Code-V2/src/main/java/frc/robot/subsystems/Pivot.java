@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.pathfinding.Aiming;
 
 public class Pivot extends SubsystemBase
 {
@@ -32,6 +33,8 @@ public class Pivot extends SubsystemBase
     private float homeStateAngle;
     private float shootAngle;
     private float movementAngle;
+
+    private float distanceBasedShootAngle;
     //This should be used while arm is extending/retracting to clear frame.
 
     public float distanceValue;
@@ -72,6 +75,9 @@ public class Pivot extends SubsystemBase
         this.homeStateAngle = -27;
         this.ampScoreAngle = 61;
         this.shootAngle = -27;
+        
+        this.distanceBasedShootAngle = -27;
+        // default to home state
         
         this.pid = new PIDController(0.08, 0.0, 0.0);
 
@@ -180,6 +186,9 @@ public class Pivot extends SubsystemBase
             this.isInitialized = true;
         }
 
+        if(Aiming.isAiming){
+           this.desiredAngle = Aiming.angle;
+        }
         // Max was 0.7f
         final float maxoutput = 0.7f;
         final double output = MathUtil.clamp(this.pid.calculate(NormalizeAngle((float)(this.pivotEncoder.getAbsolutePosition().getValue()*360)), this.desiredAngle), -maxoutput, maxoutput);

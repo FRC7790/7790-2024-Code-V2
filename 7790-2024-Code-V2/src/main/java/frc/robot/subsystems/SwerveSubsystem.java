@@ -325,9 +325,9 @@ public class SwerveSubsystem extends SubsystemBase
      
       if(Vision.isTargeting && Vision.notePose != null)
       {
-        double speed = 0.6;
-        double speed2 = 0.48;
-        double multiplier = 0.05;
+        double speed = 0.3;
+        double speed2 = 0.3;
+        double multiplier = 0.1;
         double x = Vision.notePose.getX();
         error = x * multiplier;
 
@@ -373,15 +373,15 @@ public class SwerveSubsystem extends SubsystemBase
 
       if(Aiming.isAiming)
       {
-        Translation2d stickPose = Aiming.getStickPoseToScore(getPose());
-         double xInput = Math.pow(translationX.getAsDouble(), 3); // Smooth controll out
+        Translation2d stickPose = Aiming.getDiffPoseToScore(getPose());
+        double xInput = Math.pow(translationX.getAsDouble(), 3); // Smooth controll out
         double yInput = Math.pow(translationY.getAsDouble(), 3); // Smooth controll out
 
 
 
-        double compensation = xInput * 1;
+        double compensation = xInput * 8;
 
-        System.out.println(compensation);
+        //System.out.println(compensation);
 
         driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput, yInput,
                                                                       stickPose.getY(),
@@ -451,7 +451,7 @@ public class SwerveSubsystem extends SubsystemBase
     
     addVisionMeasurement();
 
-
+    Aiming.getShootAngle(getPose());
   }
 
   @Override

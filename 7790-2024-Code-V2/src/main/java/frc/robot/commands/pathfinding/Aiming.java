@@ -1,7 +1,9 @@
 package frc.robot.commands.pathfinding;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
@@ -9,6 +11,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class Aiming {
 
     public static boolean isAiming = false;
+
+    public static float angle = -27;
 
     public static void setIsAiming() {
         isAiming = true;
@@ -18,10 +22,18 @@ public class Aiming {
         isAiming = false;
     }
 
-    public static Translation2d getStickPoseToScore(Pose2d botPose)
+    public static Translation2d getDiffPoseToScore(Pose2d botPose)
     {
         // SpeakerPose
         Pose2d speakerPose = new Pose2d (0.0,5.55, Rotation2d.fromDegrees(0));
+
+        var alliance = DriverStation.getAlliance();
+         boolean isRedAlliance =  alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+
+         if(isRedAlliance){
+
+            speakerPose = new Pose2d (16.54,5.55, Rotation2d.fromDegrees(0));
+         }
 
         Translation2d diffPose = botPose.minus(speakerPose).getTranslation();
 
@@ -29,9 +41,36 @@ public class Aiming {
         
     }
 
+    public static double getShootAngle(Pose2d botPose) {
+        
+        Pose2d speakerPose = new Pose2d (0.0,5.55, Rotation2d.fromDegrees(0));
+
+        var alliance = DriverStation.getAlliance();
+         boolean isRedAlliance =  alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+
+         if(isRedAlliance){
+
+            speakerPose = new Pose2d (16.54,5.55, Rotation2d.fromDegrees(0));
+         }
+
+        Translation2d diffPose = botPose.minus(speakerPose).getTranslation();
+         
+        double dist = diffPose.getNorm();
+        
+        System.out.println(dist);
+
+        angle = 0;
+
+        if (dist < 1.7) {
+            angle = -27;
+        }
+        if (dist > 1.7) {
+            angle = -18;
+        }    
+        return angle;
+}
 
 
-// flip for red alliance add
 
 
 
