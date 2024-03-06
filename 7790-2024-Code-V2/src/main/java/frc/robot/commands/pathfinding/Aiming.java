@@ -1,5 +1,7 @@
 package frc.robot.commands.pathfinding;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
@@ -9,14 +11,36 @@ public class Aiming {
     public static boolean isAiming = false;
 
     public static void setIsAiming() {
-        boolean isAiming = true;
+        isAiming = true;
     }
 
     public static void setIsNotAiming() {
-        boolean isAiming = false;
+        isAiming = false;
     }
 
-    public static double getAngleOfLineBetweenTwoPoints(Pose2d aimingPose) {
+    public static Translation2d getStickPoseToScore(Pose2d botPose)
+    {
+        // SpeakerPose
+        Pose2d speakerPose = new Pose2d (0.0,5.55, Rotation2d.fromDegrees(0));
+
+        Translation2d diffPose = botPose.minus(speakerPose).getTranslation();
+
+        return diffPose;
+        
+    }
+
+
+
+// flip for red alliance add
+
+
+
+
+
+
+
+
+ /*    public static double getAngleOfLineBetweenTwoPoints(Pose2d aimingPose) {
 
         
         
@@ -63,5 +87,5 @@ public class Aiming {
         computedAngle = Math.toDegrees(Math.atan2(yDiff, xDiff));
 
         return computedAngle;
-    }
+    } */
 }

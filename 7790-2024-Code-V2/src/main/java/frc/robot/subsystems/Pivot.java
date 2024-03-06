@@ -71,7 +71,7 @@ public class Pivot extends SubsystemBase
         //this.speakerScoreAngle = 0.0f;
         this.homeStateAngle = -27;
         this.ampScoreAngle = 61;
-        this.shootAngle = -31;
+        this.shootAngle = -27;
         
         this.pid = new PIDController(0.08, 0.0, 0.0);
 

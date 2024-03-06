@@ -56,8 +56,7 @@ public class SwerveSubsystem extends SubsystemBase
 
 
   public boolean isFieldOriented = true;
-  
-  public boolean isAiming = false;
+
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -347,10 +346,7 @@ public class SwerveSubsystem extends SubsystemBase
       //System.out.println("ang" + angularRotationX.getAsDouble());
       //System.out.println(angularRotationX);
       // System.out.println();
-      if(!Aiming.isAiming) {
-      double computedAngle = Aiming.getAngleOfLineBetweenTwoPoints(getPose());
-    }
-      
+         
 
       double rot = angularRotationX.getAsDouble();
 
@@ -375,13 +371,35 @@ public class SwerveSubsystem extends SubsystemBase
         multiplier = 1;
       }
 
-      swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble() * multiplier, 3) * swerveDrive.getMaximumVelocity(),
-                                          Math.pow(translationY.getAsDouble() * multiplier, 3) * swerveDrive.getMaximumVelocity()),
-                        Math.pow(rot , 3) * swerveDrive.getMaximumAngularVelocity() ,
-                        isFieldOriented,
-                        false);
+      if(Aiming.isAiming)
+      {
+        Translation2d stickPose = Aiming.getStickPoseToScore(getPose());
+         double xInput = Math.pow(translationX.getAsDouble(), 3); // Smooth controll out
+        double yInput = Math.pow(translationY.getAsDouble(), 3); // Smooth controll out
+
+
+
+        double compensation = xInput * 1;
+
+        System.out.println(compensation);
+
+        driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput, yInput,
+                                                                      stickPose.getY(),
+                                                                      stickPose.getX() - compensation,
+                                                                      swerveDrive.getOdometryHeading().getRadians(),
+                                                                      swerveDrive.getMaximumVelocity()));
+      }
+      else
+      {
+        swerveDrive.drive(new Translation2d(Math.pow(translationX.getAsDouble() * multiplier, 3) * swerveDrive.getMaximumVelocity(),
+                                            Math.pow(translationY.getAsDouble() * multiplier, 3) * swerveDrive.getMaximumVelocity()),
+                          Math.pow(rot , 3) * swerveDrive.getMaximumAngularVelocity() ,
+                          isFieldOriented,
+                          false);
+      }
     });
   }
+  
 
   /**
    * The primary method for controlling the drivebase.  Takes a {@link Translation2d} and a rotation rate, and

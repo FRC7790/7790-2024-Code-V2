@@ -29,6 +29,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.CommandFactory;
 //import frc.robot.commands.autos.GroundPickupExtension;
 import frc.robot.commands.drivebase.AbsoluteDriveAdv;
+import frc.robot.commands.pathfinding.Aiming;
 import frc.robot.commands.pathfinding.ButtonMapping;
 import frc.robot.commands.pathfinding.Vision;
 import frc.robot.subsystems.Shooter;
@@ -115,8 +116,10 @@ public class RobotContainer {
   private final JoystickButton amp = new JoystickButton(this.buttonBox2, 10);
 
 
+  private final JoystickButton setIsAiming = new JoystickButton(this.driverXbox, 4);
 
-  LED led = new LED();
+
+    LED led = new LED();
     Shooter shooter = new Shooter(led);
     Pivot pivot = new Pivot();
     Extender extender = new Extender(led);
@@ -204,7 +207,19 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-    new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
+
+
+
+
+
+//    new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
+    
+      // put on joystick as failsafe
+    
+    
+    
+    
+    
     // new JoystickButton(driverXbox, 3).onTrue(new
     // InstantCommand(drivebase::addFakeVisionReading));
 
@@ -245,8 +260,8 @@ public class RobotContainer {
     this.midRightField.whileTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(6)));
     this.backField.whileTrue(drivebase.driveToPose(ButtonMapping.buttonToPose(7)));
     
-    
-     
+    this.setIsAiming.onTrue(new InstantCommand(() -> Aiming.setIsAiming()));
+    this.setIsAiming.onFalse(new InstantCommand(() -> Aiming.setIsNotAiming()));
 
     this.extender.setDefaultCommand(
         new InstantCommand(() -> this.extender.extendAmount((float) -this.alternate.getRawAxis(1)), extender));
