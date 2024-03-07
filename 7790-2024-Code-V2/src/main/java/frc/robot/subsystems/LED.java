@@ -12,7 +12,7 @@ public class LED extends SubsystemBase {
     private String endGameCelebration;
     private String shoot;
     
-    //SerialPort ledInfo = new SerialPort(9600, SerialPort.Port.kOnboard);
+    SerialPort ledInfo = new SerialPort(9600, SerialPort.Port.kOnboard);
 
     double lastRunTime = Timer.getFPGATimestamp();
     
@@ -72,7 +72,7 @@ public class LED extends SubsystemBase {
 
             String numString = String.valueOf(currentPattern);
 
-           // ledInfo.writeString(numString);
+            ledInfo.writeString(numString);
 
             lastRunTime = curTime;
         }

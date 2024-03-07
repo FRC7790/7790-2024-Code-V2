@@ -115,7 +115,6 @@ public class RobotContainer {
   //private final JoystickButton ShootStage3 = new JoystickButton(this.buttonBox2, 9);
   private final JoystickButton amp = new JoystickButton(this.buttonBox2, 10);
 
-
   private final JoystickButton setIsAiming = new JoystickButton(this.driverXbox, 4);
 
 
@@ -274,7 +273,8 @@ public class RobotContainer {
     
     this.harvest.onTrue(CommandFactory.harvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsNotFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOn())));
     this.harvest.onFalse(CommandFactory.retractHarvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOff())));
-
+    
+    
    // this.harvest.onTrue((new InstantCommand(() -> Vision.targetingOn())));
     //this.harvest.onFalse((new InstantCommand(() -> Vision.targetingOff())));
 

@@ -6,6 +6,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,8 +22,20 @@ public class Shooter extends SubsystemBase
     private CANSparkMax intakeMotor;
     private CANSparkMax indexMotor;
 
-    private Boolean isTriggered;
+    private RelativeEncoder shooter1Encoder;
+    private RelativeEncoder shooter3Encoder;
+
+    public Boolean isTriggered = false;
+
+    private double setpoint1 = 0;
+    private double setpoint3 = 0;
+    
     DigitalInput noteSensor = new DigitalInput(9);
+
+
+    BangBangController controller = new BangBangController();
+    BangBangController controller3 = new BangBangController();
+
 
     LED led;
     public Shooter(LED led) {
@@ -42,22 +55,32 @@ public class Shooter extends SubsystemBase
         this.indexMotor.restoreFactoryDefaults();
         this.intakeMotor.restoreFactoryDefaults();
 
-        this.shooterMotor1.setIdleMode(IdleMode.kBrake);
-        this.shooterMotor2.setIdleMode(IdleMode.kBrake);
-        this.shooterMotor3.setIdleMode(IdleMode.kBrake);
-        this.shooterMotor4.setIdleMode(IdleMode.kBrake);
+        this.shooterMotor1.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor2.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor3.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor4.setIdleMode(IdleMode.kCoast);
         this.indexMotor.setIdleMode(IdleMode.kCoast);
         this.intakeMotor.setIdleMode(IdleMode.kCoast);
         
 
         this.shooterMotor2.follow(this.shooterMotor1, true);
         this.shooterMotor4.follow(this.shooterMotor3, true);
-        this.isTriggered = false;
-      
+        
+        shooter1Encoder = shooterMotor1.getEncoder();
+        shooter1Encoder.setPosition(0);
+        shooter1Encoder.setPositionConversionFactor(1);
+
+        shooter3Encoder = shooterMotor3.getEncoder();
+        shooter3Encoder.setPosition(0);
+        shooter3Encoder.setPositionConversionFactor(1);
+
+
     }
     public void startShooter() {
-        shooterMotor1.set(-.45);
-        shooterMotor3.set(.4);
+        //shooterMotor1.set(-.45);
+        //shooterMotor3.set(.4);
+        setpoint1 = 100;
+        setpoint3 = 75;
     }
         public void startAmpShooter() {
         shooterMotor1.set(-.1);
@@ -141,11 +164,23 @@ public Command stopHarvestCommand()
     public void periodic() {
 
         isTriggered = noteSensor.get();
-
-        if(isTriggered == true)
-        {
-            led.noteLoaded();
-        }
         
+        float bangBangMultiplier = 0.1f;
+
+        double speed1 = shooter1Encoder.getVelocity();
+
+        double speed3 = shooter3Encoder.getVelocity();
+        
+        double motor1Speed = controller.calculate(speed1, setpoint1);
+        
+        double motor3Speed = controller3.calculate(speed3, setpoint3);
+
+        motor1Speed = motor1Speed * bangBangMultiplier;
+        motor3Speed = motor3Speed * bangBangMultiplier;
+    
+        shooterMotor1.set(motor1Speed);
+
+        shooterMotor3.set(motor3Speed);
+
         }
     }

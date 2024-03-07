@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 1.8378347867806841,
-        "y": 7.649043869516311
+        "y": 7.563126396378017
       },
       "prevControl": {
         "x": 1.8378347867806841,
-        "y": 7.306559743563596
+        "y": 7.2206422704253015
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,11 +33,18 @@
   "eventMarkers": [
     {
       "name": "ampScore",
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 0.2,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ampScoreCommand"
+              }
+            }
+          ]
         }
       }
     }
