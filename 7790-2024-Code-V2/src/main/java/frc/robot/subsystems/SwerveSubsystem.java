@@ -382,7 +382,8 @@ public class SwerveSubsystem extends SubsystemBase
         double compensation = xInput * 8;
 
         //System.out.println(compensation);
-
+        System.out.println(xInput);
+        System.out.println(yInput);
         driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput, yInput,
                                                                       stickPose.getY(),
                                                                       stickPose.getX() - compensation,
