@@ -73,7 +73,7 @@ public class Aiming {
             angle = -23;
         }
         else {
-            angle = -20;
+            angle = -21;
         }
         return angle;
 }

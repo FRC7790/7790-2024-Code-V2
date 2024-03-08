@@ -67,9 +67,8 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
     public static Command shootCommand(Extender extender, Shooter shooter, Pivot pivot)
     {
         Command command = pivot.setShootAngleCommand()
-        .andThen(new WaitCommand(.5))
         .andThen(shooter.startShooterCommand())
-        .andThen(new WaitCommand(.75))
+        .andThen(new WaitCommand(.9))
         .andThen(shooter.shootCommand())
         .andThen(new WaitCommand(.4))
         .andThen(shooter.stopShooterCommand())
