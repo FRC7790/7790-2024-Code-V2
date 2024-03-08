@@ -12,7 +12,7 @@ public class LED extends SubsystemBase {
     private int shoot;
     private int standard;
     
-    SerialPort ledInfo = new SerialPort(9600, SerialPort.Port.kOnboard);
+    SerialPort ledInfo = new SerialPort(115200, SerialPort.Port.kOnboard);
 
     double lastRunTime = Timer.getMatchTime();
     
