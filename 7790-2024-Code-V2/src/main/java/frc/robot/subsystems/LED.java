@@ -55,7 +55,7 @@ public class LED extends SubsystemBase {
         double curTime = Timer.getFPGATimestamp();
         double timeSinceLastRun = curTime - lastRunTime;
 
-        if(timeSinceLastRun > 3f)
+        if(timeSinceLastRun > .5f)
         {
             runTheTask = true;
         }

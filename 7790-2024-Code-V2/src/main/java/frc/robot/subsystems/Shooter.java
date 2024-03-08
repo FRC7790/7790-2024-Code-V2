@@ -27,8 +27,10 @@ public class Shooter extends SubsystemBase
     private RelativeEncoder shooter3Encoder;
     private RelativeEncoder shooter4Encoder;
 
-    public Boolean isTriggered = false;
+    public boolean isTriggered = false;
 
+    private boolean isShooting = false;
+    
     private double setpoint1 = 0;
     private double setpoint2 = 0;
     private double setpoint3 = 0;
@@ -83,22 +85,39 @@ public class Shooter extends SubsystemBase
     public void startShooter() {
         //shooterMotor1.set(-.45);
         //shooterMotor3.set(.4);
-        setpoint1 = 100;
-        setpoint2 = 100;
-        setpoint3 = 75;
-        setpoint4 = 75;
+        this.shooterMotor1.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor2.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor3.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor4.setIdleMode(IdleMode.kCoast);
+        setpoint1 = 3000;
+        setpoint2 = 3000;
+        setpoint3 = 3000;
+        setpoint4 = 3000;
+        isShooting = true;
     }
         public void startAmpShooter() {
-        shooterMotor1.set(-.1);
-        shooterMotor3.set(.1);
+        this.shooterMotor1.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor2.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor3.setIdleMode(IdleMode.kCoast);
+        this.shooterMotor4.setIdleMode(IdleMode.kCoast);
+        setpoint1 = 200;
+        setpoint2 = 200;
+        setpoint3 = 200;
+        setpoint4 = 200;
+        isShooting = true;
     }
     public void stopShooter() {
         //shooterMotor1.set(0);
         //shooterMotor3.set(0);
+        this.shooterMotor1.setIdleMode(IdleMode.kBrake);
+        this.shooterMotor2.setIdleMode(IdleMode.kBrake);
+        this.shooterMotor3.setIdleMode(IdleMode.kBrake);
+        this.shooterMotor4.setIdleMode(IdleMode.kBrake);
         setpoint1 = 0;
         setpoint2 = 0;
         setpoint3 = 0;
         setpoint4 = 0;
+        isShooting = false;
     }
 
 public Command startShooterCommand()
@@ -186,12 +205,17 @@ public Command stopHarvestCommand()
             led.setstandard();
         }
         
-        float bangBangMultiplier = 0.1f;
+        float bangBangMultiplier = 1f;
 
         double speed1 = shooter1Encoder.getVelocity();
         double speed2 = shooter2Encoder.getVelocity();
         double speed3 = shooter3Encoder.getVelocity();
         double speed4 = shooter4Encoder.getVelocity();
+
+
+
+
+
 
         double motor1Speed = controller1.calculate(speed1, setpoint1);
         double motor2Speed = controller2.calculate(speed2, setpoint2);
@@ -199,10 +223,17 @@ public Command stopHarvestCommand()
         double motor4Speed = controller4.calculate(speed4, setpoint4);
 
         motor1Speed = motor1Speed * bangBangMultiplier;
-        motor2Speed = motor1Speed * bangBangMultiplier;
+        motor2Speed = motor2Speed * bangBangMultiplier;
         motor3Speed = motor3Speed * bangBangMultiplier;
-        motor4Speed = motor1Speed * bangBangMultiplier;
+        motor4Speed = motor4Speed * bangBangMultiplier;
     
+        if (!isShooting) {
+            motor1Speed = 0;
+            motor2Speed = 0;
+            motor3Speed = 0;
+            motor4Speed = 0;
+        }
+
         shooterMotor1.set(motor1Speed);
         
         shooterMotor2.set(motor2Speed);
