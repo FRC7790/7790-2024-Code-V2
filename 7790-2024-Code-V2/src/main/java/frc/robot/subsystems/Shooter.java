@@ -23,19 +23,24 @@ public class Shooter extends SubsystemBase
     private CANSparkMax indexMotor;
 
     private RelativeEncoder shooter1Encoder;
+    private RelativeEncoder shooter2Encoder;
     private RelativeEncoder shooter3Encoder;
+    private RelativeEncoder shooter4Encoder;
 
     public Boolean isTriggered = false;
 
     private double setpoint1 = 0;
+    private double setpoint2 = 0;
     private double setpoint3 = 0;
+    private double setpoint4 = 0;
     
     DigitalInput noteSensor = new DigitalInput(9);
 
 
-    BangBangController controller = new BangBangController();
+    BangBangController controller1 = new BangBangController();
+    BangBangController controller2 = new BangBangController();
     BangBangController controller3 = new BangBangController();
-
+    BangBangController controller4 = new BangBangController();
 
     LED led;
     public Shooter(LED led) {
@@ -62,17 +67,16 @@ public class Shooter extends SubsystemBase
         this.indexMotor.setIdleMode(IdleMode.kCoast);
         this.intakeMotor.setIdleMode(IdleMode.kCoast);
         
+        this.shooterMotor1.setInverted(true);
+        this.shooterMotor4.setInverted(true);
 
-        this.shooterMotor2.follow(this.shooterMotor1, true);
-        this.shooterMotor4.follow(this.shooterMotor3, true);
-        
         shooter1Encoder = shooterMotor1.getEncoder();
-        shooter1Encoder.setPosition(0);
-        shooter1Encoder.setPositionConversionFactor(1);
+
+        shooter2Encoder = shooterMotor2.getEncoder();
 
         shooter3Encoder = shooterMotor3.getEncoder();
-        shooter3Encoder.setPosition(0);
-        shooter3Encoder.setPositionConversionFactor(1);
+
+        shooter4Encoder = shooterMotor4.getEncoder();
 
 
     }
@@ -80,15 +84,21 @@ public class Shooter extends SubsystemBase
         //shooterMotor1.set(-.45);
         //shooterMotor3.set(.4);
         setpoint1 = 100;
+        setpoint2 = 100;
         setpoint3 = 75;
+        setpoint4 = 75;
     }
         public void startAmpShooter() {
         shooterMotor1.set(-.1);
         shooterMotor3.set(.1);
     }
     public void stopShooter() {
-        shooterMotor1.set(0);
-        shooterMotor3.set(0);
+        //shooterMotor1.set(0);
+        //shooterMotor3.set(0);
+        setpoint1 = 0;
+        setpoint2 = 0;
+        setpoint3 = 0;
+        setpoint4 = 0;
     }
 
 public Command startShooterCommand()
@@ -138,6 +148,8 @@ public Command stopHarvestCommand()
 
         intakeMotor.set(.45);
         indexMotor.set(.35);
+        led.setstandard();
+     
     }
 
     public void harvestStop() {
@@ -163,24 +175,41 @@ public Command stopHarvestCommand()
     @Override
     public void periodic() {
 
-        isTriggered = noteSensor.get();
+        isTriggered = !noteSensor.get();
+
+        if(isTriggered)
+        {
+            led.noteLoaded();
+        }
+        else
+        {
+            led.setstandard();
+        }
         
         float bangBangMultiplier = 0.1f;
 
         double speed1 = shooter1Encoder.getVelocity();
-
+        double speed2 = shooter2Encoder.getVelocity();
         double speed3 = shooter3Encoder.getVelocity();
-        
-        double motor1Speed = controller.calculate(speed1, setpoint1);
-        
+        double speed4 = shooter4Encoder.getVelocity();
+
+        double motor1Speed = controller1.calculate(speed1, setpoint1);
+        double motor2Speed = controller2.calculate(speed2, setpoint2);
         double motor3Speed = controller3.calculate(speed3, setpoint3);
+        double motor4Speed = controller4.calculate(speed4, setpoint4);
 
         motor1Speed = motor1Speed * bangBangMultiplier;
+        motor2Speed = motor1Speed * bangBangMultiplier;
         motor3Speed = motor3Speed * bangBangMultiplier;
+        motor4Speed = motor1Speed * bangBangMultiplier;
     
         shooterMotor1.set(motor1Speed);
+        
+        shooterMotor2.set(motor2Speed);
 
         shooterMotor3.set(motor3Speed);
+        
+        shooterMotor4.set(motor4Speed);
 
         }
     }

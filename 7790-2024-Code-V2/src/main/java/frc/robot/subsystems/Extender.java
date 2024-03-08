@@ -94,7 +94,7 @@ public class Extender extends SubsystemBase
 
     public void setHumanPickup() {
         this.setDesiredPosition(this.humanPickupPose);     
-        led.setGroundPose();
+        
     }
     public void setGroundPose() {
         this.setDesiredPosition(this.groundPickupPose);       

@@ -57,7 +57,7 @@ public class Aiming {
          
         double dist = diffPose.getNorm();
         
-        System.out.println(dist);
+        //System.out.println(dist);
 
         angle = 0;
 
