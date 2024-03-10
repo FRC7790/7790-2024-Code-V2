@@ -56,7 +56,6 @@ public class SwerveSubsystem extends SubsystemBase
 
 
   public boolean isFieldOriented = true;
-
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -379,14 +378,17 @@ public class SwerveSubsystem extends SubsystemBase
 
 
 
-        double compensation = xInput * 1;
+        double compensation = yInput * 1.5;
 
         //System.out.println(compensation);
         //System.out.println(xInput);
         //System.out.println(yInput);
-        driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput, yInput,
-                                                                      stickPose.getY(),
-                                                                      stickPose.getX() - compensation,
+
+        System.out.println(stickPose.getY() + compensation);
+
+        driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput * multiplier, yInput * multiplier,
+                                                                      stickPose.getY() + compensation,
+                                                                      stickPose.getX(),
                                                                       swerveDrive.getOdometryHeading().getRadians(),
                                                                       swerveDrive.getMaximumVelocity()));
       }
@@ -516,6 +518,13 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Resets the gyro angle to zero and resets odometry to the same position, but facing toward 0.
    */
+
+
+
+
+
+
+
   public void zeroGyro()
   {
 
@@ -524,6 +533,38 @@ public class SwerveSubsystem extends SubsystemBase
 
 
   }
+
+
+    /**
+   * This will zero (calibrate) the robot to assume the current position is facing forward
+   * 
+   * If red alliance rotate the robot 180 after the drviebase zero command
+   */
+
+
+
+
+   private boolean isRedAlliance() {
+     var alliance = DriverStation.getAlliance();
+     return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+   }
+
+
+  public void zeroGyroWithAlliance() 
+  {
+    if (isRedAlliance()) {
+      zeroGyro();
+      //Set the pose 180 degrees
+      resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
+    } else {
+       zeroGyro();      
+    }
+  }  
+
+
+
+
+
 
   /**
    * Sets the drive motors to brake/coast mode.
