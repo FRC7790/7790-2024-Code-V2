@@ -57,7 +57,7 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
     {
         Command command = pivot.setHomeCommand()
         .andThen(shooter.stopHarvestCommand())
-        .andThen(new WaitCommand(.8))
+        .andThen(new WaitCommand(.5))
         .andThen(extender.homeStateCommand());
 
         command.addRequirements(shooter,pivot,extender);
@@ -72,6 +72,7 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
         .andThen(aiming.setIsAimingCommand())
 
         .andThen(shooter.startShooterCommand())
+        
         .andThen(new WaitCommand(.9))
         .andThen(shooter.shootCommand())
         .andThen(new WaitCommand(.4))
