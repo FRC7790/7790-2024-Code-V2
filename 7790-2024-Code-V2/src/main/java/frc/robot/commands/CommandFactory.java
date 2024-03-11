@@ -73,7 +73,7 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
 
         .andThen(shooter.startShooterCommand())
         
-        .andThen(new WaitCommand(.9))
+        .andThen(new WaitCommand(1.2))
         .andThen(shooter.shootCommand())
         .andThen(new WaitCommand(.4))
         .andThen(shooter.stopShooterCommand())
@@ -89,23 +89,13 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
         return command;
     }
 
-    public static Command humanPickupCommand(Extender extender, Shooter shooter, Pivot pivot)
+    public static Command climbCommand(Extender extender, Pivot pivot)
     {
-        Command command = pivot.setHumanPickupCommand()
+        Command command = pivot.setClimbAngleCommand()
         .andThen(new WaitCommand(.5))
-        .andThen(extender.setHumanPickupCommand())
-        .andThen(shooter.startHarvestCommand())
+        .andThen(extender.setClimbCommand());
 
-        //Add logic to start harvest to auto stop on after sensor triggered 
-        //that would move it onto the next command
-
-        .andThen(new WaitCommand(4))
-        //this ^ goes away after auto note detection
-
-        //require led to change here
-        .andThen(shooter.stopHarvestCommand());
-
-        command.addRequirements(shooter,pivot,extender);
+        command.addRequirements(pivot,extender);
 
         return command;
     }

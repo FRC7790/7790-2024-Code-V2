@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.0284843426829717,
-      "y": 6.6553938822163365
+      "x": 1.4682680793933023,
+      "y": 5.5479153815450495
     },
-    "rotation": 56.768288932020596
+    "rotation": -0.6488044235947675
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot Left"
+            "pathName": "Shoot Middle"
           }
         },
         {
@@ -26,7 +26,100 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.6
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterOut"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterIn"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Shoot Left"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.6
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterOut"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note 2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "harvesterIn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot Middle"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.6
           }
         },
         {
@@ -38,43 +131,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Note 1"
+            "pathName": "Note 3"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "harvesterIn"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "harvesterOut"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "harvesterIn"
+            "pathName": "Shoot Right"
           }
         },
         {
@@ -86,43 +155,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "harvesterOut"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2-3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "harvesterIn"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "harvesterIn"
+            "waitTime": 1.6
           }
         }
       ]

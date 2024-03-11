@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 8.064656987990183,
+        "x": 8.09434304582895,
         "y": 0.7616386661344746
       },
       "prevControl": {
-        "x": 7.815000388498094,
+        "x": 7.84468644633686,
         "y": 0.7489697984762701
       },
       "nextControl": null,
@@ -30,28 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Harvester Out",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "Intake",
-      "waypointRelativePos": 0.85,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
     "maxAcceleration": 3.5,

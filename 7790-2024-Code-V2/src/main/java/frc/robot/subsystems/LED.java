@@ -21,11 +21,11 @@ public class LED extends SubsystemBase {
     public LED() {
         //3,4,7 are coolest
         
-        standard = 7;
-        noteLoaded = 4;
+        standard = 1;
+        noteLoaded = 2;
         navigateToSpeaker = 0;
-        endGameCelebration = 1;
-        shoot = 3;
+        endGameCelebration = 7;
+        shoot = 0;
         currentPattern = standard;
     }
     public void setDesiredLight(int desiredLight) {
@@ -44,7 +44,7 @@ public class LED extends SubsystemBase {
     }
 
     public void setShoot() {
-        this.setDesiredLight(this.shoot);
+       // this.setDesiredLight(this.shoot);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class LED extends SubsystemBase {
         double curTime = Timer.getFPGATimestamp();
         double timeSinceLastRun = curTime - lastRunTime;
 
-        if(timeSinceLastRun > .5f)
+        if(timeSinceLastRun > .1f)
         {
             runTheTask = true;
         }

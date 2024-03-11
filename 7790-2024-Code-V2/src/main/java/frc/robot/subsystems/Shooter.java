@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
@@ -22,6 +23,13 @@ public class Shooter extends SubsystemBase
     private CANSparkMax intakeMotor;
     private CANSparkMax indexMotor;
 
+    private double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
+
+    private SparkPIDController shooterMotor1PID;
+    private SparkPIDController shooterMotor2PID;
+    private SparkPIDController shooterMotor3PID;
+    private SparkPIDController shooterMotor4PID;
+
     private RelativeEncoder shooter1Encoder;
     private RelativeEncoder shooter2Encoder;
     private RelativeEncoder shooter3Encoder;
@@ -29,7 +37,6 @@ public class Shooter extends SubsystemBase
 
     public boolean isTriggered = false;
 
-    private boolean isShooting = false;
     
     private double setpoint1 = 0;
     private double setpoint2 = 0;
@@ -37,12 +44,6 @@ public class Shooter extends SubsystemBase
     private double setpoint4 = 0;
     
     DigitalInput noteSensor = new DigitalInput(9);
-
-
-    BangBangController controller1 = new BangBangController();
-    BangBangController controller2 = new BangBangController();
-    BangBangController controller3 = new BangBangController();
-    BangBangController controller4 = new BangBangController();
 
     LED led;
     public Shooter(LED led) {
@@ -72,6 +73,17 @@ public class Shooter extends SubsystemBase
         this.shooterMotor1.setInverted(true);
         this.shooterMotor4.setInverted(true);
 
+
+
+        shooterMotor1PID = shooterMotor1.getPIDController();
+
+        shooterMotor2PID = shooterMotor2.getPIDController();
+
+        shooterMotor3PID = shooterMotor3.getPIDController();
+
+        shooterMotor4PID = shooterMotor4.getPIDController();
+
+
         shooter1Encoder = shooterMotor1.getEncoder();
 
         shooter2Encoder = shooterMotor2.getEncoder();
@@ -80,47 +92,96 @@ public class Shooter extends SubsystemBase
 
         shooter4Encoder = shooterMotor4.getEncoder();
 
+    kP = 6e-5; 
+    kI = 0;
+    kD = 0; 
+    kIz = 0; 
+    kFF = 0.000015; 
+    kMaxOutput = 1; 
+    kMinOutput = -1;
+    maxRPM = 11000;
+        
+    shooterMotor1PID.setP(kP);
+    shooterMotor1PID.setI(kI);
+    shooterMotor1PID.setD(kD);
+    shooterMotor1PID.setIZone(kIz);
+    shooterMotor1PID.setFF(kFF);
+    shooterMotor1PID.setOutputRange(kMinOutput, kMaxOutput);
+
+    shooterMotor2PID.setP(kP);
+    shooterMotor2PID.setI(kI);
+    shooterMotor2PID.setD(kD);
+    shooterMotor2PID.setIZone(kIz);
+    shooterMotor2PID.setFF(kFF);
+    shooterMotor2PID.setOutputRange(kMinOutput, kMaxOutput);
+
+    shooterMotor3PID.setP(kP);
+    shooterMotor3PID.setI(kI);
+    shooterMotor3PID.setD(kD);
+    shooterMotor3PID.setIZone(kIz);
+    shooterMotor3PID.setFF(kFF);
+    shooterMotor3PID.setOutputRange(kMinOutput, kMaxOutput);
+
+    shooterMotor4PID.setP(kP);
+    shooterMotor4PID.setI(kI);
+    shooterMotor4PID.setD(kD);
+    shooterMotor4PID.setIZone(kIz);
+    shooterMotor4PID.setFF(kFF);
+    shooterMotor4PID.setOutputRange(kMinOutput, kMaxOutput);
 
     }
     public void startShooter() {
         //shooterMotor1.set(-.45);
         //shooterMotor3.set(.4);
-        this.shooterMotor1.setIdleMode(IdleMode.kCoast);
-        this.shooterMotor2.setIdleMode(IdleMode.kCoast);
-        this.shooterMotor3.setIdleMode(IdleMode.kCoast);
-        this.shooterMotor4.setIdleMode(IdleMode.kCoast);
+        setpoint1 = 7000;
+        setpoint2 = 7000;
+        setpoint3 = 7000;
+        setpoint4 = 7000;
+    }
+        public void startAmpShooter() {
         setpoint1 = 2000;
         setpoint2 = 2000;
         setpoint3 = 2000;
         setpoint4 = 2000;
-        isShooting = true;
-    }
-        public void startAmpShooter() {
-        this.shooterMotor1.setIdleMode(IdleMode.kCoast);
-        this.shooterMotor2.setIdleMode(IdleMode.kCoast);
-        this.shooterMotor3.setIdleMode(IdleMode.kCoast);
-        this.shooterMotor4.setIdleMode(IdleMode.kCoast);
-        setpoint1 = 200;
-        setpoint2 = 200;
-        setpoint3 = 200;
-        setpoint4 = 200;
-        isShooting = true;
     }
     public void stopShooter() {
-        //shooterMotor1.set(0);
-        //shooterMotor3.set(0);
-        this.shooterMotor1.setIdleMode(IdleMode.kBrake);
-        this.shooterMotor2.setIdleMode(IdleMode.kBrake);
-        this.shooterMotor3.setIdleMode(IdleMode.kBrake);
-        this.shooterMotor4.setIdleMode(IdleMode.kBrake);
         setpoint1 = 0;
         setpoint2 = 0;
         setpoint3 = 0;
         setpoint4 = 0;
-        isShooting = false;
     }
 
-public Command startShooterCommand()
+
+    public void harvest() {
+
+        intakeMotor.set(.45);
+        indexMotor.set(.35);
+        led.setstandard();
+     
+    }
+
+    public void harvestStop() {
+        intakeMotor.set(0);
+        indexMotor.set(0);
+    }
+    public void harvestReverse() {
+        intakeMotor.set(0);
+        indexMotor.set(-.35);
+    }
+    public void shoot() {
+        intakeMotor.set(.35);
+        indexMotor.set(.45);
+
+         led.setShoot();
+    }
+    
+      public void indexStop() {
+        indexMotor.set(0);
+        intakeMotor.set(0);
+      }
+    
+
+      public Command startShooterCommand()
 {
     Command command = new InstantCommand(()->startShooter(), this);
     return command;
@@ -163,34 +224,9 @@ public Command stopHarvestCommand()
     return command;
 }
 
-    public void harvest() {
 
-        intakeMotor.set(.3);
-        indexMotor.set(.4);
-        led.setstandard();
-     
-    }
 
-    public void harvestStop() {
-        intakeMotor.set(0);
-        indexMotor.set(0);
-    }
-    public void harvestReverse() {
-        intakeMotor.set(-.2);
-        indexMotor.set(-.2);
-    }
-    public void shoot() {
-        intakeMotor.set(.3);
-        indexMotor.set(.4);
 
-         led.setShoot();
-    }
-    
-      public void indexStop() {
-        indexMotor.set(0);
-        intakeMotor.set(0);
-      }
-    
     @Override
     public void periodic() {
 
@@ -205,42 +241,14 @@ public Command stopHarvestCommand()
             led.setstandard();
         }
         
-        float bangBangMultiplier = 1f;
-
-        double speed1 = shooter1Encoder.getVelocity();
-        double speed2 = shooter2Encoder.getVelocity();
-        double speed3 = shooter3Encoder.getVelocity();
-        double speed4 = shooter4Encoder.getVelocity();
-
-
-
-
-
-
-        double motor1Speed = controller1.calculate(speed1, setpoint1);
-        double motor2Speed = controller2.calculate(speed2, setpoint2);
-        double motor3Speed = controller3.calculate(speed3, setpoint3);
-        double motor4Speed = controller4.calculate(speed4, setpoint4);
-
-        motor1Speed = motor1Speed * bangBangMultiplier;
-        motor2Speed = motor2Speed * bangBangMultiplier;
-        motor3Speed = motor3Speed * bangBangMultiplier;
-        motor4Speed = motor4Speed * bangBangMultiplier;
-    
-        if (!isShooting) {
-            motor1Speed = 0;
-            motor2Speed = 0;
-            motor3Speed = 0;
-            motor4Speed = 0;
-        }
-
-        shooterMotor1.set(motor1Speed);
         
-        shooterMotor2.set(motor2Speed);
+        shooterMotor1PID.setReference(setpoint1, CANSparkMax.ControlType.kVelocity);
 
-        shooterMotor3.set(motor3Speed);
-        
-        shooterMotor4.set(motor4Speed);
+        shooterMotor2PID.setReference(setpoint2, CANSparkMax.ControlType.kVelocity);
+
+        shooterMotor3PID.setReference(setpoint3, CANSparkMax.ControlType.kVelocity);
+
+        shooterMotor4PID.setReference(setpoint4, CANSparkMax.ControlType.kVelocity);
 
         }
     }

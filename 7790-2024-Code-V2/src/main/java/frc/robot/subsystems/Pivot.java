@@ -27,7 +27,7 @@ public class Pivot extends SubsystemBase
     private float angleMin;
     private float speakerScoreAngle;
     private float ampScoreAngle;
-    private float humanPickupAngle;
+    private float climbAngle;
     private float groundPickupAngle;
     private float trapScoreAngle;
     private float homeStateAngle;
@@ -67,13 +67,13 @@ public class Pivot extends SubsystemBase
         this.isInitialized = false;
         this.angleMax = 68;
         this.angleMin = -46.1f;
-        this.humanPickupAngle = 19;
-        this.groundPickupAngle = -46.1f;
+        this.climbAngle = 27;
+        this.groundPickupAngle = -46f;
         //this.movementAngle = 0.0f;
         this.trapScoreAngle = 56;
         //this.speakerScoreAngle = 0.0f;
         this.homeStateAngle = -27;
-        this.ampScoreAngle = 61;
+        this.ampScoreAngle = 48f;
         this.shootAngle = -27;
         
         this.distanceBasedShootAngle = -27;
@@ -126,8 +126,8 @@ public class Pivot extends SubsystemBase
         this.setDesiredAngle(this.speakerScoreAngle);
     }
 
-    public void setHumanPickup() {
-        this.setDesiredAngle(this.humanPickupAngle);
+    public void setClimbAngle() {
+        this.setDesiredAngle(this.climbAngle);
     }
     
     public void setGroundPickup() {
@@ -172,9 +172,9 @@ public class Pivot extends SubsystemBase
         return command;
     }
 
-    public Command setHumanPickupCommand()
+    public Command setClimbAngleCommand()
     {
-        Command command = new InstantCommand(()-> this.setHumanPickup(), this);
+        Command command = new InstantCommand(()-> this.setClimbAngle(), this);
         return command;
     }
 

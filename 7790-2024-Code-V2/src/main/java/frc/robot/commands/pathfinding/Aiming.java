@@ -75,19 +75,23 @@ public class Aiming {
 
         angle = 0;
 
-        if (dist < 1.7) {
-            angle = -29;
+        if (dist < 1.9) {
+            angle = -31;
         }
-        else if (1.7 < dist && dist < 2.3) {
-        
+        else if (1.9 < dist && dist < 2.2) {
+            angle = -28;
+        }
+        else if (2.2 < dist && dist < 2.5) {
             angle = -26;
-
         }
-        else if (2.3 < dist && dist < 3.0) {
-            angle = -23;
+        else if (2.5 < dist && dist < 2.9) {
+            angle = -22;
+        }
+        else if (2.9 < dist && dist < 3.4) {
+            angle = -19;
         }
         else {
-            angle = -21;
+            angle = -17;
         }
         return angle;
 }

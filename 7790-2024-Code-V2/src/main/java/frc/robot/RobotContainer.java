@@ -84,8 +84,11 @@ public class RobotContainer {
   //private final JoystickButton targetingMode = new JoystickButton(this.driverXbox, 3);
 
   private final POVButton ampScore = new POVButton(this.driverXbox, 0);
+
+  private final JoystickButton ampScore1 = new JoystickButton(this.driverXbox, 10);
+
   private final POVButton ampScoreRetract = new POVButton(this.driverXbox, 180);
-  private final POVButton humanPickup = new POVButton(this.driverXbox, 90);
+  private final POVButton climbprep = new POVButton(this.driverXbox, 90);
 
   // private final POVButton GroundPickupExtension = new
   // POVButton(this.driverXbox, 90);
@@ -149,7 +152,7 @@ public class RobotContainer {
     
 
 
-    autoChooser = AutoBuilder.buildAutoChooser("Auto 2-3");
+    autoChooser = AutoBuilder.buildAutoChooser("Faster Auto 1-2-3");
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -253,8 +256,8 @@ public class RobotContainer {
     this.speakerLeft.whileTrue(drivebase.driveToPath(3).andThen((CommandFactory.shootCommand(extender, shooter, pivot, aiming))));
     this.speakerRight.whileTrue(drivebase.driveToPath(4).andThen((CommandFactory.shootCommand(extender, shooter, pivot, aiming))));
     
-    this.sourceLeft.whileTrue(drivebase.driveToPath(5).andThen((CommandFactory.humanPickupCommand(extender, shooter, pivot))));
-    this.sourceRight.whileTrue(drivebase.driveToPath(6).andThen((CommandFactory.humanPickupCommand(extender, shooter, pivot))));
+    this.sourceLeft.whileTrue(drivebase.driveToPath(5).andThen((CommandFactory.harvestCommand(extender, shooter, pivot))));
+    this.sourceRight.whileTrue(drivebase.driveToPath(6).andThen((CommandFactory.harvestCommand(extender, shooter, pivot))));
     
     this.StageL.whileTrue(drivebase.driveToPath(7));
     this.StageM.whileTrue(drivebase.driveToPath(8));
@@ -305,13 +308,14 @@ public class RobotContainer {
 
 
     this.ampScore.onTrue(CommandFactory.ampScoreCommand(extender, shooter, pivot));
+    this.ampScore1.onTrue(CommandFactory.ampScoreCommand(extender, shooter, pivot));
 
     this.ampScoreRetract.onTrue(CommandFactory.ampScoreRetractCommand(extender, shooter, pivot));
 
     this.shoot.onTrue(CommandFactory.shootCommand(extender, shooter, pivot, aiming));
 
 
-    this.humanPickup.onTrue(CommandFactory.humanPickupCommand(extender, shooter, pivot));
+    this.climbprep.onTrue(CommandFactory.climbCommand(extender, pivot));
 
 
     this.harvestManual.onTrue(new InstantCommand(() -> this.shooter.harvest()));

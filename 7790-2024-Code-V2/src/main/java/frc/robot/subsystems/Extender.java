@@ -22,7 +22,7 @@ public class Extender extends SubsystemBase
     private float extenderMin;
     private float speakerScorePose;
     private float ampScorePose;
-    private float humanPickupPose;
+    private float climbPose;
     private float groundPickupPose;
     private float trapScorePose;
     private float homeStatePose;
@@ -44,12 +44,12 @@ public class Extender extends SubsystemBase
 
         this.extenderMax = 45.0f;
         this.extenderMin = 0.5f;
-        this.humanPickupPose = 44.5f;
-        this.groundPickupPose = 44.5f;
-        this.trapScorePose = 44.5f;
+        this.climbPose = 44.5f;
+        this.groundPickupPose = 45f;
+        this.trapScorePose = 45f;
         this.speakerScorePose = 0.0f;
         this.homeStatePose = 0.5f;
-        this.ampScorePose = 44.5f;
+        this.ampScorePose = 45f;
         this.extenderMotor1 = new CANSparkMax(22, CANSparkLowLevel.MotorType.kBrushless);
         this.extenderMotor2 = new CANSparkMax(23, CANSparkLowLevel.MotorType.kBrushless);
 
@@ -93,8 +93,8 @@ public class Extender extends SubsystemBase
         this.setDesiredPosition(this.desiredPosition + amount * scale);
      }
 
-    public void setHumanPickup() {
-        this.setDesiredPosition(this.humanPickupPose);     
+    public void setClimb() {
+        this.setDesiredPosition(this.climbPose);     
         
     }
     public void setGroundPose() {
@@ -129,9 +129,9 @@ public class Extender extends SubsystemBase
         return command;
     }
 
-    public Command setHumanPickupCommand()
+    public Command setClimbCommand()
     {
-        Command command = new InstantCommand(()-> this.setHumanPickup(), this);
+        Command command = new InstantCommand(()-> this.setClimb(), this);
         return command;
     }
     

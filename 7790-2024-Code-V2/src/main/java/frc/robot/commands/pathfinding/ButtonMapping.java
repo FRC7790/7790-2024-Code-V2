@@ -11,11 +11,10 @@ public class ButtonMapping {
         float y = 0;
 
         double fieldWidth = 16.54;
-        double midField = fieldWidth / 2;
 
         switch (buttonNum) {
             case 1:
-                x = 5;
+                x = 2;
                 y = 4;
                 break;
             case 2:
