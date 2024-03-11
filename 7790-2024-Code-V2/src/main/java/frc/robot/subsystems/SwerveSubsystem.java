@@ -384,7 +384,7 @@ public class SwerveSubsystem extends SubsystemBase
         //System.out.println(xInput);
         //System.out.println(yInput);
 
-        //System.out.println(stickPose.getY() + compensation);
+        System.out.println(stickPose.getY() + compensation);
 
         driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput * multiplier, yInput * multiplier,
                                                                       stickPose.getY() + compensation,
@@ -454,7 +454,10 @@ public class SwerveSubsystem extends SubsystemBase
     
     addVisionMeasurement();
 
+    
     Aiming.getShootAngle(getPose());
+    
+
   }
 
   @Override

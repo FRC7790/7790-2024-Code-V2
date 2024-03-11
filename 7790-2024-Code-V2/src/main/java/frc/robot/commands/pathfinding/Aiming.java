@@ -5,6 +5,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 
 
@@ -20,6 +22,18 @@ public class Aiming {
 
     public static void setIsNotAiming() {
         isAiming = false;
+    }
+
+    public Command setIsAimingCommand()
+    {
+        Command command = new InstantCommand(()-> Aiming.setIsAiming());
+        return command;
+    }
+
+    public Command setIsNotAimingCommand()
+    {
+        Command command = new InstantCommand(()-> Aiming.setIsNotAiming());
+        return command;
     }
 
     public static Translation2d getDiffPoseToScore(Pose2d botPose)
@@ -77,8 +91,6 @@ public class Aiming {
         }
         return angle;
 }
-
-
 
 
 

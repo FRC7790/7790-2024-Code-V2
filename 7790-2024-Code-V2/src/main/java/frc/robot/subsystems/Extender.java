@@ -34,7 +34,8 @@ public class Extender extends SubsystemBase
     private RelativeEncoder extender2Encoder;
 
     private LED led;
-    
+
+
     public Extender(LED led) {
         this.led = led;
         this.desiredPosition = 0.0f;
@@ -107,6 +108,8 @@ public class Extender extends SubsystemBase
         this.setDesiredPosition(this.ampScorePose);       
     }
 
+
+
     //Commands
     public Command homeStateCommand()
     {
@@ -131,7 +134,6 @@ public class Extender extends SubsystemBase
         Command command = new InstantCommand(()-> this.setHumanPickup(), this);
         return command;
     }
-
     
     @Override
     public void periodic() {
@@ -143,8 +145,8 @@ public class Extender extends SubsystemBase
         double pos1 = extender1Encoder.getPosition();
         double pos2 = extender2Encoder.getPosition();
 
-        System.out.println(pos1);
-        System.out.println(pos2);
+        //System.out.println(pos1);
+        //System.out.println(pos2);
 
         final double output = MathUtil.clamp(this.pid.calculate(pos1, this.desiredPosition), -maxoutput, maxoutput);
         extenderMotor1.set(output);

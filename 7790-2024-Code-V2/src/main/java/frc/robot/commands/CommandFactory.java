@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.pathfinding.Aiming;
 import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
@@ -64,15 +65,21 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
         return command;
     }
 
-    public static Command shootCommand(Extender extender, Shooter shooter, Pivot pivot)
+    public static Command shootCommand(Extender extender, Shooter shooter, Pivot pivot, Aiming aiming)
     {
-        Command command = pivot.setShootAngleCommand()
+        Command command = extender.homeStateCommand()
+        
+        .andThen(aiming.setIsAimingCommand())
+
         .andThen(shooter.startShooterCommand())
         .andThen(new WaitCommand(.9))
         .andThen(shooter.shootCommand())
         .andThen(new WaitCommand(.4))
         .andThen(shooter.stopShooterCommand())
+
+        .andThen(aiming.setIsNotAimingCommand())
         .andThen(shooter.indexStopCommand())
+
         .andThen(extender.homeStateCommand())
         .andThen(pivot.setHomeCommand());
 

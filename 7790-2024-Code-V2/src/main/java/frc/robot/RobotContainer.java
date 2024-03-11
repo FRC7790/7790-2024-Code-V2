@@ -129,7 +129,7 @@ public class RobotContainer {
     Pivot pivot = new Pivot();
     Extender extender = new Extender(led);
     Climber climber = new Climber();
-
+    Aiming aiming = new Aiming();
      private final SendableChooser<Command> autoChooser;
   
   /**
@@ -138,12 +138,12 @@ public class RobotContainer {
   public RobotContainer() {
 
     NamedCommands.registerCommand("ampScore", CommandFactory.ampScoreCommand(extender, shooter, pivot));
-    NamedCommands.registerCommand("shoot", CommandFactory.shootCommand(extender, shooter, pivot));
+    NamedCommands.registerCommand("shoot", CommandFactory.shootCommand(extender, shooter, pivot, aiming));
     NamedCommands.registerCommand("harvesterOut", CommandFactory.harvestCommand(extender, shooter, pivot));
     NamedCommands.registerCommand("harvesterIn", CommandFactory.retractHarvestCommand(extender, shooter, pivot));
     
 
-    
+
     drivebase.setupPathPlanner();
 
     
@@ -248,10 +248,10 @@ public class RobotContainer {
     //this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
 
     
-    this.amp.whileTrue(drivebase.driveToPath(1).andThen((CommandFactory.ampScoreCommand(extender, shooter, pivot))));
-    this.speakerMiddle.whileTrue(drivebase.driveToPath(2).andThen((CommandFactory.shootCommand(extender, shooter, pivot))));
-    this.speakerLeft.whileTrue(drivebase.driveToPath(3).andThen((CommandFactory.shootCommand(extender, shooter, pivot))));
-    this.speakerRight.whileTrue(drivebase.driveToPath(4).andThen((CommandFactory.shootCommand(extender, shooter, pivot))));
+    this.amp.whileTrue(drivebase.driveToPath(1));//.andThen((CommandFactory.ampScoreCommand(extender, shooter, pivot))));
+    this.speakerMiddle.whileTrue(drivebase.driveToPath(2).andThen((CommandFactory.shootCommand(extender, shooter, pivot, aiming))));
+    this.speakerLeft.whileTrue(drivebase.driveToPath(3).andThen((CommandFactory.shootCommand(extender, shooter, pivot, aiming))));
+    this.speakerRight.whileTrue(drivebase.driveToPath(4).andThen((CommandFactory.shootCommand(extender, shooter, pivot, aiming))));
     
     this.sourceLeft.whileTrue(drivebase.driveToPath(5).andThen((CommandFactory.humanPickupCommand(extender, shooter, pivot))));
     this.sourceRight.whileTrue(drivebase.driveToPath(6).andThen((CommandFactory.humanPickupCommand(extender, shooter, pivot))));
@@ -308,7 +308,7 @@ public class RobotContainer {
 
     this.ampScoreRetract.onTrue(CommandFactory.ampScoreRetractCommand(extender, shooter, pivot));
 
-    this.shoot.onTrue(CommandFactory.shootCommand(extender, shooter, pivot));
+    this.shoot.onTrue(CommandFactory.shootCommand(extender, shooter, pivot, aiming));
 
 
     this.humanPickup.onTrue(CommandFactory.humanPickupCommand(extender, shooter, pivot));
