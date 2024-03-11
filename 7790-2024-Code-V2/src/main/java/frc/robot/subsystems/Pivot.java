@@ -65,10 +65,10 @@ public class Pivot extends SubsystemBase
         //17.44 long
 
         this.isInitialized = false;
-        this.angleMax = 61;
-        this.angleMin = -45f;
+        this.angleMax = 68;
+        this.angleMin = -46.1f;
         this.humanPickupAngle = 19;
-        this.groundPickupAngle = -45f;
+        this.groundPickupAngle = -46.1f;
         //this.movementAngle = 0.0f;
         this.trapScoreAngle = 56;
         //this.speakerScoreAngle = 0.0f;
@@ -108,13 +108,13 @@ public class Pivot extends SubsystemBase
             return;
         }
 
-        float scale = 0.5f;
+        float scale = 0.2f;
 
-       // float f = (float)MathUtil.clamp(this.desiredAngle + amount * scale, angleMin,angleMax);
+        float f = (float)MathUtil.clamp(this.desiredAngle + amount * scale, angleMin,angleMax);
 
        //disabled after first match jackson
 
-       float f = (float)this.desiredAngle + amount * scale;
+       //float f = (float)this.desiredAngle + amount * scale;
 
 
         this.desiredAngle = f;

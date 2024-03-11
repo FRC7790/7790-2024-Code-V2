@@ -41,7 +41,7 @@ public class Extender extends SubsystemBase
 
         //max 44.0f
 
-        this.extenderMax = 44.5f;
+        this.extenderMax = 45.0f;
         this.extenderMin = 0.5f;
         this.humanPickupPose = 44.5f;
         this.groundPickupPose = 44.5f;
@@ -88,7 +88,7 @@ public class Extender extends SubsystemBase
             return;
         }
 
-        float scale = 0.5f;
+        float scale = 0.2f;
         this.setDesiredPosition(this.desiredPosition + amount * scale);
      }
 
@@ -138,8 +138,13 @@ public class Extender extends SubsystemBase
 
         final float maxoutput = 0.7f;
 
+        //final float maxoutput = 0.1f;
+
         double pos1 = extender1Encoder.getPosition();
         double pos2 = extender2Encoder.getPosition();
+
+        System.out.println(pos1);
+        System.out.println(pos2);
 
         final double output = MathUtil.clamp(this.pid.calculate(pos1, this.desiredPosition), -maxoutput, maxoutput);
         extenderMotor1.set(output);

@@ -17,7 +17,7 @@ public class Climber extends SubsystemBase
     private CANSparkMax climberMotor2;
     private float desiredSpeed1 = 0;
     private float desiredSpeed2 = 0;
-    private float maxSpeed = .1f;
+    private float maxSpeed = 1;
 
 
     
@@ -33,11 +33,26 @@ public class Climber extends SubsystemBase
         
     }
     
-    public void setDesiredSpeed1(final float f) {
-       desiredSpeed1 = f;
+
+    public void setDesiredSpeed1() {
+       desiredSpeed1 = .5f;
     }
-    public void setDesiredSpeed2(final float f) {
-       desiredSpeed2 = f;
+    public void setDesiredSpeed2() {
+       desiredSpeed2 = -.5f;
+    }
+
+
+    public void setDesiredSpeedRev1() {
+       desiredSpeed1 = -.3f;
+    }
+    public void setDesiredSpeedRev2() {
+       desiredSpeed2 = .3f;
+    }
+    public void setDesiredSpeedZero1() {
+       desiredSpeed1 = 0;
+    }
+    public void setDesiredSpeedZero2() {
+       desiredSpeed2 = 0;
     }
 
     public void setDesiredSpeeds(final float f1, final float f2) {
@@ -50,9 +65,9 @@ public class Climber extends SubsystemBase
 
         
         
-        climberMotor1.set(desiredSpeed1);
+        climberMotor1.set(desiredSpeed1 * maxSpeed);
 
-        climberMotor2.set(desiredSpeed2);
+        climberMotor2.set(desiredSpeed2 * maxSpeed);
     }
 
 }

@@ -89,10 +89,10 @@ public class Shooter extends SubsystemBase
         this.shooterMotor2.setIdleMode(IdleMode.kCoast);
         this.shooterMotor3.setIdleMode(IdleMode.kCoast);
         this.shooterMotor4.setIdleMode(IdleMode.kCoast);
-        setpoint1 = 3000;
-        setpoint2 = 3000;
-        setpoint3 = 3000;
-        setpoint4 = 3000;
+        setpoint1 = 2000;
+        setpoint2 = 2000;
+        setpoint3 = 2000;
+        setpoint4 = 2000;
         isShooting = true;
     }
         public void startAmpShooter() {
@@ -165,8 +165,8 @@ public Command stopHarvestCommand()
 
     public void harvest() {
 
-        intakeMotor.set(.45);
-        indexMotor.set(.35);
+        intakeMotor.set(.3);
+        indexMotor.set(.4);
         led.setstandard();
      
     }

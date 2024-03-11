@@ -117,12 +117,18 @@ public class RobotContainer {
 
   private final JoystickButton setIsAiming = new JoystickButton(this.driverXbox, 4);
 
+  private final JoystickButton climb1f = new JoystickButton(this.alternate, 8);
+  private final JoystickButton climb2f = new JoystickButton(this.alternate, 7);
+
+  private final JoystickButton climb1r = new JoystickButton(this.alternate, 10);
+  private final JoystickButton climb2r = new JoystickButton(this.alternate, 9);
+
 
     LED led = new LED();
     Shooter shooter = new Shooter(led);
     Pivot pivot = new Pivot();
     Extender extender = new Extender(led);
-   // Climber climber = new Climber();
+    Climber climber = new Climber();
 
      private final SendableChooser<Command> autoChooser;
   
@@ -266,11 +272,27 @@ public class RobotContainer {
         new InstantCommand(() -> this.extender.extendAmount((float) -this.alternate.getRawAxis(1)), extender));
     this.pivot.setDefaultCommand(
         new InstantCommand(() -> this.pivot.moveAmount((float) this.alternate.getRawAxis(2)), pivot));
-
-    //this.climber.setDefaultCommand(new InstantCommand(() -> this.climber.setDesiredSpeeds((float) -this.driverXbox.getRawAxis(2),(float) this.driverXbox.getRawAxis(3)), climber));
     
 
-    
+    this.climb1f.onTrue(new InstantCommand(() -> climber.setDesiredSpeed1()));
+
+    this.climb1f.onFalse(new InstantCommand(() -> climber.setDesiredSpeedZero1()));
+
+    this.climb2f.onTrue(new InstantCommand(() -> climber.setDesiredSpeed2()));
+
+    this.climb2f.onFalse(new InstantCommand(() -> climber.setDesiredSpeedZero2()));
+
+
+    this.climb1r.onTrue(new InstantCommand(() -> climber.setDesiredSpeedRev1()));
+
+    this.climb1r.onFalse(new InstantCommand(() -> climber.setDesiredSpeedZero1()));
+
+    this.climb2r.onTrue(new InstantCommand(() -> climber.setDesiredSpeedRev2()));
+
+    this.climb2r.onFalse(new InstantCommand(() -> climber.setDesiredSpeedZero2()));
+
+
+
     this.harvest.onTrue(CommandFactory.harvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsNotFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOn())));
     this.harvest.onFalse(CommandFactory.retractHarvestCommand(extender, shooter, pivot).alongWith(new InstantCommand(()->drivebase.setIsFieldOriented())).alongWith(new InstantCommand(() -> Vision.targetingOff())));
     
