@@ -135,15 +135,18 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() { 
-    
-    
-    drivebase.setupPathPlanner();
+  public RobotContainer() {
 
     NamedCommands.registerCommand("ampScore", CommandFactory.ampScoreCommand(extender, shooter, pivot));
     NamedCommands.registerCommand("shoot", CommandFactory.shootCommand(extender, shooter, pivot));
     NamedCommands.registerCommand("harvesterOut", CommandFactory.harvestCommand(extender, shooter, pivot));
     NamedCommands.registerCommand("harvesterIn", CommandFactory.retractHarvestCommand(extender, shooter, pivot));
+    
+
+    
+    drivebase.setupPathPlanner();
+
+    
 
 
     autoChooser = AutoBuilder.buildAutoChooser("Auto 2-3");
