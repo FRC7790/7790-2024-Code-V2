@@ -77,6 +77,11 @@
           "visible": true
         }
       },
+      "/SmartDashboard/Auto Chooser": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "XModules": {
           "arrowColor": [
@@ -106,6 +111,11 @@
       "FMSInfo": {
         "open": true
       },
+      "PathPlanner": {
+        "HotReload": {
+          "open": true
+        }
+      },
       "SmartDashboard": {
         "Field": {
           "open": true
@@ -118,6 +128,15 @@
     }
   },
   "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
+    "Server": {
+      "open": true
+    },
     "visible": true
   }
 }

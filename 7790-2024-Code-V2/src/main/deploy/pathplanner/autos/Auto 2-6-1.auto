@@ -56,6 +56,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "spoolShooter"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -69,12 +75,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Shoot Middle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spoolShooter"
                 }
               }
             ]
@@ -106,6 +106,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "spoolShooter"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -119,12 +125,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Note 7 To middle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spoolShooter"
                 }
               }
             ]
@@ -162,6 +162,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "spoolShooter"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -175,12 +181,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Shoot Left"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spoolShooter"
                 }
               }
             ]

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.9861581082732835,
-      "y": 6.637928410024977
+      "x": 1.309243119380694,
+      "y": 6.314843398917567
     },
-    "rotation": 58.29857033049431
+    "rotation": 38.257560523806944
   },
   "command": {
     "type": "sequential",
@@ -56,6 +56,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "spoolShooter"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -69,12 +75,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Shoot Left"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spoolShooter"
                 }
               }
             ]
@@ -106,6 +106,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "spoolShooter"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -119,12 +125,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Shoot Left"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spoolShooter"
                 }
               }
             ]
@@ -162,6 +162,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "spoolShooter"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -175,12 +181,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Shoot Left"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spoolShooter"
                 }
               }
             ]
