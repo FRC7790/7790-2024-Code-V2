@@ -74,17 +74,17 @@ public class Shooter extends SubsystemBase
 
 
 
-        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500); 
-        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500); 
+        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 10000); 
+        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 10000); 
 
-        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500); 
-        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500); 
+        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10000); 
+        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 10000); 
 
-        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500); 
-        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500); 
+        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 10000); 
+        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 10000); 
 
-        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500); 
-        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500); 
+        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 10000); 
+        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 10000); 
         
 
         this.shooterMotor1.setInverted(true);
@@ -172,7 +172,7 @@ public class Shooter extends SubsystemBase
     public void harvest() {
 
         intakeMotor.set(.45);
-        indexMotor.set(.35);
+        indexMotor.set(.4);
         led.setstandard();
      
     }
@@ -187,7 +187,7 @@ public class Shooter extends SubsystemBase
     }
     public void shoot() {
         intakeMotor.set(.35);
-        indexMotor.set(.45);
+        indexMotor.set(.5);
 
          led.setShoot();
     }
