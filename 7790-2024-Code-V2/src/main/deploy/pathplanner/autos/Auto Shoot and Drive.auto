@@ -1,0 +1,50 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.059586519888604,
+      "y": 4.376333332273105
+    },
+    "rotation": -51.694606493728124
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Shoot Right"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spoolShooter"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootQuick"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drive Out"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3826715309960145,
-      "y": 5.5479153815450495
+      "x": 1.0008437905963476,
+      "y": 4.376333332273105
     },
-    "rotation": -0.6488044235947675
+    "rotation": -52.43140797117251
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Middle"
+                  "pathName": "Shoot Right"
                 }
               },
               {
@@ -37,69 +37,25 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Right to Note 8"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note 8"
+                }
+              },
               {
                 "type": "named",
                 "data": {
                   "name": "harvesterOut"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Note 2"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "harvesterIn"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Shoot Middle"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "spoolShooter"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shootQuick"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "harvesterOut"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Note 3"
                 }
               }
             ]
@@ -119,6 +75,62 @@
                 "type": "path",
                 "data": {
                   "pathName": "Shoot Right"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spoolShooter"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootQuick"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right to Note 7"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterOut"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note 7"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterIn"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Shoot Middle"
                 }
               },
               {

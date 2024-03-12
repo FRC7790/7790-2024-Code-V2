@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3826715309960145,
-      "y": 5.5479153815450495
+      "x": 0.9861581082732835,
+      "y": 6.637928410024977
     },
-    "rotation": -0.6488044235947675
+    "rotation": 58.29857033049431
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,57 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Middle"
+                  "pathName": "Shoot Left"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spoolShooter"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootQuick"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterOut"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterIn"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Shoot Left"
                 }
               },
               {
@@ -49,7 +99,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note 2"
+                  "pathName": "Note 4"
                 }
               }
             ]
@@ -68,7 +118,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Middle"
+                  "pathName": "Shoot Left"
                 }
               },
               {
@@ -87,6 +137,12 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Left to Note 5"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -99,7 +155,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note 3"
+                  "pathName": "Note 5"
                 }
               }
             ]
@@ -118,7 +174,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Right"
+                  "pathName": "Shoot Left"
                 }
               },
               {

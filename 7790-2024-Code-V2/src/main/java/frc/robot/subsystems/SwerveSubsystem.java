@@ -179,7 +179,7 @@ public class SwerveSubsystem extends SubsystemBase
   {
     // Create the constraints to use while pathfinding
     PathConstraints constraints = new PathConstraints(
-        swerveDrive.getMaximumVelocity(), 1.0,
+        swerveDrive.getMaximumVelocity(), 3.5,
         swerveDrive.getMaximumAngularVelocity(), Units.degreesToRadians(360));
 
        
@@ -241,7 +241,7 @@ public class SwerveSubsystem extends SubsystemBase
     PathConstraints constraints = new PathConstraints(
 
     // orig 4.0, 720
-        1.5, 1.5,
+        3.5, 3.5,
         Units.degreesToRadians(360), Units.degreesToRadians(360));
 
       

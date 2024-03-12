@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3826715309960145,
+      "x": 1.3973572133190786,
       "y": 5.5479153815450495
     },
-    "rotation": -0.6488044235947675
+    "rotation": 0.2659920486767212
   },
   "command": {
     "type": "sequential",
@@ -41,15 +41,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "harvesterOut"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "Note 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterOut"
                 }
               }
             ]
@@ -78,6 +78,62 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootQuick"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note 6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterOut"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "harvesterIn"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note 7 To middle"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "spoolShooter"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot Middle"
           }
         },
         {

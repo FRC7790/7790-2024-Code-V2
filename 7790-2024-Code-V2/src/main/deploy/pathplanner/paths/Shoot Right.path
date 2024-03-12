@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4096302478319247,
-        "y": 3.9287347146122866
+        "x": 1.3767013508728891,
+        "y": 3.9503526377103473
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.307014042599514,
-        "y": 4.104648209296419
+        "x": 1.2885872569345043,
+        "y": 4.061963823365634
       },
       "isLocked": false,
       "linkedName": null
@@ -30,28 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Speaker Score",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "Spool Shooter",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
     "maxAcceleration": 3.5,
@@ -66,7 +45,7 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -49.23639479905882,
+    "rotation": -50.91748713349802,
     "velocity": 0
   },
   "useDefaultConstraints": true

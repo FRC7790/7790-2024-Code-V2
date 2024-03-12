@@ -89,6 +89,30 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
         return command;
     }
 
+    public static Command spoolShooterCommand(Shooter shooter, Aiming aiming)
+    {
+        Command command = (aiming.setIsAimingCommand())
+        .andThen(shooter.startShooterCommand());
+
+        command.addRequirements(shooter);
+
+        return command;
+    }
+
+    public static Command shootQuickCommand(Shooter shooter, Aiming aiming)
+    {
+        Command command = (shooter.shootCommand())
+        .andThen(new WaitCommand(.4))
+        .andThen(shooter.stopShooterCommand())
+
+        .andThen(shooter.indexStopCommand())
+        .andThen(aiming.setIsNotAimingCommand());
+
+        command.addRequirements(shooter);
+
+        return command;
+    }
+
     public static Command climbCommand(Extender extender, Pivot pivot)
     {
         Command command = pivot.setClimbAngleCommand()

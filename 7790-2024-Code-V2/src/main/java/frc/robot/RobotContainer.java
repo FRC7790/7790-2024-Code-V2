@@ -144,15 +144,17 @@ public class RobotContainer {
     NamedCommands.registerCommand("shoot", CommandFactory.shootCommand(extender, shooter, pivot, aiming));
     NamedCommands.registerCommand("harvesterOut", CommandFactory.harvestCommand(extender, shooter, pivot));
     NamedCommands.registerCommand("harvesterIn", CommandFactory.retractHarvestCommand(extender, shooter, pivot));
-    
 
+
+    NamedCommands.registerCommand("spoolShooter", CommandFactory.spoolShooterCommand(shooter, aiming));
+    NamedCommands.registerCommand("shootQuick", CommandFactory.shootQuickCommand(shooter, aiming));
 
     drivebase.setupPathPlanner();
 
     
 
 
-    autoChooser = AutoBuilder.buildAutoChooser("Faster Auto 1-2-3");
+    autoChooser = AutoBuilder.buildAutoChooser("Auto 2-1-3");
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
