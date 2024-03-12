@@ -39,6 +39,8 @@ import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Climber;
 
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.UnicornHorn;
+
 import java.io.File;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -89,6 +91,7 @@ public class RobotContainer {
 
   private final POVButton ampScoreRetract = new POVButton(this.driverXbox, 180);
   private final POVButton climbprep = new POVButton(this.driverXbox, 90);
+  private final POVButton Unicorn = new POVButton(this.driverXbox, 270);
 
   // private final POVButton GroundPickupExtension = new
   // POVButton(this.driverXbox, 90);
@@ -133,6 +136,8 @@ public class RobotContainer {
     Extender extender = new Extender(led);
     Climber climber = new Climber();
     Aiming aiming = new Aiming();
+    UnicornHorn unicornHorn = new UnicornHorn();
+
      private final SendableChooser<Command> autoChooser;
   
   /**
@@ -331,8 +336,8 @@ public class RobotContainer {
     this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter()));
     this.startShooter.onFalse(new InstantCommand(() -> this.shooter.stopShooter()));
     
-
-
+    this.Unicorn.onTrue(new InstantCommand(() -> this.unicornHorn.unicornExtend()));
+    this.Unicorn.onFalse(new InstantCommand(() -> this.unicornHorn.unicornRetract()));
   }
 
   /**
