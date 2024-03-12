@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.BangBangController;
@@ -70,6 +71,22 @@ public class Shooter extends SubsystemBase
         this.indexMotor.setIdleMode(IdleMode.kCoast);
         this.intakeMotor.setIdleMode(IdleMode.kCoast);
         
+
+
+
+        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500); 
+        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500); 
+
+        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500); 
+        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500); 
+
+        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500); 
+        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500); 
+
+        this.indexMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500); 
+        this.intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500); 
+        
+
         this.shooterMotor1.setInverted(true);
         this.shooterMotor4.setInverted(true);
 

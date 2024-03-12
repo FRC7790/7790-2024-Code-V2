@@ -2,6 +2,7 @@
 
 import edu.wpi.first.math.MathUtil;
 import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -30,6 +31,18 @@ public class Climber extends SubsystemBase
 
         this.climberMotor2.restoreFactoryDefaults();
         this.climberMotor2.setIdleMode(IdleMode.kBrake);
+
+        this.climberMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500); 
+        this.climberMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 500); 
+
+        this.climberMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500); 
+        this.climberMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500); 
+
+        this.climberMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500); 
+        this.climberMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 500); 
+
+        this.climberMotor1.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500); 
+        this.climberMotor2.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500); 
         
     }
     
