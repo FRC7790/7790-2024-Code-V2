@@ -37,6 +37,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "harvesterOut"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -44,12 +50,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Note 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "harvesterOut"
                 }
               }
             ]

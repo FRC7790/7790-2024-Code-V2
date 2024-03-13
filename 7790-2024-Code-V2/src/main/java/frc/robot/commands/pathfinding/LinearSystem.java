@@ -16,11 +16,13 @@ public class LinearSystem {
         if(!isInitialized)
         {
             poses = new ArrayList<Pose2d>();
-            poses.add(new Pose2d(1.9,-31.0,Rotation2d.fromDegrees(0)));
-            poses.add(new Pose2d(2.2,-28.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(1.9,-32.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(2.2,-29.0,Rotation2d.fromDegrees(0)));
             poses.add(new Pose2d(2.5,-26.0,Rotation2d.fromDegrees(0)));
             poses.add(new Pose2d(2.9,-22.0,Rotation2d.fromDegrees(0)));
             poses.add(new Pose2d(3.4,-17.8,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(3.99,-14.55,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(4.01,-12.8,Rotation2d.fromDegrees(0)));
             poses.add(new Pose2d(4.3,-12.0,Rotation2d.fromDegrees(0)));
             poses.add(new Pose2d(5.4,-7.0,Rotation2d.fromDegrees(0)));
             isInitialized = true;
@@ -41,7 +43,7 @@ public class LinearSystem {
             double min = poses.get(i).getX();
             double max = poses.get(i+1).getX();
 
-            if(distance < max && distance > min)
+            if(distance <= max && distance >= min)
             {
                 closestBelow = poses.get(i);
                 closestAbove = poses.get(i+1);

@@ -37,6 +37,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "harvesterOut"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -44,12 +50,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Note 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "harvesterOut"
                 }
               }
             ]
@@ -99,10 +99,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note 3"
+                  "pathName": "Note 1-3"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note 3"
           }
         },
         {
@@ -174,7 +180,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Left Far"
+                  "pathName": "Shoot Left Farther"
                 }
               }
             ]
@@ -216,18 +222,18 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Shoot Left Farther"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "harvesterIn"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot Left Farther"
           }
         },
         {

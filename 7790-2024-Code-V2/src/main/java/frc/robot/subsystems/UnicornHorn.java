@@ -14,12 +14,13 @@ public class UnicornHorn extends SubsystemBase {
         unicornServo.setSpeed(-1);
     }
 
-    public void unicornRetract() {
-        unicornServo.setSpeed(-1);
-
-    }
-
     public void unicornExtend() {
         unicornServo.setSpeed(1);
     }
+
+    public void unicornRetract() {
+        unicornServo.setSpeed(-1);
+    }
+
+    
 }

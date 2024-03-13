@@ -89,6 +89,8 @@ public class RobotContainer {
 
   private final JoystickButton ampScore1 = new JoystickButton(this.driverXbox, 10);
 
+  private final JoystickButton ampRetract1 = new JoystickButton(this.driverXbox, 9);
+
   private final POVButton ampScoreRetract = new POVButton(this.driverXbox, 180);
   private final POVButton climbprep = new POVButton(this.driverXbox, 90);
   private final POVButton Unicorn = new POVButton(this.driverXbox, 270);
@@ -128,6 +130,9 @@ public class RobotContainer {
 
   private final JoystickButton climb1r = new JoystickButton(this.alternate, 10);
   private final JoystickButton climb2r = new JoystickButton(this.alternate, 9);
+
+
+  private final JoystickButton fullReset = new JoystickButton(this.alternate, 11);
 
 
     LED led = new LED();
@@ -260,7 +265,7 @@ public class RobotContainer {
     //this.targetingMode.onFalse(new InstantCommand(() -> Vision.targetingOff(), new Subsystem[0]));
 
     
-    this.amp.whileTrue(drivebase.driveToPath(1));//.andThen((CommandFactory.ampScoreCommand(extender, shooter, pivot))));
+    this.amp.whileTrue(drivebase.driveToPath(1));
     this.speakerMiddle.whileTrue(drivebase.driveToPath(2).andThen((CommandFactory.shootCommand(extender, shooter, pivot, aiming))));
     this.speakerLeft.whileTrue(drivebase.driveToPath(3).andThen((CommandFactory.shootCommand(extender, shooter, pivot, aiming))));
     this.speakerRight.whileTrue(drivebase.driveToPath(4).andThen((CommandFactory.shootCommand(extender, shooter, pivot, aiming))));
@@ -321,6 +326,8 @@ public class RobotContainer {
 
     this.ampScoreRetract.onTrue(CommandFactory.ampScoreRetractCommand(extender, shooter, pivot));
 
+    this.ampRetract1.onTrue(CommandFactory.ampScoreRetractCommand(extender, shooter, pivot));
+
     this.shoot.onTrue(CommandFactory.shootCommand(extender, shooter, pivot, aiming));
 
 
@@ -330,7 +337,7 @@ public class RobotContainer {
     this.harvestManual.onTrue(new InstantCommand(() -> this.shooter.forward()));
     this.harvestManual.onFalse(new InstantCommand(() -> this.shooter.harvestStop()));
 
-    
+    this.fullReset.onTrue(this.extender.fullRetractCommand());
 
     this.harvestManualReverse.onTrue(new InstantCommand(() -> this.shooter.harvestReverse()));
     this.harvestManualReverse.onFalse(new InstantCommand(() -> this.shooter.harvestStop()));

@@ -12,9 +12,23 @@ public class CommandFactory {
     {
         Command command = extender.ampScoreCommand()
         .andThen(pivot.setAmpScoreCommand())
-        .andThen(new WaitCommand(2))
+        .andThen(new WaitCommand(1.5))
         .andThen(shooter.startAmpShooterCommand())
         .andThen(new WaitCommand(1))
+        .andThen(shooter.shootCommand())
+        .andThen(new WaitCommand(1))
+        .andThen(shooter.stopShooterCommand())
+        .andThen(shooter.indexStopCommand());
+
+        command.addRequirements(shooter,pivot,extender);
+
+        return command;
+    }
+
+    public static Command ampScoreCommandFinish(Extender extender, Shooter shooter, Pivot pivot)
+    {
+        Command command = (shooter.startAmpShooterCommand())
+        .andThen(new WaitCommand(.5))
         .andThen(shooter.shootCommand())
         .andThen(new WaitCommand(1))
         .andThen(shooter.stopShooterCommand())

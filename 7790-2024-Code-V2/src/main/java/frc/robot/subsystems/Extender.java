@@ -47,9 +47,10 @@ public class Extender extends SubsystemBase
         this.climbPose = 44.5f;
         this.groundPickupPose = 45f;
         this.trapScorePose = 45f;
-        this.speakerScorePose = 0.0f;
+        this.speakerScorePose = 0.5f;
         this.homeStatePose = 0.5f;
         this.ampScorePose = 45f;
+
         this.extenderMotor1 = new CANSparkMax(22, CANSparkLowLevel.MotorType.kBrushless);
         this.extenderMotor2 = new CANSparkMax(23, CANSparkLowLevel.MotorType.kBrushless);
 
@@ -69,7 +70,7 @@ public class Extender extends SubsystemBase
         extender2Encoder.setPosition(0);
         extender2Encoder.setPositionConversionFactor(1);
 
-        this.pid = new PIDController(0.07, 0.0, 0.0);
+        this.pid = new PIDController(0.2, 0.0, 0.0);
     
     }
     
@@ -80,6 +81,11 @@ public class Extender extends SubsystemBase
 
 
         this.desiredPosition = (newDesiredPose);
+    }
+
+    public void setFullRetract(){
+
+        this.desiredPosition = 0;
     }
 
     public void extendAmount(final float amount) {
@@ -108,12 +114,15 @@ public class Extender extends SubsystemBase
         this.setDesiredPosition(this.ampScorePose);       
     }
 
-
-
     //Commands
     public Command homeStateCommand()
     {
         Command command = new InstantCommand(()-> this.setHomeState(), this);
+        return command;
+    }
+    public Command fullRetractCommand()
+    {
+        Command command = new InstantCommand(()-> this.setFullRetract(), this);
         return command;
     }
 

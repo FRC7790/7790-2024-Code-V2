@@ -19,6 +19,8 @@ public class Aiming {
 
     public static boolean longShot = false;
 
+    public static boolean shortShot = false;
+
     public static float spoolTime;
     public static void setIsAiming() {
         isAiming = true;
@@ -61,14 +63,16 @@ public class Aiming {
 
     public static double getShootAngle(Pose2d botPose) {
         
-        Pose2d speakerPose = new Pose2d (0.0,5.55, Rotation2d.fromDegrees(0));
+        double offset = 0;
+
+        Pose2d speakerPose = new Pose2d (-offset,5.55, Rotation2d.fromDegrees(0));
 
         var alliance = DriverStation.getAlliance();
          boolean isRedAlliance =  alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
 
          if(isRedAlliance){
 
-            speakerPose = new Pose2d (16.54,5.55, Rotation2d.fromDegrees(0));
+            speakerPose = new Pose2d (16.54 + offset,5.55, Rotation2d.fromDegrees(0));
          }
 
         Translation2d diffPose = botPose.minus(speakerPose).getTranslation();
@@ -77,7 +81,7 @@ public class Aiming {
         
         System.out.println(dist);
 
-
+        shortShot = false;
         longShot = false;
         spoolTime = 1.2f;
 
@@ -111,6 +115,11 @@ public class Aiming {
 
         if ( dist > 4) {            
             longShot = true;
+            spoolTime = 2;
+        }
+
+        if ( dist < 2.2) {            
+            shortShot = true;
             spoolTime = 2;
         }
 

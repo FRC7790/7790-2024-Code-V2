@@ -162,6 +162,10 @@ public class Shooter extends SubsystemBase
         if (Aiming.longShot) {
             speed = 8200;
         }
+
+        if (Aiming.shortShot) {
+            speed = 6000;
+        }
         setpoint1 = speed;
         setpoint2 = speed;
         setpoint3 = speed;
