@@ -9,19 +9,27 @@ import edu.wpi.first.math.geometry.Rotation2d;
 public class LinearSystem {
     public static ArrayList<Pose2d> poses;
 
-    public LinearSystem ()
+    static Boolean isInitialized = false;
+
+    public static void initialize ()
     {
-        poses = new ArrayList<Pose2d>();
-        poses.add(new Pose2d(1.9,-31.0,Rotation2d.fromDegrees(0)));
-        poses.add(new Pose2d(2.2,-28.0,Rotation2d.fromDegrees(0)));
-        poses.add(new Pose2d(2.5,-26.0,Rotation2d.fromDegrees(0)));
-        poses.add(new Pose2d(2.9,-22.0,Rotation2d.fromDegrees(0)));
-        poses.add(new Pose2d(3.4,-19.0,Rotation2d.fromDegrees(0)));
-        poses.add(new Pose2d(5.4,-7.0,Rotation2d.fromDegrees(0)));
+        if(!isInitialized)
+        {
+            poses = new ArrayList<Pose2d>();
+            poses.add(new Pose2d(1.9,-31.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(2.2,-28.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(2.5,-26.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(2.9,-22.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(3.4,-17.8,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(4.3,-12.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(5.4,-7.0,Rotation2d.fromDegrees(0)));
+            isInitialized = true;
+        }
     }
 
     public static double getAngle(double distance){
 
+        initialize();
         double angle = poses.get(0).getY();
 
         Pose2d closestBelow = poses.get(0);
