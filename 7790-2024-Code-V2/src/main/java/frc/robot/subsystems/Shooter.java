@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.pathfinding.Aiming;
 
 public class Shooter extends SubsystemBase
 {
@@ -47,6 +48,10 @@ public class Shooter extends SubsystemBase
     DigitalInput noteSensor = new DigitalInput(9);
 
     LED led;
+
+    Boolean isShooting = false;
+     Boolean isReverse = false;
+     Boolean isHarvesting = false;
     public Shooter(LED led) {
 
         this.led = led;
@@ -150,10 +155,19 @@ public class Shooter extends SubsystemBase
     public void startShooter() {
         //shooterMotor1.set(-.45);
         //shooterMotor3.set(.4);
-        setpoint1 = 7000;
-        setpoint2 = 7000;
-        setpoint3 = 7000;
-        setpoint4 = 7000;
+        
+        int speed = 7000;
+
+        
+        if (Aiming.longShot) {
+            speed = 8200;
+        }
+        setpoint1 = speed;
+        setpoint2 = speed;
+        setpoint3 = speed;
+        setpoint4 = speed;
+
+
     }
         public void startAmpShooter() {
         setpoint1 = 2000;
@@ -171,21 +185,41 @@ public class Shooter extends SubsystemBase
 
     public void harvest() {
 
-        intakeMotor.set(.45);
-        indexMotor.set(.4);
+        isShooting = false;
+        isReverse = false;
+        isHarvesting = true;
+        intakeMotor.set(.5);
+        indexMotor.set(.5);
         led.setstandard();
-     
+    }
+
+    public void forward() {
+
+        isShooting = false;
+        isReverse = true;
+        isHarvesting = false;
+        intakeMotor.set(.35);
+        indexMotor.set(.35);
     }
 
     public void harvestStop() {
+        isShooting = false;
+        isReverse = false;
+        isHarvesting = false;
         intakeMotor.set(0);
         indexMotor.set(0);
     }
     public void harvestReverse() {
-        intakeMotor.set(0);
-        indexMotor.set(-.35);
+         isShooting = false;
+         isReverse = true;
+         isHarvesting = false;
+        intakeMotor.set(-.4);
+        indexMotor.set(-.4);
     }
     public void shoot() {
+        isShooting = true;
+        isReverse = false;
+        isHarvesting = false;
         intakeMotor.set(.35);
         indexMotor.set(.5);
 
@@ -193,11 +227,18 @@ public class Shooter extends SubsystemBase
     }
     
       public void indexStop() {
+         isShooting = false;
+         isReverse = false;
+         isHarvesting = false;
         indexMotor.set(0);
         intakeMotor.set(0);
       }
-    
-
+    public void setisAutonHarvest(){
+        isHarvesting = true;
+    }
+public void setisAutonHarvestStop(){
+        isHarvesting = false;
+    }
       public Command startShooterCommand()
 {
     Command command = new InstantCommand(()->startShooter(), this);
@@ -240,6 +281,11 @@ public Command stopHarvestCommand()
     Command command = new InstantCommand(()->harvestStop() , this);
     return command;
 }
+public Command forwardCommand()
+{
+    Command command = new InstantCommand(()->forward() , this);
+    return command;
+}
 
 
 
@@ -251,7 +297,11 @@ public Command stopHarvestCommand()
 
         if(isTriggered)
         {
+           
             led.noteLoaded();
+            if(isHarvesting){
+                harvestStop();               
+            }
         }
         else
         {

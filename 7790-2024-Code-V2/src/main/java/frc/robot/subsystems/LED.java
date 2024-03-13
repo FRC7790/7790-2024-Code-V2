@@ -70,7 +70,7 @@ public class LED extends SubsystemBase {
 
             String numString = String.valueOf(currentPattern);
 
-             System.out.println("l " + numString);
+            // System.out.println("l " + numString);
 
             ledInfo.writeString(numString);
 

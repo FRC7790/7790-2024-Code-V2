@@ -3,6 +3,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,6 +17,9 @@ public class Aiming {
 
     public static float angle = -27;
 
+    public static boolean longShot = false;
+
+    public static float spoolTime;
     public static void setIsAiming() {
         isAiming = true;
     }
@@ -71,10 +75,14 @@ public class Aiming {
          
         double dist = diffPose.getNorm();
         
-        //System.out.println(dist);
+        System.out.println(dist);
 
-        angle = 0;
 
+        longShot = false;
+        spoolTime = 1.2f;
+
+        angle = (float)LinearSystem.getAngle(dist);
+        /* 
         if (dist < 1.9) {
             angle = -31;
         }
@@ -90,9 +98,22 @@ public class Aiming {
         else if (2.9 < dist && dist < 3.4) {
             angle = -19;
         }
-        else {
-            angle = -17;
+        else if (3.4 < dist && dist < 5.4) {
+            angle = -7f;
+            longShot = true;
+            spoolTime = 2;
         }
+        else {
+            angle = -7f;
+            longShot = true;
+            spoolTime = 2;
+        }*/
+
+        if ( dist > 4) {            
+            longShot = true;
+            spoolTime = 2;
+        }
+
         return angle;
     }
 

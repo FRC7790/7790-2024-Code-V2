@@ -148,7 +148,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("ampScore", CommandFactory.ampScoreCommand(extender, shooter, pivot));
     NamedCommands.registerCommand("shoot", CommandFactory.shootCommand(extender, shooter, pivot, aiming));
     NamedCommands.registerCommand("harvesterOut", CommandFactory.harvestCommand(extender, shooter, pivot));
-    NamedCommands.registerCommand("harvesterIn", CommandFactory.retractHarvestCommand(extender, shooter, pivot));
+    
+    NamedCommands.registerCommand("harvesterIn", CommandFactory.retractHarvestCommandAuto(extender, shooter, pivot));
+    NamedCommands.registerCommand("harvesterInNorm", CommandFactory.retractHarvestCommand(extender, shooter, pivot));
 
 
     NamedCommands.registerCommand("spoolShooter", CommandFactory.spoolShooterCommand(shooter, aiming));
@@ -325,7 +327,7 @@ public class RobotContainer {
     this.climbprep.onTrue(CommandFactory.climbCommand(extender, pivot));
 
 
-    this.harvestManual.onTrue(new InstantCommand(() -> this.shooter.harvest()));
+    this.harvestManual.onTrue(new InstantCommand(() -> this.shooter.forward()));
     this.harvestManual.onFalse(new InstantCommand(() -> this.shooter.harvestStop()));
 
     

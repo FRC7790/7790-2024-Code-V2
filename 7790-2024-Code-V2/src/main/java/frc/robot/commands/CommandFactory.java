@@ -65,6 +65,18 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
         return command;
     }
 
+    public static Command retractHarvestCommandAuto(Extender extender, Shooter shooter, Pivot pivot)
+    {
+        Command command = pivot.setHomeCommand()
+
+        .andThen(new WaitCommand(.5))
+        .andThen(extender.homeStateCommand());
+
+        command.addRequirements(pivot,extender);
+
+        return command;
+    }
+
     public static Command shootCommand(Extender extender, Shooter shooter, Pivot pivot, Aiming aiming)
     {
         Command command = extender.homeStateCommand()
@@ -73,7 +85,7 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
 
         .andThen(shooter.startShooterCommand())
         
-        .andThen(new WaitCommand(1.2))
+        .andThen(new WaitCommand(2))
         .andThen(shooter.shootCommand())
         .andThen(new WaitCommand(.4))
         .andThen(shooter.stopShooterCommand())
@@ -88,6 +100,7 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
 
         return command;
     }
+
 
     public static Command spoolShooterCommand(Shooter shooter, Aiming aiming)
     {

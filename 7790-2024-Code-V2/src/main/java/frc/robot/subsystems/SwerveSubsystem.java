@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.io.File;
+import java.util.function.DoubleSupplier;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathConstraints;
@@ -14,7 +17,6 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -25,14 +27,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.pathfinding.Aiming;
 import frc.robot.commands.pathfinding.LimelightHelpers;
 import frc.robot.commands.pathfinding.Vision;
-import frc.robot.commands.pathfinding.Aiming;
-
-import java.io.Console;
-import java.io.File;
-import java.util.List;
-import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.math.SwerveMath;
@@ -722,14 +719,14 @@ public class SwerveSubsystem extends SubsystemBase
       visionIsInitialized = true;
     }
 
-    if(limelightMeasurement.tagCount >= 2)
+    if(limelightMeasurement.tagCount >= 2 && limelightMeasurement.avgTagArea > 0.2)
     {
       swerveDrive.addVisionMeasurement(
           limelightMeasurement.pose,
           limelightMeasurement.timestampSeconds,VecBuilder.fill(.5,.5,6));
          // System.out.println("vision 1");
     }
-    else if((limelightMeasurement.avgTagArea > 0.8) && poseDifference < 0.5 )
+    else if((limelightMeasurement.avgTagArea > 0.8) && poseDifference < 0.5)
     {
       swerveDrive.addVisionMeasurement(
           limelightMeasurement.pose,
