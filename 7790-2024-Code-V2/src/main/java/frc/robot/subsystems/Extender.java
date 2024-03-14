@@ -40,16 +40,16 @@ public class Extender extends SubsystemBase
         this.led = led;
         this.desiredPosition = 0.0f;
 
-        //max 44.0f
+        //max 44.5f
 
-        this.extenderMax = 45.0f;
+        this.extenderMax = 44.5f;
         this.extenderMin = 0.5f;
         this.climbPose = 44.5f;
-        this.groundPickupPose = 45f;
-        this.trapScorePose = 45f;
+        this.groundPickupPose = 44.5f;
+        this.trapScorePose = 44.5f;
         this.speakerScorePose = 0.5f;
         this.homeStatePose = 0.5f;
-        this.ampScorePose = 45f;
+        this.ampScorePose = 44.5f;
 
         this.extenderMotor1 = new CANSparkMax(22, CANSparkLowLevel.MotorType.kBrushless);
         this.extenderMotor2 = new CANSparkMax(23, CANSparkLowLevel.MotorType.kBrushless);
