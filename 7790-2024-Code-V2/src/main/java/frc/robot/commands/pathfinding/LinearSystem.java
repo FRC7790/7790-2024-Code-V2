@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LinearSystem {
     public static ArrayList<Pose2d> poses;
@@ -54,7 +55,9 @@ public class LinearSystem {
         double d = (distance - closestBelow.getX())/range;
         angle = MathUtil.interpolate(closestBelow.getY(), closestAbove.getY(), d);
 
-        System.out.println(angle);
+        //System.out.println(angle);
+
+        
         return angle;
     }
 }

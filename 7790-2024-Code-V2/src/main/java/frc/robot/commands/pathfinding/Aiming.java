@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -79,7 +80,9 @@ public class Aiming {
          
         double dist = diffPose.getNorm();
         
-        System.out.println(dist);
+        //System.out.println(dist);
+
+        SmartDashboard.putNumber("Distance", dist);
 
         shortShot = false;
         longShot = false;
