@@ -11,6 +11,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -45,6 +46,7 @@ public class Shooter extends SubsystemBase
     private double setpoint3 = 0;
     private double setpoint4 = 0;
     
+    private double dashboardMultiplier;
     DigitalInput noteSensor = new DigitalInput(9);
 
     LED led;
@@ -76,6 +78,7 @@ public class Shooter extends SubsystemBase
         this.indexMotor.setIdleMode(IdleMode.kCoast);
         this.intakeMotor.setIdleMode(IdleMode.kCoast);
         
+        this.dashboardMultiplier = 1.00;
 
 
 
@@ -151,21 +154,28 @@ public class Shooter extends SubsystemBase
     shooterMotor4PID.setFF(kFF);
     shooterMotor4PID.setOutputRange(kMinOutput, kMaxOutput);
 
+
+    SmartDashboard.putNumber("Shooter Multiplier", dashboardMultiplier);
+    
     }
     public void startShooter() {
         //shooterMotor1.set(-.45);
         //shooterMotor3.set(.4);
         
-        int speed = 7000;
+        double speed = 7000;
 
-        
+        SmartDashboard.getNumber("Shooter Multiplier", dashboardMultiplier);
+
+        speed = speed * dashboardMultiplier;
+
         if (Aiming.longShot) {
-            speed = 8200;
+            speed = 8200 * dashboardMultiplier;
         }
 
         if (Aiming.shortShot) {
-            speed = 6000;
+            speed = 6000 * dashboardMultiplier;
         }
+
         setpoint1 = speed;
         setpoint2 = speed;
         setpoint3 = speed;
