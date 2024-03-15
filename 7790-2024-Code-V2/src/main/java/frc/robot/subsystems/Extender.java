@@ -42,7 +42,7 @@ public class Extender extends SubsystemBase
 
         //max 44.5f
 
-        this.extenderMax = 44.5f;
+        this.extenderMax = 45f;
         this.extenderMin = 0.5f;
         this.climbPose = 44.5f;
         this.groundPickupPose = 44.5f;
