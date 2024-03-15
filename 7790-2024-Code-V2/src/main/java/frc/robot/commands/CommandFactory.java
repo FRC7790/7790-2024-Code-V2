@@ -128,7 +128,8 @@ public static Command harvestCommand(Extender extender, Shooter shooter, Pivot p
 
     public static Command shootQuickCommand(Shooter shooter, Aiming aiming)
     {
-        Command command = (shooter.shootCommand())
+        Command command = (shooter.startShooterCommand())
+        .andThen(shooter.shootCommand())
         .andThen(new WaitCommand(.2))
         .andThen(shooter.indexStopCommand())
         .andThen(aiming.setIsNotAimingCommand());

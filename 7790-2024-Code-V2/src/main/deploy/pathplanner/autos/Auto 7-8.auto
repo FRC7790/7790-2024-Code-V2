@@ -80,7 +80,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Right"
+                  "pathName": "Shoot Right Far"
                 }
               }
             ]
@@ -136,10 +136,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Middle"
+                  "pathName": "Left From Note 7"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot Right Far"
           }
         },
         {

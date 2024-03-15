@@ -164,7 +164,7 @@ public class Shooter extends SubsystemBase
         
         double speed = 7000;
 
-        SmartDashboard.getNumber("Shooter Multiplier", dashboardMultiplier);
+        dashboardMultiplier = SmartDashboard.getNumber("Shooter Multiplier", 1);
 
         speed = speed * dashboardMultiplier;
 

@@ -5,7 +5,7 @@
       "x": 1.3826715309960145,
       "y": 5.5479153815450495
     },
-    "rotation": -0.6488044235947675
+    "rotation": 0.767418896877585
   },
   "command": {
     "type": "sequential",
@@ -37,19 +37,25 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
+          "data": {
+            "name": "harvesterOut"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
                   "pathName": "Note 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "harvesterOut"
                 }
               }
             ]
@@ -99,10 +105,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note 1"
+                  "pathName": "Note 2-1"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note 1"
           }
         },
         {
@@ -124,16 +136,10 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Left"
+                  "pathName": "Shoot Left Far"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shootQuick"
           }
         }
       ]

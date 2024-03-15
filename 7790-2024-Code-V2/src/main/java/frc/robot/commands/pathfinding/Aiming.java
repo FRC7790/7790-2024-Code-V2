@@ -58,6 +58,18 @@ public class Aiming {
 
         Translation2d diffPose = botPose.minus(speakerPose).getTranslation();
 
+
+       /*  if(diffPose.getY() < 2) {
+
+            double y;
+
+            diffPose.getY();
+
+
+        }
+
+ */
+
         return diffPose;
         
     }
@@ -89,6 +101,8 @@ public class Aiming {
         spoolTime = 1.2f;
 
         angle = (float)LinearSystem.getAngle(dist);
+
+        
         /* 
         if (dist < 1.9) {
             angle = -31;

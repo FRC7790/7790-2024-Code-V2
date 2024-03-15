@@ -370,18 +370,25 @@ public class SwerveSubsystem extends SubsystemBase
       if(Aiming.isAiming)
       {
         Translation2d stickPose = Aiming.getDiffPoseToScore(getPose());
+
+
+        
+
+
+
+
         double xInput = Math.pow(translationX.getAsDouble(), 3); // Smooth controll out
         double yInput = Math.pow(translationY.getAsDouble(), 3); // Smooth controll out
 
 
 
-        double compensation = yInput * 3;
+        double compensation = yInput * 2;
 
         //System.out.println(compensation);
         //System.out.println(xInput);
         //System.out.println(yInput);
 
-        System.out.println(stickPose.getY() + compensation);
+        //System.out.println(stickPose.getY() + compensation);
 
         driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput * multiplier, yInput * multiplier,
                                                                       stickPose.getY() + compensation,
