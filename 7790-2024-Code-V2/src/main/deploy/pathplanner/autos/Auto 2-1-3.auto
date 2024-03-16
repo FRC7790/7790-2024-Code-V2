@@ -76,14 +76,20 @@
                 "data": {
                   "name": "harvesterIn"
                 }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Shoot Middle"
-                }
               }
             ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot Middle"
           }
         },
         {
@@ -136,7 +142,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Left Far"
+                  "pathName": "Shoot Middle"
                 }
               }
             ]
@@ -192,7 +198,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Right Far"
+                  "pathName": "Shoot Middle"
                 }
               }
             ]
