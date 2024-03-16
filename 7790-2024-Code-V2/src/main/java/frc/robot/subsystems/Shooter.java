@@ -173,7 +173,8 @@ public class Shooter extends SubsystemBase
         }
 
         if (Aiming.shortShot) {
-            speed = 6000 * dashboardMultiplier;
+            //speed = 6000 * dashboardMultiplier;
+            speed = 7000 * dashboardMultiplier;
         }
 
         setpoint1 = speed;
@@ -182,6 +183,13 @@ public class Shooter extends SubsystemBase
         setpoint4 = speed;
 
 
+    }
+
+    public void startPass() {
+        setpoint1 = 5000;
+        setpoint2 = 5000;
+        setpoint3 = 5000;
+        setpoint4 = 5000;
     }
         public void startAmpShooter() {
         setpoint1 = 2000;
@@ -300,7 +308,11 @@ public Command forwardCommand()
     Command command = new InstantCommand(()->forward() , this);
     return command;
 }
-
+public Command startPassCommand()
+{
+    Command command = new InstantCommand(()->startPass() , this);
+    return command;
+}
 
 
 
@@ -309,6 +321,7 @@ public Command forwardCommand()
 
         isTriggered = !noteSensor.get();
 
+        SmartDashboard.putBoolean("noteSensor", isTriggered);
         if(isTriggered)
         {
            

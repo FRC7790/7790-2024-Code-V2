@@ -37,19 +37,13 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Right to Note 8"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note 8"
+                  "pathName": "Right to Note 8"
                 }
               },
               {
@@ -59,6 +53,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note 8"
           }
         },
         {
@@ -80,22 +80,22 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Shoot Right Far"
+                  "pathName": "Left From Note 7"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "shootQuick"
+            "pathName": "Shoot Right Far"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Right to Note 7"
+            "name": "shootQuick"
           }
         },
         {
@@ -111,10 +111,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note 7"
+                  "pathName": "Right to Note 8"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note 7"
           }
         },
         {

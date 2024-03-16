@@ -187,7 +187,8 @@ public class Pivot extends SubsystemBase
         }
 
         if(Aiming.isAiming){
-           this.desiredAngle = Aiming.angle;
+           this.desiredAngle = Aiming.angle - (float)SmartDashboard.getNumber("Angle Offset", 0);
+
         }
         // Max was 0.7f
         final float maxoutput = 0.7f;

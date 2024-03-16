@@ -93,7 +93,9 @@ public class RobotContainer {
 
   private final POVButton ampScoreRetract = new POVButton(this.driverXbox, 180);
   private final POVButton climbprep = new POVButton(this.driverXbox, 90);
-  private final POVButton Unicorn = new POVButton(this.driverXbox, 270);
+  //private final POVButton Unicorn = new POVButton(this.driverXbox, 270);
+
+  private final POVButton pass = new POVButton(this.driverXbox, 270);
 
   // private final POVButton GroundPickupExtension = new
   // POVButton(this.driverXbox, 90);
@@ -330,6 +332,7 @@ public class RobotContainer {
 
     this.shoot.onTrue(CommandFactory.shootCommand(extender, shooter, pivot, aiming));
 
+    this.pass.onTrue(CommandFactory.passCommand(extender, shooter, pivot, aiming));
 
     this.climbprep.onTrue(CommandFactory.climbCommand(extender, pivot));
 
@@ -345,8 +348,8 @@ public class RobotContainer {
     this.startShooter.onTrue(new InstantCommand(() -> this.shooter.startShooter()));
     this.startShooter.onFalse(new InstantCommand(() -> this.shooter.stopShooter()));
     
-    this.Unicorn.onTrue(new InstantCommand(() -> this.unicornHorn.unicornExtend()));
-    this.Unicorn.onFalse(new InstantCommand(() -> this.unicornHorn.unicornRetract()));
+    //this.Unicorn.onTrue(new InstantCommand(() -> this.unicornHorn.unicornExtend()));
+    //this.Unicorn.onFalse(new InstantCommand(() -> this.unicornHorn.unicornRetract()));
   }
 
   /**

@@ -17,14 +17,17 @@ public class LinearSystem {
         if(!isInitialized)
         {
             poses = new ArrayList<Pose2d>();
-            poses.add(new Pose2d(1.9,-32.0,Rotation2d.fromDegrees(0)));
-            poses.add(new Pose2d(2.2,-29.0,Rotation2d.fromDegrees(0)));
-            poses.add(new Pose2d(2.5,-26.0,Rotation2d.fromDegrees(0)));
-            poses.add(new Pose2d(2.9,-22.0,Rotation2d.fromDegrees(0)));
-            poses.add(new Pose2d(3.4,-17.8,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(1.9,-28.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(2.2,-25.4,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(2.5,-20.2,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(3.0,-15.7,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(3.28,-14.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(3.4,-16.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(3.55,-12.65,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(3.78,-10.93,Rotation2d.fromDegrees(0)));
             poses.add(new Pose2d(3.99,-14.55,Rotation2d.fromDegrees(0)));
             poses.add(new Pose2d(4.01,-12.8,Rotation2d.fromDegrees(0)));
-            poses.add(new Pose2d(4.3,-12.0,Rotation2d.fromDegrees(0)));
+            poses.add(new Pose2d(4.13,-9.1,Rotation2d.fromDegrees(0)));
             poses.add(new Pose2d(5.4,-7.0,Rotation2d.fromDegrees(0)));
             isInitialized = true;
         }

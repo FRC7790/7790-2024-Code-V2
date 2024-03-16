@@ -48,18 +48,18 @@ public class Climber extends SubsystemBase
     
 
     public void setDesiredSpeed1() {
-       desiredSpeed1 = .8f;
+       desiredSpeed1 = 1f;
     }
     public void setDesiredSpeed2() {
-       desiredSpeed2 = -.8f;
+       desiredSpeed2 = -1f;
     }
 
 
     public void setDesiredSpeedRev1() {
-       desiredSpeed1 = -.3f;
+       desiredSpeed1 = -.4f;
     }
     public void setDesiredSpeedRev2() {
-       desiredSpeed2 = .3f;
+       desiredSpeed2 = .4f;
     }
     public void setDesiredSpeedZero1() {
        desiredSpeed1 = 0;
